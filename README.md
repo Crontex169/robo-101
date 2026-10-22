@@ -62,8 +62,6 @@ passes.
 
 ## Licenses
 
-- Code: [MIT](LICENSE). This project is built on the code of
-  [modern-robotics](https://github.com/oleg-Shipitko/modern-robotics) by Oleg Shipitko (MIT).
-- Fonts: Inter and JetBrains Mono under the SIL Open Font License. KaTeX and its fonts are under
-  the MIT license.
+- Code: [MIT](LICENSE). Parts of it are adapted from other open-source projects; see
+  [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 - Course text and figures are original to this project.
