@@ -198,7 +198,7 @@ the same home page as `dist/index.html`.
   - permissions: `pages: write`, `id-token: write`, `contents: read`
   - build job: `actions/checkout`, `actions/setup-python` (3.12), `actions/setup-node` (22), `node tools/check.js`, `actions/upload-pages-artifact` with `path: dist`
   - deploy job: `actions/deploy-pages`, which needs the build job
-- [ ] T041 [US4] Set `SITE_URL` and `REPO` in `site/config.json` and `tools/fixtures/config.check.json` to the real GitHub repo and Pages URL once the repo exists on GitHub. The repo will be **public** (decided 2026-10-22), so Pages works on the free plan. Ask for the repo name before creating or pushing anything
+- [X] T041 [US4] Set `SITE_URL` and `REPO` in `site/config.json` and `tools/fixtures/config.check.json` to the real GitHub repo and Pages URL once the repo exists on GitHub. The repo will be **public** (decided 2026-10-22), so Pages works on the free plan. Ask for the repo name before creating or pushing anything
 
 **Checkpoint**: the site goes live automatically after every passing check.
 
