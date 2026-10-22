@@ -1,7 +1,7 @@
 {
   "_comment": "Site links. An empty value means the link isn't set yet; the page shows '#'.",
-  "SITE_URL": "https://USER.github.io/kinematics-workshop",
-  "REPO": "https://github.com/USER/kinematics-workshop",
+  "SITE_URL": "https://crontex169.github.io/robo-101",
+  "REPO": "https://github.com/Crontex169/robo-101",
   "PUBLISHED": [
     {
       "n": "G",

@@ -100,7 +100,8 @@ async function launch(opts) {
           const params = { format: 'png', captureBeyondViewport: !!clip };
           if (clip) params.clip = Object.assign({ scale: 1 }, clip);
           const r = await S('Page.captureScreenshot', params);
-          fs.writeFileSync(file, Buffer.from(r.data, 'base64'));
+          // a synced folder (OneDrive) can briefly lock the previous file: retry a few times
+          for (let k = 0; ; k++) { try { fs.writeFileSync(file, Buffer.from(r.data, 'base64')); break; } catch (e) { if (k >= 4) throw e; await sleep(300); } }
           return file;
         },
         // screenshot of one element by selector (scrolls to it first)
