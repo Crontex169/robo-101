@@ -8,7 +8,8 @@ slides/
 # build output
 dist/
 shots/
-site/*.html
+site/index.html
+site/404.html
 site/lessons/
 site/sitemap.xml
 site/robots.txt
