@@ -98,16 +98,16 @@ parts and their lessons and checkpoints are listed, none of them clickable. Addi
 `PUBLISHED` and rebuilding makes exactly that entry a link. The theme toggle persists across
 reloads.
 
-- [ ] T020 [US1] Create `site/index.src.html` from `modern-robotics/site/index.src.html`:
+- [X] T020 [US1] Create `site/index.src.html` from `modern-robotics/site/index.src.html`:
   - keep the page skeleton, top bar, theme bootstrap script, the "how a lesson works" cards, the program renderer and the progress/"continue" logic
   - remove the hero demos, the author section, the "who is this for" Russian content, the FAQ content, the thanks button and the stats script
   - rename storage keys to `kw-*`
-- [ ] T021 [US1] Write the English home-page copy in `site/index.src.html`: a hero (course name "Kinematics Workshop", a one-paragraph promise for learners starting from zero, a "Start with M.1" button), a "Who is this for" block, "How a lesson works" (read first, then try it, under-the-hood formulas, check yourself), and three short FAQ entries (prerequisites, time per lesson, is it free)
-- [ ] T022 [US1] Replace the `PARTS` array in `site/index.src.html` with the program from `specs/001-site-foundation/data-model.md` (parts M, F, 1–5; each ends with a `'check'` checkpoint entry `CPx`), and make the program renderer show "Coming soon" (not linked) for entries missing from `READY`
-- [ ] T023 [P] [US1] Create `site/404.src.html` in English from `modern-robotics/site/404.src.html`, with a link back to the home page
-- [ ] T024 [P] [US1] Port `modern-robotics/site/assets/site.css` to `site/assets/site.css`, deleting rules for removed sections (author, hero demos, thanks) and translating comments
-- [ ] T025 [P] [US1] Port `modern-robotics/tools/og_image.js` to `tools/og_image.js` with the new course name and English tagline, and generate `site/assets/og.png`
-- [ ] T026 [US1] Build with `python site/build.py` and verify the Independent Test above by hand (light/dark, 390 px in browser dev tools)
+- [X] T021 [US1] Write the English home-page copy in `site/index.src.html`: a hero (course name "Kinematics Workshop", a one-paragraph promise for learners starting from zero, a "Start with M.1" button), a "Who is this for" block, "How a lesson works" (read first, then try it, under-the-hood formulas, check yourself), and three short FAQ entries (prerequisites, time per lesson, is it free)
+- [X] T022 [US1] Replace the `PARTS` array in `site/index.src.html` with the program from `specs/001-site-foundation/data-model.md` (parts M, F, 1–5; each ends with a `'check'` checkpoint entry `CPx`), and make the program renderer show "Coming soon" (not linked) for entries missing from `READY`
+- [X] T023 [P] [US1] Create `site/404.src.html` in English from `modern-robotics/site/404.src.html`, with a link back to the home page
+- [X] T024 [P] [US1] Port `modern-robotics/site/assets/site.css` to `site/assets/site.css`, deleting rules for removed sections (author, hero demos, thanks) and translating comments
+- [X] T025 [P] [US1] Port `modern-robotics/tools/og_image.js` to `tools/og_image.js` with the new course name and English tagline, and generate `site/assets/og.png`
+- [X] T026 [US1] Build with `python site/build.py` and verify the Independent Test above by hand (light/dark, 390 px in browser dev tools)
 
 **Checkpoint**: the home page is complete and usable on its own.
 
@@ -154,7 +154,7 @@ the sample lesson and the glossary page in headless Chrome or Edge on Windows.
 **Independent Test**: on Windows, `node tools/check.js` ends with `OK: N checks`. Each negative
 check in quickstart.md §5 makes it fail on the named step.
 
-- [ ] T033 [US3] Port `modern-robotics/tools/cdp.js` to `tools/cdp.js`:
+- [X] T033 [US3] Port `modern-robotics/tools/cdp.js` to `tools/cdp.js`:
   - replace the `CHROME` constant with `findBrowser()`, which tries `CHROME_PATH`, then Chrome and Edge under `%ProgramFiles%`, `%ProgramFiles(x86)%` and `%LOCALAPPDATA%`, then the macOS path, then `google-chrome`, `chromium` and `chromium-browser` on `PATH` (research §5)
   - throw `No Chromium browser found; set CHROME_PATH` when nothing is found
   - translate all comments and messages

@@ -4,7 +4,7 @@ config.json, and writes robots.txt and sitemap.xml.
 Run:  python site/build.py
       KW_CONFIG=tools/fixtures/config.check.json python site/build.py   (check build)
 """
-import json, os, pathlib, re, shutil, sys
+import json, os, pathlib, re, sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -13,7 +13,6 @@ if not cfg_path.is_absolute():
     cfg_path = ROOT / cfg_path
 cfg = json.loads(cfg_path.read_text(encoding='utf-8'))
 sprite = (HERE / 'assets/sprite.svg.html').read_text(encoding='utf-8')
-shutil.copyfile(ROOT / 'lessons/shared/kit.js', HERE / 'assets/kit.js')  # one source for the site and the lessons
 
 # Every published entry must exist in the program (PARTS in index.src.html), except the glossary.
 if not (HERE / 'index.src.html').exists():
