@@ -1,1 +1,18 @@
-[]
+[
+ {
+  "id": "forward-kinematics",
+  "t": "Forward kinematics",
+  "d": "Computing where the arm's hand is, and which way it points, from the joint angles.",
+  "l": "sample",
+  "sec": "arm",
+  "a": "forward kinematics"
+ },
+ {
+  "id": "workspace",
+  "t": "Workspace",
+  "d": "The set of all points the arm's hand can reach.",
+  "l": "sample",
+  "sec": "reach",
+  "a": "workspaces?"
+ }
+]

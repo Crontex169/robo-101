@@ -25,8 +25,8 @@ function s(tag, attrs, ...kids) {
   for (const kid of kids.flat()) if (kid != null) e.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
   return e;
 }
-const fmtInt = (n) => Math.round(n).toLocaleString('ru-RU');
-const fmtPct = (x, d) => (x * 100).toLocaleString('ru-RU', { maximumFractionDigits: d == null ? 0 : d, minimumFractionDigits: 0 }) + '%';
+const fmtInt = (n) => Math.round(n).toLocaleString('en-US');
+const fmtPct = (x, d) => (x * 100).toLocaleString('en-US', { maximumFractionDigits: d == null ? 0 : d, minimumFractionDigits: 0 }) + '%';
 function plural(n, one, few, many) {
   const a = Math.abs(n) % 100, b = a % 10;
   if (a > 10 && a < 20) return many;
@@ -42,8 +42,6 @@ function setRangeFill(input) {
 
 /* ---------- App event bus ---------- */
 const App = {
-  models: { policy: null, percept: null, N: 200, light: true, data: null, ready: false },
-  rules: { wb: false, teal: false },
   _l: {},
   on(evt, fn) { (this._l[evt] = this._l[evt] || []).push(fn); },
   emit(evt, data) { (this._l[evt] || []).forEach((fn) => fn(data)); },
@@ -138,3 +136,15 @@ const Chart = {
     return points.map((p, i) => (i ? 'L' : 'M') + x(p[0]).toFixed(1) + ',' + y(p[1]).toFixed(1)).join('');
   },
 };
+
+/* ---------- Lesson top bar: reading progress and the current section in the table of contents ---------- */
+function initNav() {
+  const links = $$('.toc a'), ids = links.map((a) => a.getAttribute('href').slice(1));
+  const onScroll = () => {
+    const doc = document.documentElement, bar = $('#progress');
+    if (bar) bar.style.width = (doc.scrollTop / Math.max(1, doc.scrollHeight - doc.clientHeight) * 100).toFixed(2) + '%';
+    let cur = null; for (const id of ids) { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 140) cur = id; }
+    links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+}

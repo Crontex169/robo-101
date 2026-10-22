@@ -9,6 +9,7 @@
 'use strict';
 window.Quiz = {
   render(boxSel, Q, scoreSel) {
+    this.last = Q; // read by the check scripts
     const box = $(boxSel); let answered = 0, correct = 0;
     Q.forEach((q, qi) => {
       const n = q.o.length, order = q.o.map((_, i) => (i + qi) % n);

@@ -1,0 +1,5 @@
+/* ---------- sample lesson ---------- */
+.arm-ctl { display: grid; gap: 8px; margin-top: 12px; }
+.arm-ctl .hd-range, .reach-ctl { display: grid; grid-template-columns: 110px 1fr 56px; align-items: center; gap: 8px; margin-top: 8px; }
+.arm-ctl .hd-range input, .reach-ctl input { width: 100%; }
+#armCv, #reachCv { touch-action: pan-y; }

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — Kinematics Workshop</title>
+<meta name="description" content="Glossary of the Kinematics Workshop: robot kinematics terms with short definitions and links to the lessons that explain them.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<script>
+  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark'; } catch (e) {} })();
+</script>
+<style>
+/*@@CSS@@*/
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html#program" title="Back to the course program"><div>Kinematics Workshop<small>Glossary</small></div></a>
+    <button class="theme-btn" style="margin-left:auto" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+<section class="hero hero-slim" id="top">
+  <div class="wrap">
+    <div class="kicker">Course reference</div>
+    <h1><span class="amp">Glossary</span></h1>
+    <p class="lead">Terms used in the lessons, each with a short definition and a link to the section that explains it in detail.</p>
+    <div class="gl-search" id="glSearch"><input type="search" id="glQ" placeholder="Find a term, e.g. workspace" aria-label="Search the glossary" autocomplete="off"><span class="gl-count" id="glCount"></span></div>
+    <nav class="gl-abc" id="glAbc" aria-label="Letters"></nav>
+  </div>
+</section>
+
+<section class="section" id="terms">
+  <div class="wrap"><div class="gl-list" id="glList"></div>
+    <p class="gl-none" id="glNone" hidden>Nothing found. Try another word.</p>
+    <p class="gl-empty" id="glEmpty" hidden>No terms yet. They'll appear here as lessons are published.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  Glossary of the Kinematics Workshop.
+</footer>
+<script type="application/json" id="glAll">@@GLOSSARY_JSON@@</script>
+<script>
+/*@@JS@@*/
+</script>
+</body>
+</html>

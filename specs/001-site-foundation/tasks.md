@@ -123,8 +123,8 @@ disk. Go through the warm-up, all lab missions (one of them with a prediction), 
 interactive, the "Under the hood" block (formula already typeset, no KaTeX script in the source),
 a glossary tooltip and the quiz.
 
-- [ ] T027 [P] [US2] Add two demo terms (`forward-kinematics`, `workspace`) to `lessons/shared/glossary.json` with `"l": "sample"` and `sec` set to the sample's section ids
-- [ ] T028 [US2] Create `lessons/sample/lesson.html` following contracts/lesson-source.md, in English, with these sections:
+- [X] T027 [P] [US2] Add two demo terms (`forward-kinematics`, `workspace`) to `lessons/shared/glossary.json` with `"l": "sample"` and `sec` set to the sample's section ids
+- [X] T028 [US2] Create `lessons/sample/lesson.html` following contracts/lesson-source.md, in English, with these sections:
   - a hero with time, lab and mission counts
   - `#recall` with three placeholder questions
   - `#arm`: a lab where the reader drags a 2-link planar arm to reach a target
@@ -132,15 +132,15 @@ a glossary tooltip and the quiz.
   - `#why`: prose with an "Under the hood" `<details class="deep">` containing the 2R forward-kinematics formulas in `\[ … \]`
   - `#quiz`
   - `#finale` with takeaways, an open question, further reading and a placeholder "next lesson" link wrapped in `<!--if:…-->`
-- [ ] T029 [P] [US2] Create `lessons/sample/sample.css` with only the layout the sample needs beyond `shared/lesson.css` and `shared/lab.css`
-- [ ] T030 [US2] Create `lessons/sample/ui-sample.js`. The lab scene uses `PlanarArm.fk`, `HeroKit.fit` and `HeroKit.drag`. The missions run through `Missions.mount`:
+- [X] T029 [P] [US2] Create `lessons/sample/sample.css` with only the layout the sample needs beyond `shared/lesson.css` and `shared/lab.css`
+- [X] T030 [US2] Create `lessons/sample/ui-sample.js`. The lab scene uses `PlanarArm.fk`, `HeroKit.fit` and `HeroKit.drag`. The missions run through `Missions.mount`:
   1. "Touch the target" (live criterion: tip within 3 cm)
   2. "Predict, then check" (bet: does the tip move up or down when θ₂ grows from the given pose?)
   3. "Free play" (`final`)
 
   The small interactive draws the reachable ring for the slider's L₂. The quiz has 8 questions through `Quiz.render`. All text is in English and it respects `prefers-reduced-motion`
-- [ ] T031 [US2] Register `sample` in the `LESSONS` map in `lessons/build.py` (output `sample.html`, CSS: `shared/lesson.css`, `shared/lab.css`, `sample/sample.css`; JS: `shared/ui-core.js`, `shared/kit.js`, `shared/planar-arm.js`, `shared/missions.js`, `shared/quiz.js`, `sample/ui-sample.js`)
-- [ ] T032 [US2] Build with `python lessons/build.py sample` and verify the Independent Test above by hand
+- [X] T031 [US2] Register `sample` in the `LESSONS` map in `lessons/build.py` (output `sample.html`, CSS: `shared/lesson.css`, `shared/lab.css`, `sample/sample.css`; JS: `shared/ui-core.js`, `shared/kit.js`, `shared/planar-arm.js`, `shared/missions.js`, `shared/quiz.js`, `sample/ui-sample.js`)
+- [X] T032 [US2] Build with `python lessons/build.py sample` and verify the Independent Test above by hand
 
 **Checkpoint**: the sample lesson works and can be copied to start a real lesson.
 
@@ -158,19 +158,19 @@ check in quickstart.md §5 makes it fail on the named step.
   - replace the `CHROME` constant with `findBrowser()`, which tries `CHROME_PATH`, then Chrome and Edge under `%ProgramFiles%`, `%ProgramFiles(x86)%` and `%LOCALAPPDATA%`, then the macOS path, then `google-chrome`, `chromium` and `chromium-browser` on `PATH` (research §5)
   - throw `No Chromium browser found; set CHROME_PATH` when nothing is found
   - translate all comments and messages
-- [ ] T034 [P] [US3] Create `tools/fixtures/config.check.json`, a copy of `site/config.json` whose `PUBLISHED` has `{ "n": "M.1", "file": "lessons/sample.html" }` and `{ "n": "G", "file": "lessons/glossary.html" }`
-- [ ] T035 [US3] Port `modern-robotics/tools/assemble.py` to `tools/assemble.py`:
+- [X] T034 [P] [US3] Create `tools/fixtures/config.check.json`, a copy of `site/config.json` whose `PUBLISHED` has `{ "n": "M.1", "file": "lessons/sample.html" }` and `{ "n": "G", "file": "lessons/glossary.html" }`
+- [X] T035 [US3] Port `modern-robotics/tools/assemble.py` to `tools/assemble.py`:
   - honour `KW_CONFIG`
   - copy `index.html`, `404.html`, `robots.txt`, `sitemap.xml`, `assets/` and the published lessons only
   - remove the thanks warning and the release logic
   - after copying, fail on any internal `href`/`src` in `dist/` that doesn't resolve to a file in `dist/`
   - fail on any character U+0400–U+04FF in a `dist/` text file (`.html`, `.css`, `.js`, `.json`, `.xml`, `.txt`)
-- [ ] T036 [US3] Create `tools/lesson_sample.js`:
+- [X] T036 [US3] Create `tools/lesson_sample.js`:
   - Node part: assert the `PlanarArm` numbers that the sample text states (e.g. the reach radii for L₁ = 0.5, L₂ = 0.4: 0.9 m outer and 0.1 m inner, and two IK solutions for an interior target)
   - browser part, through `tools/cdp.js`: answer the warm-up; complete mission 1 by setting angles through the lab's exposed test hook; make the prediction and complete mission 2; reach free play; open "Under the hood" and assert there is a `.katex` element and no KaTeX `<script>`; hover a glossary term and assert the tooltip appears; answer the quiz and assert "Score: 8 of 8"
   - then dark theme and 390 px with no horizontal overflow, with screenshots to `shots/sample-*.png`
-- [ ] T037 [US3] Expose a test hook in `lessons/sample/ui-sample.js` (`window.__sample = { setAngles(a1, a2), state() }`) used only by `tools/lesson_sample.js`
-- [ ] T038 [US3] Create `tools/check.js`, the orchestrator (research §6):
+- [X] T037 [US3] Expose a test hook in `lessons/sample/ui-sample.js` (`window.__sample = { setAngles(a1, a2), state() }`) used only by `tools/lesson_sample.js`
+- [X] T038 [US3] Create `tools/check.js`, the orchestrator (research §6):
   1. run `python tools/assemble.py dist` with the real config
   2. build the check variant into `dist-check/` with `KW_CONFIG=tools/fixtures/config.check.json`
   3. run `tools/lesson_sample.js` against `dist-check/lessons/sample.html`
@@ -179,7 +179,7 @@ check in quickstart.md §5 makes it fail on the named step.
   6. check that every page has no horizontal overflow at 390 px
 
   Print `✓`/`✗` per step and `OK: N checks` or `FAILED: k of N checks`, and exit non-zero on failure. Add `dist-check/` to `.gitignore`
-- [ ] T039 [US3] Run `node tools/check.js` on Windows until it passes, then run each negative check from quickstart.md §5 and confirm it fails on the named step
+- [X] T039 [US3] Run `node tools/check.js` on Windows until it passes, then run each negative check from quickstart.md §5 and confirm it fails on the named step
 
 **Checkpoint**: one command proves the site is ready to publish.
 
@@ -212,13 +212,13 @@ are none.
 **Independent Test**: in the real build, `dist/lessons/glossary.html` shows the empty-state
 message. In the check build, it lists the sample's two terms with links to their sections.
 
-- [ ] T042 [US5] Port `modern-robotics/lessons/gl/lesson.html`, `gl.css` and `ui-gl.js` to `lessons/gl/`:
+- [X] T042 [US5] Port `modern-robotics/lessons/gl/lesson.html`, `gl.css` and `ui-gl.js` to `lessons/gl/`:
   - in English, titled "Glossary — Kinematics Workshop"
   - each entry shows the term, its definition and a "where it's introduced" link
   - remove the English-equivalent column
   - show "No terms yet. They'll appear here as lessons are published." when the list is empty
-- [ ] T043 [US5] Make the glossary data published-aware in `lessons/build.py`: `@@GLOSSARY_JSON@@` includes only terms whose lesson output file is in `PUBLISHED`. Add `{ "n": "G", "file": "lessons/glossary.html" }` to `site/config.json → PUBLISHED`, and add a "Glossary" link to the home page menu and footer in `site/index.src.html`
-- [ ] T044 [US5] Rebuild and verify the Independent Test above (also covered by `tools/check.js` step 5)
+- [X] T043 [US5] Make the glossary data published-aware in `lessons/build.py`: `@@GLOSSARY_JSON@@` includes only terms whose lesson output file is in `PUBLISHED`. Add `{ "n": "G", "file": "lessons/glossary.html" }` to `site/config.json → PUBLISHED`, and add a "Glossary" link to the home page menu and footer in `site/index.src.html`
+- [X] T044 [US5] Rebuild and verify the Independent Test above (also covered by `tools/check.js` step 5)
 
 **Checkpoint**: all five user stories work on their own.
 

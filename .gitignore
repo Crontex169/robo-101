@@ -7,7 +7,6 @@ slides/
 
 # build output
 dist/
-dist-check/
 shots/
 site/*.html
 site/lessons/
@@ -15,3 +14,4 @@ site/sitemap.xml
 site/robots.txt
 site/assets/kit.js
 __pycache__/
+dist-check/

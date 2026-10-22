@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample lesson — Kinematics Workshop</title>
+<meta name="description" content="Template lesson for authors: every building block a Kinematics Workshop lesson can use, on a two-link planar arm. Not part of the course.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<script>
+  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark'; } catch (e) {} })();
+</script>
+<style>
+/*@@CSS@@*/
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html#program" title="Back to the course program"><div>Kinematics Workshop<small>Sample lesson · template</small></div></a>
+    <nav class="toc" aria-label="Lesson sections">
+      <a href="#arm">Lab</a>
+      <a href="#reach">Reach</a>
+      <a href="#why">Formulas</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#finale">Wrap-up</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="kicker"><span class="num">S</span> Template · not part of the course</div>
+    <h1>Sample lesson: <span class="amp">a two-link arm</span></h1>
+    <p class="lead">This page shows every block a lesson can use, so a new lesson can start as a copy of it. The text is a placeholder. It walks through a planar arm with two links: you move its joints, see where the hand ends up, and find out which points it can reach at all.</p>
+    <div class="hero-meta"><span>≈ 10 minutes</span><span>1 lab and 1 interactive</span><span>3 missions</span></div>
+    <div class="hero-list">
+      <div><b>LAB</b>Turn the two joints and put the hand on a target, then predict what bending the elbow does</div>
+      <div><b>REACH</b>Change the second link's length and watch the reachable ring grow and shrink</div>
+    </div>
+    <p style="margin-top:28px"><a class="btn primary" href="#arm">Start the lesson ↓</a></p>
+  </div>
+</section>
+
+<section class="recall-sec" id="recall" aria-label="Warm-up on the previous lesson">
+  <div class="wrap"><div class="card recall" data-recall></div></div>
+  <script type="application/json" id="recallData">{"n": "S", "title": "Course program", "href": "../index.html", "q": [{"q": "How many links does the arm in this lesson have?", "o": ["One", "Two", "Three"], "a": 1, "e": "A two-link planar arm: a shoulder joint, an elbow joint and two rigid links.", "sec": "program", "secTitle": "Program"}, {"q": "Where do the formulas live in a lesson?", "o": ["In the main text", "In fold-out \"Under the hood\" blocks", "Only in the quiz"], "a": 1, "e": "The main text builds intuition; the math sits in fold-out blocks.", "sec": "how", "secTitle": "How a lesson works"}, {"q": "What do you do before running a mission with a prediction?", "o": ["Nothing", "Pick what you think will happen", "Read the explanation"], "a": 1, "e": "Predicting first makes the result stick, whether you were right or not.", "sec": "how", "secTitle": "How a lesson works"}]}</script>
+</section>
+
+<section class="section alt" id="arm">
+  <div class="wrap">
+    <div class="prose" style="margin:0 0 22px;max-width:820px">
+      <div class="kicker"><span class="num">1</span> Lab</div>
+      <h2>Joint angles and where the hand ends up</h2>
+      <p>Our arm lies flat on a table. A shoulder joint at the base turns the first link, and an elbow joint turns the second link relative to the first. Two numbers, the joint angles θ₁ and θ₂, decide the whole pose.</p>
+      <p>Going from joint angles to the position of the hand is called <strong>forward kinematics</strong>. The links simply add up, one after the other. Try it: drag the elbow or the hand, or use the sliders, and put the hand on the green target.</p>
+    </div>
+    <div class="lab lab-narrow">
+      <div class="card scene-card">
+        <canvas id="armCv" width="420" height="420" class="sq-cv" role="img" aria-label="Two-link arm seen from above, with a green target to reach"></canvas>
+        <div class="arm-ctl">
+          <label class="hd-range"><span>Shoulder θ₁</span><input id="armQ1" type="range" min="-180" max="180" step="1" value="20"><output></output></label>
+          <label class="hd-range"><span>Elbow θ₂</span><input id="armQ2" type="range" min="-170" max="170" step="1" value="60"><output></output></label>
+        </div>
+        <div class="readout" id="armOut"></div>
+      </div>
+      <div class="card guide-card"><div id="armMis"></div></div>
+    </div>
+    <div class="prose" style="margin:26px 0 0;max-width:820px">
+      <p>Guessing angles by hand works, but it's slow. Next, let's see which points the hand can reach at all.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reach">
+  <div class="wrap">
+    <div class="prose" style="margin:0 0 22px;max-width:820px">
+      <div class="kicker"><span class="num">2</span> Interactive</div>
+      <h2>The reachable ring</h2>
+      <p>Swing both joints through every angle and the hand sweeps out a ring around the base. This set of points is the arm's <strong>workspace</strong>. Its outer edge is where the arm is fully stretched, its inner edge where it's folded back on itself. Change the second link's length and watch the ring.</p>
+    </div>
+    <div class="lab lab-narrow">
+      <div class="card scene-card">
+        <canvas id="reachCv" width="420" height="420" class="sq-cv" role="img" aria-label="The ring of points the two-link arm can reach"></canvas>
+        <label class="hd-range reach-ctl"><span>Second link L₂</span><input id="reachL2" type="range" min="0.1" max="0.5" step="0.01" value="0.4"><output></output></label>
+        <div class="readout" id="reachOut"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="why">
+  <div class="wrap">
+    <div class="prose" style="max-width:820px">
+      <div class="kicker"><span class="num">3</span> Formulas</div>
+      <h2>Adding up the links</h2>
+      <p>Each link points in the direction of all the angles before it added together. The hand's position is the sum of the two link vectors. With our lengths, 0.5 m and 0.4 m, the hand can be at most 0.9 m from the base and at least 0.1 m.</p>
+      <details class="deep"><summary>Under the hood: forward kinematics of a two-link arm</summary><div class="body">
+        <div class="formula">\[\begin{aligned} x &= L_1\cos\theta_1 + L_2\cos(\theta_1 + \theta_2),\\ y &= L_1\sin\theta_1 + L_2\sin(\theta_1 + \theta_2). \end{aligned}\]</div>
+        <p>The workspace is the ring between radii \(|L_1 - L_2|\) and \(L_1 + L_2\).</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="quiz">
+  <div class="prose">
+    <div class="kicker"><span class="num">4</span> Check yourself</div>
+    <h2>Eight questions on common misconceptions</h2>
+    <div class="quiz" id="quizBox"></div>
+    <p class="score" id="quizScore" style="margin-top:14px"></p>
+  </div>
+</section>
+
+<section class="section alt" id="finale">
+  <div class="prose">
+    <div class="kicker"><span class="num">5</span> Wrap-up</div>
+    <h2>What we covered</h2>
+    <ol class="takeaways">
+      <li><span>Forward kinematics turns joint angles into the hand's position by <strong>adding up the links</strong>.</span></li>
+      <li><span>A two-link arm reaches a <strong>ring</strong>: no farther than L₁ + L₂, no closer than |L₁ − L₂|.</span></li>
+    </ol>
+    <h3 style="margin-top:40px">Open questions</h3>
+    <details class="card pad open-q"><summary>What shape is the workspace when both links have the same length?</summary><p>The inner radius |L₁ − L₂| becomes zero, so the ring turns into a full disc: the hand can reach the base itself.</p></details>
+    <h3 style="margin-top:34px">Further reading</h3>
+    <ul class="links">
+      <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch and F. Park, 2017: free book and videos; forward kinematics is chapter 4</span></li>
+    </ul>
+    <p style="margin-top:34px">Next: <!--if:m-1-vectors-and-frames.html--><a href="m-1-vectors-and-frames.html">M.1 Vectors and coordinate frames</a>.<!--/if--> The real course starts with the math toolkit.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Sample lesson of the Kinematics Workshop. All scenes run locally in your browser.
+</footer>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+<script>
+/*@@JS@@*/
+</script>
+</body>
+</html>

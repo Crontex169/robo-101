@@ -2,6 +2,11 @@
   "_comment": "Site links. An empty value means the link isn't set yet; the page shows '#'.",
   "SITE_URL": "https://USER.github.io/kinematics-workshop",
   "REPO": "https://github.com/USER/kinematics-workshop",
-  "PUBLISHED": [],
+  "PUBLISHED": [
+    {
+      "n": "G",
+      "file": "lessons/glossary.html"
+    }
+  ],
   "_comment_published": "Published pages: marked available on the home page, listed in sitemap.xml and copied to dist/ by tools/assemble.py."
 }
