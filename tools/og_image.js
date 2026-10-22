@@ -1,7 +1,8 @@
 // Link-preview image 1200×630 for messengers and social networks: site/assets/og.png.
 const { launch, sleep } = require('./cdp');
 const fs = require('fs'), path = require('path');
-const fonts = 'file:///' + path.resolve(__dirname, '../site/assets/fonts/fonts.css').replace(/\\/g, '/');
+const { pathToFileURL } = require('url');
+const fonts = pathToFileURL(path.resolve(__dirname, '../site/assets/fonts/fonts.css')).href;
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="${fonts}">
 <style>
 html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
@@ -26,7 +27,7 @@ svg { position: absolute; right: 70px; top: 150px; width: 340px; }
   fs.mkdirSync(path.resolve(__dirname, '../shots'), { recursive: true });
   const tmp = path.resolve(__dirname, '../shots/og-card.html'); fs.writeFileSync(tmp, html);
   const B = await launch({ w: 1200, h: 630 });
-  const p = await B.page('file:///' + tmp.replace(/\\/g, '/'), { width: 1200, height: 630 });
+  const p = await B.page(pathToFileURL(tmp).href, { width: 1200, height: 630 });
   await p.waitFor('document.readyState === "complete" && document.fonts.status === "loaded"'); await sleep(400);
   const out = path.resolve(__dirname, '../site/assets/og.png');
   await p.shot(out); console.log('done:', out, fs.statSync(out).size, 'bytes');

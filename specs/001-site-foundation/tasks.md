@@ -193,7 +193,7 @@ Pages.
 **Independent Test**: after a push to `main`, the "Pages" workflow is green and the live URL shows
 the same home page as `dist/index.html`.
 
-- [ ] T040 [US4] Create `.github/workflows/pages.yml`:
+- [X] T040 [US4] Create `.github/workflows/pages.yml`:
   - runs on push to `main` and on `workflow_dispatch`
   - permissions: `pages: write`, `id-token: write`, `contents: read`
   - build job: `actions/checkout`, `actions/setup-python` (3.12), `actions/setup-node` (22), `node tools/check.js`, `actions/upload-pages-artifact` with `path: dist`
@@ -226,10 +226,10 @@ message. In the check build, it lists the sample's two terms with links to their
 
 ## Phase 8: Polish & Cross-Cutting Concerns
 
-- [ ] T045 [P] Write `README.md`: what the project is, the requirements (Python 3.10+, Node 22+, Chrome or Edge), the commands from contracts/commands.md, how to start a lesson from `lessons/sample/`, and the licenses (code MIT, fonts OFL, KaTeX MIT; course content original)
-- [ ] T046 [P] Grep the repo (excluding `modern-robotics/`, `.git/`, fonts and `tools/vendor/`) for leftover `mr-`, `MR_`, `modernrobotics`, `Шипитько`, `Ada`/`Ада` and any Cyrillic, and fix every hit
-- [ ] T047 Run quickstart.md end to end (§1–§5) and tick off spec success criteria SC-001–SC-006 in `specs/001-site-foundation/checklists/requirements.md` notes
-- [ ] T048 Commit the work on branch `001-site-foundation` with a conventional message, and leave merging and pushing for the user to approve
+- [X] T045 [P] Write `README.md`: what the project is, the requirements (Python 3.10+, Node 22+, Chrome or Edge), the commands from contracts/commands.md, how to start a lesson from `lessons/sample/`, and the licenses (code MIT, fonts OFL, KaTeX MIT; course content original)
+- [X] T046 [P] Grep the repo (excluding `modern-robotics/`, `.git/`, fonts and `tools/vendor/`) for leftover `mr-`, `MR_`, `modernrobotics`, `Шипитько`, `Ada`/`Ада` and any Cyrillic, and fix every hit
+- [X] T047 Run quickstart.md end to end (§1–§5) and tick off spec success criteria SC-001–SC-006 in `specs/001-site-foundation/checklists/requirements.md` notes
+- [X] T048 Commit the work on branch `001-site-foundation` with a conventional message, and leave merging and pushing for the user to approve
 
 ---
 

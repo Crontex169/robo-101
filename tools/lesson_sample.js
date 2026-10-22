@@ -8,7 +8,7 @@ const { launch, sleep } = require('./cdp');
 const Arm = require('../lessons/shared/planar-arm.js');
 
 const shot = (n) => path.resolve(__dirname, '../shots', n);
-const fileUrl = (p) => 'file:///' + path.resolve(p).replace(/\\/g, '/');
+const fileUrl = (p) => require('url').pathToFileURL(path.resolve(p)).href;
 
 function nodeNumbers(check) {
   const near = (a, b) => Math.abs(a - b) < 1e-9;

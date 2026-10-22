@@ -112,9 +112,9 @@ lesson. The glossary page shows only terms whose lesson is published.
 
 Where: browser `localStorage`, key `kw-progress`.
 
-Shape: `{ [pageSlug]: { s: firstSeenUnix, t: lastSeenUnix, sec: furthestSectionId, done?: true } }`
+Shape: `{ [pageSlug]: { s: firstSeenUnix, t: lastSeenUnix, i: furthestSectionIndex, sec: furthestSectionId, f?: completedUnix } }`
 
-States: not present (not started) → present (started) → `done: true` (completed: the reader
+States: not present (not started) → present (started) → `f` set (completed: the reader
 reached the wrap-up section). There is a "Reset progress" link on the home page that removes the
 key. If storage is blocked, nothing is stored and nothing fails.
 

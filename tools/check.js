@@ -12,7 +12,7 @@ const { launch, sleep } = require('./cdp');
 const sample = require('./lesson_sample');
 
 const ROOT = path.resolve(__dirname, '..');
-const fileUrl = (p) => 'file:///' + path.resolve(ROOT, p).replace(/\\/g, '/');
+const fileUrl = (p) => require('url').pathToFileURL(path.resolve(ROOT, p)).href;
 const shot = (n) => path.resolve(ROOT, 'shots', n);
 const PY = process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3');
 let fails = 0, n = 0;
