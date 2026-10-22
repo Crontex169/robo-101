@@ -1,0 +1,6 @@
+# referans ve telifli kaynaklar: repoya girmez
+modern-robotics/
+slides/
+*.pdf
+.superpowers/
+.claude/settings.local.json
