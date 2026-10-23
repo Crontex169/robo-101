@@ -123,6 +123,7 @@ reader's attention on the idea.
 - **Glossary:** every entry shows the English term next to the Turkish one, so readers can
   follow English sources such as Craig and the course slides.
 - **Notation:** stays as in the slides and Craig (ᴬP, {A}, BORG subscripts, DH symbols).
+  Decimals use a point (0.6), not the Turkish comma, matching the slides and the code.
 - **Program:** Part M, math primer (5 lessons); Part F, physics primer (3 lessons); Part 1,
   manipulators; Part 2, position and orientation; Part 3, forward kinematics; Part 4, inverse
   kinematics; Part 5, the Jacobian. Each part ends with a checkpoint quiz.

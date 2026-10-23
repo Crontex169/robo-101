@@ -39,7 +39,7 @@ descriptions and the link-preview image. Paper and book titles stay as published
 - **FR-003**: Glossary entries gain an `en` field shown in tooltips and on the glossary page;
   aliases match Turkish suffixes (for example `vektör\w*`).
 - **FR-004**: Notation (ᴬP, {A}, BORG) and numbers are unchanged; decimals keep the point, as in
-  the course slides (open question for the owner: switch to the Turkish decimal comma).
+  the course slides and the code (owner decision 2026-10-23: no Turkish decimal comma).
 - **FR-005**: Every existing check passes with Turkish strings.
 
 ## Success Criteria
