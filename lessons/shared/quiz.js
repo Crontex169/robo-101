@@ -21,11 +21,11 @@ window.Quiz = {
           if (card.dataset.done) return; card.dataset.done = '1';
           const ok = oi === q.a; b.classList.add(ok ? 'correct' : 'incorrect');
           if (!ok) $$('.q-opt', opts)[order.indexOf(q.a)].classList.add('correct');
-          exp.innerHTML = `<strong>${ok ? 'Correct.' : 'Not quite.'}</strong> ${q.e}`; exp.hidden = false;
+          exp.innerHTML = `<strong>${ok ? 'Doğru.' : 'Tam değil.'}</strong> ${q.e}`; exp.hidden = false;
           answered++; if (ok) correct++;
           $(scoreSel).textContent = answered === Q.length
-            ? `Score: ${correct} of ${Q.length}. ${correct >= Q.length - 2 ? 'Nicely done, you can move on.' : 'Have another look at the sections where you slipped.'}`
-            : `Answered ${answered} of ${Q.length}`;
+            ? `Puan: ${correct} / ${Q.length}. ${correct >= Q.length - 2 ? 'Güzel, devam edebilirsin.' : 'Takıldığın bölümlere bir daha göz at.'}`
+            : `${Q.length} sorudan ${answered} tanesi cevaplandı`;
         });
         opts.append(b);
       });

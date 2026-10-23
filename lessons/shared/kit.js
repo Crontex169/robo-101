@@ -70,7 +70,7 @@ window.HeroKit = (function () {
     if (!live || !live.classList.contains('kb-live')) { live = el('p', { class: 'sr kb-live', 'aria-live': 'polite' }); cv.after(live); }
     // o.handles may be a getter: the movable handles can change from mission to mission
     const cur = () => { const hs = o.handles; if (!hs.length) return null; i %= hs.length; return hs[i]; };
-    const say = () => { const h = cur(); live.textContent = h == null ? 'Nothing to move in this step.' : (o.describe ? o.describe(h) : ''); };
+    const say = () => { const h = cur(); live.textContent = h == null ? 'Bu adımda hareket ettirilecek bir şey yok.' : (o.describe ? o.describe(h) : ''); };
     const D = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] };
     cv.addEventListener('keydown', (e) => {
       if (D[e.key]) { const h = cur(), s = e.shiftKey ? 0.1 : 0.5; if (h != null) o.move(h, D[e.key][0] * s, D[e.key][1] * s); say(); e.preventDefault(); }

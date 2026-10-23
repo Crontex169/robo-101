@@ -40,7 +40,7 @@ async function run(B, url, check) {
     const D = JSON.parse(document.getElementById('recallData').textContent);
     [...document.querySelectorAll('.rc-q')].forEach((card, i) => [...card.querySelectorAll('.rc-opt')].find((b) => b.textContent === D.q[i].o[D.q[i].a]).click());
     return document.querySelector('.rc-total').textContent; })()`);
-  check(recall.startsWith('3 of 3 correct'), `warm-up: "${recall.slice(0, 40)}"`);
+  check(recall.startsWith('3 sorudan 3 doğru'), `warm-up: "${recall.slice(0, 40)}"`);
 
   const key = (sel, k, n) => p.eval(`(() => { const cv = document.querySelector('${sel}'); cv.focus(); for (let i = 0; i < ${n || 1}; i++) cv.dispatchEvent(new KeyboardEvent('keydown', { key: '${k}', bubbles: true })); return true; })()`);
   const done = (lab, k) => p.waitFor(`window.__m1.${lab}.ctl.ctx.done[${k}] === true`, 4000).then(() => true, () => false);
@@ -53,7 +53,7 @@ async function run(B, url, check) {
   await p.eval("document.querySelectorAll('#arrowsMis .m-bet .opts button')[1].click()");
   await p.click('#arrowsMis .g-go');
   const out2 = await done('arrows', 1) && await p.eval("document.querySelector('#arrowsMis .g-out').textContent");
-  check(!!out2 && out2.includes('prediction was right') && out2.includes('(2.0, 3.0)'), `lab 1, mission 2: prediction (2, 3) is right ("${String(out2).slice(0, 60)}…")`);
+  check(!!out2 && out2.includes('Tahminin doğruydu') && out2.includes('(2.0, 3.0)'), `lab 1, mission 2: prediction (2, 3) is right ("${String(out2).slice(0, 60)}…")`);
   await p.click('#arrowsMis .g-next');
   await key('#arrowsCv', 'ArrowRight', 4); await key('#arrowsCv', 'Enter'); await key('#arrowsCv', 'ArrowUp', 4);
   check(await done('arrows', 2), 'lab 1, mission 3: reached the target with the keyboard only (a = (4, 0), b = (0, 3))');
@@ -63,16 +63,16 @@ async function run(B, url, check) {
   // Components, length and unit vector
   await p.eval('window.__m1.parts.set([3, 4])');
   const parts = await p.eval("document.getElementById('partsOut').textContent");
-  check(parts.includes('length 5.00') && parts.includes('(0.60, 0.80)'), `§2: ${parts}`);
+  check(parts.includes('uzunluk 5.00') && parts.includes('(0.60, 0.80)'), `§2: ${parts}`);
   await p.eval('window.__m1.parts.set([0, 0])');
-  check((await p.eval("document.getElementById('partsOut').textContent")).includes('undefined'), '§2: zero vector reads "undefined", no NaN');
+  check((await p.eval("document.getElementById('partsOut').textContent")).includes('tanımsız'), '§2: zero vector reads "tanımsız" (undefined), no NaN');
 
   // Lab 2
   check(await p.eval("document.getElementById('framesOut').textContent.endsWith('?')"), 'lab 2, mission 1: P in {A} is hidden before the reveal');
   await p.eval("document.querySelectorAll('#framesMis .m-bet .opts button')[1].click()");
   await p.click('#framesMis .g-go');
   const f1 = await done('frames', 0) && await p.eval("document.querySelector('#framesMis .g-out').textContent");
-  check(!!f1 && f1.includes('prediction was right') && f1.includes('(3.0, 4.0)'), 'lab 2, mission 1: prediction (3, 4) is right');
+  check(!!f1 && f1.includes('Tahminin doğruydu') && f1.includes('(3.0, 4.0)'), 'lab 2, mission 1: prediction (3, 4) is right');
   await p.click('#framesMis .g-next');
   await key('#framesCv', 'ArrowRight', 10); await key('#framesCv', 'ArrowUp', 2);
   check(await done('frames', 1), 'lab 2, mission 2: {B} placed at (2, −1) with the keyboard only');
@@ -88,7 +88,7 @@ async function run(B, url, check) {
   // 3D frame
   const hand = await p.eval(`(() => { const t = window.__m1.three, o = () => document.getElementById('threeOut').textContent.split('.')[0];
     const a = [t.state().hand, o()]; t.flip(2); const b = [t.state().hand, o()]; t.flip(0); const c = [t.state().hand, o()]; t.flip(0); t.flip(2); return [a, b, c]; })()`);
-  check(hand[0][0] === 'right' && hand[1][0] === 'left' && hand[2][0] === 'right' && hand[0][1] === 'Right-handed' && hand[1][1] === 'Left-handed',
+  check(hand[0][0] === 'right' && hand[1][0] === 'left' && hand[2][0] === 'right' && hand[0][1] === 'Sağ elli' && hand[1][1] === 'Sol elli',
     `§5: right-handed → flip z → left-handed → flip x → right-handed (${hand.map((h) => h[0]).join(' → ')})`);
 
   // Research thinking, glossary, quiz
@@ -100,7 +100,7 @@ async function run(B, url, check) {
   const score = await p.eval(`(() => { const Q = window.Quiz.last;
     [...document.querySelectorAll('#quizBox .q-card')].forEach((card, i) => [...card.querySelectorAll('.q-opt')].find((b) => b.textContent === Q[i].o[Q[i].a]).click());
     return document.getElementById('quizScore').textContent; })()`);
-  check(score.startsWith('Score: 8 of 8'), `quiz: "${score.slice(0, 20)}"`);
+  check(score.startsWith('Puan: 8 / 8'), `quiz: "${score.slice(0, 20)}"`);
   const qa = await p.eval('window.Quiz.last.map((q) => q.o[q.a])');
   check(qa[3] === '(−1, 3)' && qa[4] === '13' && qa[6] === '(5, 2)' && qa[7] === '(2, 1)', 'quiz: the marked answers are the numbers checked in Node');
   await p.shot(shot('m1-light.png'));

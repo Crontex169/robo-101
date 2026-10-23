@@ -15,7 +15,7 @@ window.Cards = (function () {
     root.innerHTML = ''; root.classList.add('c-sort');
     const pool = el('div', 'c-pool'), zones = el('div', 'c-zones'), bar = el('div', 'c-bar'), out = el('div', 'c-out');
     const cards = {}, zoneBody = {}; let sel = null, checked = false;
-    pool.append(el('div', 'c-pool-h', 'Cards'));
+    pool.append(el('div', 'c-pool-h', 'Kartlar'));
     const poolBody = el('div', 'c-body'); pool.append(poolBody);
     spec.targets.forEach((t) => {
       const z = el('div', 'c-zone'); z.dataset.zone = t.id;
@@ -31,15 +31,15 @@ window.Cards = (function () {
       const c = el('button', 'c-card'); c.type = 'button'; c.textContent = it.label; c.dataset.id = it.id; cards[it.id] = c;
       attachDrag(c, it.id); poolBody.append(c);
     });
-    const checkBtn = el('button', 'btn primary sm', spec.checkLabel || 'Check'); checkBtn.type = 'button'; checkBtn.disabled = true;
-    const resetBtn = el('button', 'btn sm', 'Start over'); resetBtn.type = 'button';
+    const checkBtn = el('button', 'btn primary sm', spec.checkLabel || 'Kontrol et'); checkBtn.type = 'button'; checkBtn.disabled = true;
+    const resetBtn = el('button', 'btn sm', 'Baştan başla'); resetBtn.type = 'button';
     const status = el('span', 'muted-s');
     bar.append(checkBtn, resetBtn, status);
     root.append(pool, zones, bar, out);
     function placed() { return spec.items.filter((it) => cards[it.id].parentElement !== poolBody).length; }
     function refresh() {
       const n = placed(); checkBtn.disabled = n < spec.items.length || checked;
-      status.textContent = checked ? '' : n < spec.items.length ? `Placed ${n} of ${spec.items.length}` : 'All placed. Ready to check';
+      status.textContent = checked ? '' : n < spec.items.length ? `${spec.items.length} karttan ${n} tanesi yerleşti` : 'Hepsi yerleşti. Kontrol edebilirsin';
       pool.classList.toggle('c-empty', n === spec.items.length);
     }
     function place(id, zone) {
@@ -82,7 +82,7 @@ window.Cards = (function () {
         c.classList.add(ok ? 'c-ok' : 'c-bad'); c.disabled = true;
       });
       const tname = (id) => (spec.targets.find((t) => t.id === id) || {}).label || '';
-      out.innerHTML = `<p><b>${score} of ${spec.items.length}.</b> ${score === spec.items.length ? 'All correct.' : 'What went wrong:'}</p>` +
+      out.innerHTML = `<p><b>${spec.items.length} karttan ${score} doğru.</b> ${score === spec.items.length ? 'Hepsi doğru.' : 'Nerede yanlış gitti:'}</p>` +
         (wrong.length ? '<ul>' + wrong.map((it) => `<li><b>${it.label}</b> → ${tname(it.target)}. ${it.why || ''}</li>`).join('') + '</ul>' : '') +
         (spec.after ? `<p>${spec.after}</p>` : '');
       refresh(); if (spec.onCheck) spec.onCheck(score, spec.items.length);

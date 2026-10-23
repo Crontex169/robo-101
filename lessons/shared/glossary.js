@@ -27,8 +27,8 @@
   function show(el) {
     const id = el.dataset.gl, g = D[id]; if (!g) return;
     clearTimeout(hideT); cur = el;
-    const where = g.here ? '' : `<a href="${esc(g.href)}">Lesson ${esc(g.n)}${g.st ? `: ${esc(g.st)}` : ''}</a> · `;
-    pop.innerHTML = `<b>${esc(g.t)}</b><p>${esc(g.d)}</p><p class="gl-links">${where}<a href="glossary.html#${esc(id)}">In the glossary</a></p>`;
+    const where = g.here ? '' : `<a href="${esc(g.href)}">Ders ${esc(g.n)}${g.st ? `: ${esc(g.st)}` : ''}</a> · `;
+    pop.innerHTML = `<b>${esc(g.t)}</b>${g.en ? ` <span class="gl-en">(${esc(g.en)})</span>` : ''}<p>${esc(g.d)}</p><p class="gl-links">${where}<a href="glossary.html#${esc(id)}">Sözlükte</a></p>`;
     pop.hidden = false; el.setAttribute('aria-describedby', 'glPop'); place(el);
   }
   function hide(now) {

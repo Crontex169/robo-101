@@ -1,16 +1,17 @@
 <!--
 Sync Impact Report
-- Version change: 1.1.0 → 1.2.0 (MINOR: new principle VII, Plain Pages)
-- Modified principles: II. Explain First, Then Let Them Try It (structure follows the reference
-  site; visual style now follows Principle VII)
-- Added sections: VII. Plain Pages
+- Version change: 1.2.0 → 1.3.0 (MINOR: site language switched from English to Turkish)
+- Modified principles: none
+- Modified sections: Scope and Language (site language Turkish; code and docs stay English;
+  glossary carries English terms; notation unchanged)
+- Added sections: none
 - Removed sections: none
 - Templates requiring updates:
-  ✅ .specify/templates/plan-template.md — Constitution Check gates are derived per plan; no edit needed
-  ✅ .specify/templates/spec-template.md — no mandatory section added or removed
-  ✅ .specify/templates/tasks-template.md — check-script tasks map to Principle III and the workflow section; no edit needed
-- Follow-up TODOs: README.md lists Inter/JetBrains Mono under assets; update when spec 002 drops
-  text web fonts.
+  ✅ .specify/templates/plan-template.md — no language-specific gate; no edit needed
+  ✅ .specify/templates/spec-template.md — specs stay English; no edit needed
+  ✅ .specify/templates/tasks-template.md — no edit needed
+  ✅ README.md — describes the site in English; one line added about the Turkish site language
+- Follow-up TODOs: none
 -->
 
 # Kinematics Workshop Constitution
@@ -116,7 +117,12 @@ reader's attention on the idea.
 
 ## Scope and Language
 
-- **Site language:** English, for everything: lesson text, UI, glossary, code and docs.
+- **Site language:** Turkish for everything a reader sees: lesson text, UI strings, glossary,
+  page titles and descriptions, link previews. The owner polishes the Turkish wording by hand.
+- **Working language:** English for code, code comments, specs, plans, README and other docs.
+- **Glossary:** every entry shows the English term next to the Turkish one, so readers can
+  follow English sources such as Craig and the course slides.
+- **Notation:** stays as in the slides and Craig (ᴬP, {A}, BORG subscripts, DH symbols).
 - **Program:** Part M, math primer (5 lessons); Part F, physics primer (3 lessons); Part 1,
   manipulators; Part 2, position and orientation; Part 3, forward kinematics; Part 4, inverse
   kinematics; Part 5, the Jacobian. Each part ends with a checkpoint quiz.
@@ -145,4 +151,4 @@ are made in this file along with an updated Sync Impact Report. Versioning is se
 for removing or redefining a principle, MINOR for adding a principle or section, PATCH for
 wording fixes.
 
-**Version**: 1.2.0 | **Ratified**: 2026-10-21 | **Last Amended**: 2026-10-23
+**Version**: 1.3.0 | **Ratified**: 2026-10-21 | **Last Amended**: 2026-10-23

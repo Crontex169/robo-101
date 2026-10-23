@@ -40,7 +40,7 @@ window.Missions = (function () {
       li.addEventListener('click', () => { if (!busy && k <= reached && k !== i) go(k); });
       pills.append(li);
     });
-    const restart = el('button', 'g-restart', 'Start over'); restart.type = 'button';
+    const restart = el('button', 'g-restart', 'Baştan başla'); restart.type = 'button';
     restart.addEventListener('click', () => { if (busy) return; api.reset(); ctx.results = []; ctx.bets = []; ctx.done = []; ctx.data = {}; reached = 0; go(0); revealTop(); });
     foot.append(restart);
     root.innerHTML = ''; root.append(card);
@@ -72,12 +72,12 @@ window.Missions = (function () {
       applyControls(m);
       card.innerHTML = '';
       const top = el('div', 'm-top'), bottom = el('div', 'm-bottom');
-      top.append(pills, el('div', 'g-kicker', m.final ? 'Free play' : `Mission ${i + 1} of ${missions.length}`));
+      top.append(pills, el('div', 'g-kicker', m.final ? 'Serbest oyun' : `Görev ${i + 1} / ${missions.length}`));
       const h = el('h3'); h.textContent = m.title; top.append(h);
       top.append(el('p', 'g-text', m.text));
       view = { m, betBtns: [], crit: [], log: null, act: null, out: null, next: null, hint: null, top };
       if (m.bet) {
-        const box = el('div', 'g-pred m-bet'), q = el('div', 'q'); q.textContent = 'Predict: ' + m.bet.q; box.append(q);
+        const box = el('div', 'g-pred m-bet'), q = el('div', 'q'); q.textContent = 'Tahmin et: ' + m.bet.q; box.append(q);
         const row = el('div', 'opts');
         m.bet.options.forEach((o, k) => {
           const b = el('button', 'btn sm'); b.type = 'button'; b.textContent = o; b.setAttribute('aria-pressed', String(ctx.bets[i] === k));
@@ -93,16 +93,16 @@ window.Missions = (function () {
       }
       if (m.action) {
         const b = el('button', 'btn primary g-go'); b.type = 'button'; b.textContent = m.action.label; view.act = b;
-        if (m.bet && ctx.bets[i] === undefined) { b.disabled = true; b.title = 'Make your prediction first'; }
+        if (m.bet && ctx.bets[i] === undefined) { b.disabled = true; b.title = 'Önce tahminini yap'; }
         b.addEventListener('click', () => run());
         bottom.append(b);
       }
       view.log = el('ol', 'm-log'); view.log.hidden = true; bottom.append(view.log);
       (ctx.data['log' + i] || []).forEach((t) => addLog(t, true));
-      if (m.hint) { const d = el('details', 'm-hint'); d.innerHTML = `<summary>Hint</summary><div>${m.hint}</div>`; bottom.append(d); view.hint = d; }
+      if (m.hint) { const d = el('details', 'm-hint'); d.innerHTML = `<summary>İpucu</summary><div>${m.hint}</div>`; bottom.append(d); view.hint = d; }
       view.out = el('div', 'g-out'); view.out.hidden = true; bottom.append(view.out);
       const nav = el('div', 'g-nav'); view.next = el('button', 'btn g-next'); view.next.type = 'button';
-      view.next.textContent = i < missions.length - 1 ? (missions[i + 1].final ? 'Free play →' : 'Next mission →') : 'Done';
+      view.next.textContent = i < missions.length - 1 ? (missions[i + 1].final ? 'Serbest oyun →' : 'Sonraki görev →') : 'Bitti';
       view.next.hidden = true; view.next.addEventListener('click', () => { if (i < missions.length - 1) { go(i + 1); revealTop(); } });
       nav.append(view.next); bottom.append(nav, foot);
       card.append(top, bottom);
@@ -113,7 +113,7 @@ window.Missions = (function () {
       const m = missions[i]; if (busy || !m.action) return;
       if (m.bet && ctx.bets[i] === undefined) return;
       ctx.data['runs' + i] = (ctx.data['runs' + i] || 0) + 1;
-      busy = true; root.classList.add('m-busy'); view.act.disabled = true; const label = view.act.textContent; view.act.textContent = 'Running…'; view.out.hidden = true;
+      busy = true; root.classList.add('m-busy'); view.act.disabled = true; const label = view.act.textContent; view.act.textContent = 'Çalışıyor…'; view.out.hidden = true;
       showScene();
       try {
         const r = await m.action.run(api, ctx);
@@ -125,7 +125,7 @@ window.Missions = (function () {
         if (m.summary) addLog({ t: m.summary(r), ok });
         if (ok) showDone(r);
         else if (m.fail) { view.out.innerHTML = m.fail(r, ctx); view.out.hidden = false; view.out.className = 'g-out m-fail'; }
-      } catch (e) { console.error(e); view.out.textContent = 'Something went wrong. Try again.'; view.out.hidden = false; }
+      } catch (e) { console.error(e); view.out.textContent = 'Bir şeyler ters gitti. Tekrar dene.'; view.out.hidden = false; }
       busy = false; root.classList.remove('m-busy');
       if (view.act && !ctx.done[i]) { view.act.textContent = label; view.act.disabled = false; }
       else if (view.act) { view.act.textContent = label; view.act.disabled = false; }
@@ -153,7 +153,7 @@ window.Missions = (function () {
       if (m.criteria) view.crit.forEach((li) => { li.className = 'ok'; });
       if (m.bet && ctx.bets[i] !== undefined && restore) markBet(r);
       let html = m.explain ? m.explain(r, ctx) : '';
-      if (m.bet && ctx.data['betOk' + i] !== undefined) html = (ctx.data['betOk' + i] ? '<b>Your prediction was right.</b> ' : '<b>Your prediction was off.</b> ') + html;
+      if (m.bet && ctx.data['betOk' + i] !== undefined) html = (ctx.data['betOk' + i] ? '<b>Tahminin doğruydu.</b> ' : '<b>Tahminin tutmadı.</b> ') + html;
       if (html) { view.out.innerHTML = html; view.out.hidden = false; view.out.className = 'g-out m-win'; }
       view.next.hidden = !!m.final || i === missions.length - 1;
       if (!restore && opts.onDone) opts.onDone(i, r);

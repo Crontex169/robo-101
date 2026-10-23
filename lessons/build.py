@@ -24,7 +24,7 @@ if not cfg_path.is_absolute():
     cfg_path = root.parent / cfg_path
 CFG = json.loads(cfg_path.read_text(encoding='utf-8'))
 PUB = {pathlib.Path(p['file']).name for p in CFG.get('PUBLISHED', [])}
-SITE_NAME = 'Kinematics Workshop'
+SITE_NAME = 'Kinematik Atölyesi'
 def only_published(page):
     """A <!--if:3-2-attaching-frames.html-->...<!--/if--> block stays only if that page is published,
     so a lesson never links to a page that isn't live."""
@@ -46,7 +46,7 @@ def add_og(page, name):
             f'<meta property="og:title" content="{title}">\n<meta property="og:description" content="{d.group(1)}">\n'
             f'<meta property="og:url" content="{url}">\n<meta property="og:image" content="{SITE_URL}/assets/og.png">\n'
             f'<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">\n'
-            f'<meta property="og:locale" content="en_US">\n<meta name="twitter:card" content="summary_large_image">\n'
+            f'<meta property="og:locale" content="tr_TR">\n<meta name="twitter:card" content="summary_large_image">\n'
             f'<link rel="canonical" href="{url}">\n')
     return page.replace(d.group(0), d.group(0) + '\n' + tags, 1)
 def add_shared(page):
@@ -80,7 +80,7 @@ def gl_info():
                 sys.exit(f'glossary.json: term "{g["id"]}" points to unknown section "{g["sec"]}" in lesson "{g["l"]}"')
             bits = name[:-5].split('-')  # '3-1-dh-parameters.html' -> '3.1', 'm-2-trigonometry.html' -> 'M.2'
             n = f'{bits[0]}.{bits[1]}'.upper() if len(bits) > 1 and bits[1].isdigit() else bits[0]
-            _gl_info[g['id']] = {'t': g['t'], 'd': g['d'], 'k': g['l'], 'n': n, 'file': name,
+            _gl_info[g['id']] = {'t': g['t'], 'en': g.get('en', ''), 'd': g['d'], 'k': g['l'], 'n': n, 'file': name,
                                  'href': f"{name}#{g['sec']}", 'st': titles[g['l']][g['sec']]}
     return _gl_info
 def glossarize(page, key):
@@ -156,8 +156,8 @@ def build(key):
     html = add_og(html, name)
     if key != 'gl':  # the way to the glossary: a top-bar link (wide screens) and the footer
         assert '<button class="theme-btn"' in html and '</footer>' in html, f'{key}: top bar theme button or footer missing'
-        html = html.replace('<button class="theme-btn"', '<a class="topbar-gl" href="glossary.html">Glossary</a>\n    <button class="theme-btn"', 1)
-        html = html.replace('</footer>', '  <p class="foot-gl"><a href="glossary.html">Course glossary</a>: terms with definitions and links to lessons.</p>\n</footer>', 1)
+        html = html.replace('<button class="theme-btn"', '<a class="topbar-gl" href="glossary.html">Sözlük</a>\n    <button class="theme-btn"', 1)
+        html = html.replace('</footer>', '  <p class="foot-gl"><a href="glossary.html">Kurs sözlüğü</a>: tanımlarıyla terimler ve derslere bağlantılar.</p>\n</footer>', 1)
     html = add_shared(html)
     out = root.parent / 'site' / 'lessons' / name
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -35,7 +35,7 @@ async function run(B, url, check) {
     [...document.querySelectorAll('.rc-q')].forEach((card, i) => [...card.querySelectorAll('.rc-opt')].find((b) => b.textContent === D.q[i].o[D.q[i].a]).click());
     return document.querySelector('.rc-total').textContent;
   })()`);
-  check(recall.startsWith('3 of 3 correct'), `warm-up: "${recall.slice(0, 40)}"`);
+  check(recall.startsWith('3 sorudan 3 doğru'), `warm-up: "${recall.slice(0, 40)}"`);
 
   // Mission 1: put the hand on the target
   await p.eval('window.__sample.setAngles(110, -75)');
@@ -48,7 +48,7 @@ async function run(B, url, check) {
   await p.click('#armMis .g-go');
   await p.waitFor('window.__sample.ctl.ctx.done[1] === true', 5000).catch(() => {});
   const out2 = await p.eval("document.querySelector('#armMis .g-out').textContent");
-  check(await p.eval('window.__sample.ctl.ctx.done[1] === true') && out2.includes('prediction was right'), `mission 2: prediction "Up" is right ("${out2.slice(0, 50)}…")`);
+  check(await p.eval('window.__sample.ctl.ctx.done[1] === true') && out2.includes('Tahminin doğruydu'), `mission 2: prediction "Up" is right ("${out2.slice(0, 50)}…")`);
   await p.click('#armMis .g-next');
   check(await p.eval('window.__sample.ctl.index === 2'), 'free play reached');
   await p.shotEl(shot('sample-lab.png'), '#arm .lab', 8);
@@ -61,13 +61,13 @@ async function run(B, url, check) {
   // Glossary tooltip at the first mention
   const gl = await p.eval(`(() => { const t = document.querySelector('span.gl'); if (!t) return null; t.dispatchEvent(new PointerEvent('pointerenter', { pointerType: 'mouse' }));
     const pop = document.getElementById('glPop'); return pop && !pop.hidden ? pop.textContent : null; })()`);
-  check(!!gl && gl.includes('Forward kinematics'), 'glossary tooltip shows the definition' + (gl ? '' : ' (no tooltip)'));
+  check(!!gl && gl.includes('İleri kinematik') && gl.includes('(Forward kinematics)'), 'glossary tooltip shows the definition' + (gl ? '' : ' (no tooltip)'));
 
   // Quiz: answer every question correctly
   const score = await p.eval(`(() => { const Q = window.Quiz.last;
     [...document.querySelectorAll('#quizBox .q-card')].forEach((card, i) => [...card.querySelectorAll('.q-opt')].find((b) => b.textContent === Q[i].o[Q[i].a]).click());
     return document.getElementById('quizScore').textContent; })()`);
-  check(score.startsWith('Score: 8 of 8'), `quiz: "${score.slice(0, 20)}"`);
+  check(score.startsWith('Puan: 8 / 8'), `quiz: "${score.slice(0, 20)}"`);
   await p.shot(shot('sample-light.png'));
 
   // Related papers: every card has its fields; "More details" is closed until clicked

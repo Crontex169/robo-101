@@ -5,6 +5,8 @@ single self-contained web page: you read a short explanation, then try the idea 
 (drag the arm, make a prediction, check the result), and finish with a quiz on common
 misconceptions. Everything runs in the browser, offline, with no sign-up.
 
+The site itself is in Turkish; code, comments and docs are in English.
+
 The program has seven parts: a math toolkit (M), a physics toolkit (F), then manipulators, position
 and orientation, forward kinematics, inverse kinematics and the Jacobian. Each part ends with a
 checkpoint. Dynamics, trajectories and control are out of scope.

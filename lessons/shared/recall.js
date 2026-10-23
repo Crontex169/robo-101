@@ -17,8 +17,8 @@
   try { D = JSON.parse(src.textContent); } catch (e) { return; }
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
   const head = el('div', 'rc-head');
-  head.append(el('div', 'g-kicker', 'Warm-up'), el('h3', null, D.head || `Recall lesson ${D.n}: ${D.title}`),
-    el('p', 'rc-sub', `${D.q.length} ${D.q.length === 1 ? 'question' : 'questions'} to connect the lessons. You can skip them and read on.`));
+  head.append(el('div', 'g-kicker', 'Isınma'), el('h3', null, D.head || `${D.n} dersini hatırla: ${D.title}`),
+    el('p', 'rc-sub', `Dersleri birbirine bağlayan ${D.q.length} soru. İstersen atlayıp okumaya devam edebilirsin.`));
   box.append(head);
   const total = el('p', 'rc-total'); total.hidden = true;
   let answered = 0, right = 0;
@@ -39,10 +39,10 @@
         b.classList.add(ok ? 'ok' : 'no');
         if (!ok) opts.children[order.indexOf(q.a)].classList.add('ok');
         [...opts.children].forEach((x) => { x.disabled = true; });
-        exp.append(el('b', null, ok ? 'Correct. ' : 'Not quite. '), document.createTextNode(q.e + ' '));
-        if (q.sec) { const a = el('a', null, `Section "${q.secTitle}" of lesson ${D.n} →`); a.href = `${D.href}#${q.sec}`; exp.append(a); }
+        exp.append(el('b', null, ok ? 'Doğru. ' : 'Tam değil. '), document.createTextNode(q.e + ' '));
+        if (q.sec) { const a = el('a', null, `${D.n} dersi, "${q.secTitle}" bölümü →`); a.href = `${D.href}#${q.sec}`; exp.append(a); }
         exp.hidden = false;
-        if (answered === D.q.length) { total.textContent = `${right} of ${D.q.length} correct. ${right === D.q.length ? 'Ready to move on.' : (D.miss || 'If something slipped, the links lead to the right sections of the previous lesson.')}`; total.hidden = false; }
+        if (answered === D.q.length) { total.textContent = `${D.q.length} sorudan ${right} doğru. ${right === D.q.length ? 'Devam etmeye hazırsın.' : (D.miss || 'Bir şey kaçtıysa bağlantılar önceki dersin ilgili bölümlerine götürür.')}`; total.hidden = false; }
       });
       opts.append(b);
     });

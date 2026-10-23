@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M.1 Vectors and coordinate frames — Kinematics Workshop</title>
-<meta name="description" content="Lesson M.1 of the Kinematics Workshop: vectors as arrows, adding them head to tail, length and unit vectors, coordinate frames, one point seen from two frames, and right-handed frames in 3D. With live labs.">
+<title>M.1 Vektörler ve koordinat çerçeveleri — Kinematik Atölyesi</title>
+<meta name="description" content="Kinematik Atölyesi, M.1 dersi: ok olarak vektörler, uç uca toplama, uzunluk ve birim vektör, koordinat çerçeveleri, bir noktaya iki çerçeveden bakmak ve 3B'de sağ elli çerçeveler. Canlı laboratuvarlarla.">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <script>
@@ -18,17 +18,17 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="../index.html#program" title="Back to the course program">Kinematics Workshop<small>M.1</small></a>
-    <nav class="toc" aria-label="Lesson sections">
-      <a href="#arrows">Arrows</a>
-      <a href="#parts">Components</a>
-      <a href="#frames">Frames</a>
-      <a href="#two-frames">Two frames</a>
-      <a href="#three-d">3D</a>
-      <a href="#quiz">Quiz</a>
-      <a href="#finale">Wrap-up</a>
+    <a class="brand" href="../index.html#program" title="Kurs programına dön">Kinematik Atölyesi<small>M.1</small></a>
+    <nav class="toc" aria-label="Ders bölümleri">
+      <a href="#arrows">Oklar</a>
+      <a href="#parts">Bileşenler</a>
+      <a href="#frames">Çerçeveler</a>
+      <a href="#two-frames">İki çerçeve</a>
+      <a href="#three-d">3B</a>
+      <a href="#quiz">Test</a>
+      <a href="#finale">Özet</a>
     </nav>
-    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Temayı değiştir">◐</button>
   </div>
   <div class="progress" id="progress"></div>
 </header>
@@ -37,77 +37,77 @@
 
 <section class="intro" id="top">
   <div class="wrap">
-    <p class="lesson-n">Lesson M.1 · Part M, the math toolkit</p>
-    <h1>Vectors and coordinate frames</h1>
-    <p class="lead">Before a robot can move its hand somewhere, it needs a way to say where "somewhere" is. This lesson gives you that language: arrows that carry a length and a direction, and frames that say where you are measuring from.</p>
-    <p class="meta">About 45 minutes · 2 labs and 2 small interactive scenes · 5 missions</p>
-    <p>In this lesson you will:</p>
+    <p class="lesson-n">M.1 dersi · Bölüm M, matematik araç kutusu</p>
+    <h1>Vektörler ve koordinat çerçeveleri</h1>
+    <p class="lead">Bir robot elini bir yere götürmeden önce o "yer"in neresi olduğunu söyleyebilmeli. Bu ders sana bunun dilini veriyor: bir uzunluğu ve yönü olan oklar, ve nereden ölçtüğünü söyleyen çerçeveler.</p>
+    <p class="meta">Yaklaşık 45 dakika · 2 laboratuvar ve 2 küçük etkileşimli sahne · 5 görev</p>
+    <p>Bu derste:</p>
     <ul>
-      <li>drag arrows and add them head to tail, the same way a robot arm's links add up;</li>
-      <li>measure an arrow's length and direction with numbers;</li>
-      <li>describe one point from two different frames and switch between the two descriptions;</li>
-      <li>meet the right-handed frame the whole course uses.</li>
+      <li>okları sürükleyip uç uca ekleyeceksin, tıpkı bir robot kolunun uzuvlarının toplandığı gibi;</li>
+      <li>bir okun uzunluğunu ve yönünü sayılarla ölçeceksin;</li>
+      <li>bir noktayı iki farklı çerçeveden tarif edip bu iki tarif arasında geçiş yapacaksın;</li>
+      <li>kursun baştan sona kullandığı sağ elli çerçeveyle tanışacaksın.</li>
     </ul>
-    <p class="muted small">Every scene works with a mouse, a finger or the keyboard: click a scene or press Tab to reach it, move with the arrow keys (hold Shift for small steps), and press Enter to switch to the next handle.</p>
+    <p class="muted small">Her sahne fareyle, parmakla ya da klavyeyle çalışır: sahneye tıkla ya da Tab ile gel, ok tuşlarıyla hareket ettir (küçük adımlar için Shift'e basılı tut), Enter ile sonraki tutamağa geç.</p>
   </div>
 </section>
 
-<section class="recall-sec" id="recall" aria-label="Warm-up">
+<section class="recall-sec" id="recall" aria-label="Isınma">
   <div class="wrap"><div class="card recall" data-recall></div></div>
-  <script type="application/json" id="recallData">{"n": "M.1", "title": "School math", "href": "../index.html#how", "head": "Before we start: three questions from school math", "miss": "If something slipped, don't worry: the lesson goes over it again.", "q": [{"q": "On a grid, where is the point (3, 2)?", "o": ["3 squares right and 2 up from the centre", "3 up and 2 right", "3 left and 2 down"], "a": 0, "e": "The first number is how far along x (right), the second how far along y (up)."}, {"q": "A right triangle has legs 6 and 8. How long is its longest side?", "o": ["14", "10", "48"], "a": 1, "e": "Pythagoras: 6² + 8² = 36 + 64 = 100, and √100 = 10. Section 2 uses this to measure arrows."}, {"q": "On an ordinary graph, which way do the axes point?", "o": ["x to the right, y up", "x up, y to the right", "x to the left, y down"], "a": 0, "e": "x grows to the right and y grows upwards. The scenes in this lesson use the same directions."}]}</script>
+  <script type="application/json" id="recallData">{"n": "M.1", "title": "Okul matematiği", "href": "../index.html#how", "head": "Başlamadan önce: okul matematiğinden üç soru", "miss": "Bir şey kaçtıysa dert etme: ders bunların üzerinden yeniden geçiyor.", "q": [{"q": "Bir ızgarada (3, 2) noktası nerededir?", "o": ["Merkezden 3 kare sağda ve 2 kare yukarıda", "3 yukarıda ve 2 sağda", "3 solda ve 2 aşağıda"], "a": 0, "e": "İlk sayı x boyunca (sağa) ne kadar gidildiğini, ikincisi y boyunca (yukarı) ne kadar gidildiğini söyler."}, {"q": "Bir dik üçgenin dik kenarları 6 ve 8. En uzun kenarı kaçtır?", "o": ["14", "10", "48"], "a": 1, "e": "Pisagor: 6² + 8² = 36 + 64 = 100, ve √100 = 10. 2. bölüm okları ölçmek için bunu kullanıyor."}, {"q": "Sıradan bir grafikte eksenler hangi yöne bakar?", "o": ["x sağa, y yukarı", "x yukarı, y sağa", "x sola, y aşağı"], "a": 0, "e": "x sağa doğru, y yukarı doğru büyür. Bu dersteki sahneler de aynı yönleri kullanıyor."}]}</script>
 </section>
 
 <section class="section" id="arrows">
   <div class="wrap prose">
-    <h2><span class="n">1.</span> Arrows with a length and a direction</h2>
-    <p>Think of an instruction like "walk 3 steps east and 2 steps north". It says how far and which way, but not where to start: you can follow it from your front door or from the bus stop. An arrow that carries exactly this, a length and a direction and nothing else, is called a <strong>vector</strong>.</p>
+    <h2><span class="n">1.</span> Uzunluğu ve yönü olan oklar</h2>
+    <p>"Doğuya 3 adım, kuzeye 2 adım yürü" gibi bir tarif düşün. Ne kadar ve hangi yöne gideceğini söylüyor ama nereden başlayacağını söylemiyor: bunu evinin kapısından da uygulayabilirsin, otobüs durağından da. Tam olarak bunu, yani bir uzunluğu ve bir yönü taşıyan ve başka hiçbir şey taşımayan oka <strong>vektör</strong> denir.</p>
     <div class="noted">
-      <p>Because a vector doesn't remember where it starts, you can slide it anywhere on the page without changing it. Two arrows are the same vector when they have the same length and point the same way.</p>
-      <aside class="mnote" aria-label="Author's note"><p>I still catch myself thinking of a vector as "the arrow from here to there". It's only the "how far and which way" part. Where you draw it is your choice.</p></aside>
+      <p>Vektör nereden başladığını hatırlamadığı için onu sayfada istediğin yere kaydırabilirsin; değişmez. Aynı uzunlukta olan ve aynı yöne bakan iki ok aynı vektördür.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Hâlâ bazen vektörü "buradan oraya giden ok" diye düşünürken yakalıyorum kendimi. Oysa vektör sadece "ne kadar ve hangi yöne" kısmı. Nereye çizeceğin sana kalmış.</p></aside>
     </div>
-    <p>Vectors add up head to tail: put the start of the second arrow on the tip of the first, and the sum is the arrow from the first start to the last tip. Try it.</p>
+    <p>Vektörler uç uca toplanır: ikinci okun kuyruğunu birincinin ucuna koy; toplam, ilk kuyruktan son uca giden oktur. Dene.</p>
     <div class="lab">
       <div class="card scene-card">
-        <canvas id="arrowsCv" width="420" height="420" class="sq-cv" role="img" aria-label="A grid with arrows you can drag. Use the arrow keys to move the selected handle and Enter to switch handles."></canvas>
+        <canvas id="arrowsCv" width="420" height="420" class="sq-cv" role="img" aria-label="Sürüklenebilir okların olduğu bir ızgara. Seçili tutamağı ok tuşlarıyla hareket ettir, Enter ile tutamak değiştir."></canvas>
         <div class="readout" id="arrowsOut"></div>
       </div>
       <div class="card guide-card"><div id="arrowsMis"></div></div>
     </div>
-    <p>That last mission is the idea behind how a robot arm finds where its hand is, which you'll meet in Part 3: each link of the arm is a vector, and the hand sits at the sum of all of them.</p>
-    <details class="deep"><summary>Under the hood: adding vectors with numbers</summary><div class="body">
-      <p>Write a vector by how far it goes along x and along y, \(a = (a_x, a_y)\). Then</p>
+    <p>Son görev, bir robot kolunun elinin nerede olduğunu nasıl bulduğunun ardındaki fikir; bunu 3. bölümde göreceksin: kolun her uzvu bir vektör ve el, hepsinin toplamında duruyor.</p>
+    <details class="deep"><summary>Perde arkası: vektörleri sayılarla toplamak</summary><div class="body">
+      <p>Bir vektörü x boyunca ve y boyunca ne kadar gittiğiyle yaz: \(a = (a_x, a_y)\). O zaman</p>
       <div class="formula">\[a + b = (a_x + b_x,\; a_y + b_y).\]</div>
-      <p>Head to tail on the grid and part by part in numbers give the same answer, and the order doesn't matter: \(a + b = b + a\). The next section gives the two parts their proper name.</p>
+      <p>Izgarada uç uca toplamak da, sayılarda parça parça toplamak da aynı sonucu verir; sıranın da önemi yoktur: \(a + b = b + a\). Bu iki parçanın asıl adını bir sonraki bölüm veriyor.</p>
     </div></details>
   </div>
 </section>
 
 <section class="section" id="parts">
   <div class="wrap prose">
-    <h2><span class="n">2.</span> Components, length and direction</h2>
-    <p>Any arrow on a grid can be split into how far it goes along x and how far along y. These two numbers are its <strong>components</strong>, and we write them in brackets: (3, 4) means 3 along x and 4 along y. A component is negative when the arrow goes left or down.</p>
-    <p>The two components and the arrow form a right triangle, so the arrow's length, also called its <strong>magnitude</strong>, comes from Pythagoras: the arrow (3, 4) is 5 long. A length is never negative.</p>
-    <p>Divide a vector by its own length and you get a <strong>unit vector</strong>: same direction, length one. (3, 4) divided by 5 is (0.6, 0.8). Unit vectors say "this way" without saying "how far", and in the next section they become the axes of a frame. Drag the tip and watch the purple unit vector: it never gets longer or shorter, it only turns.</p>
+    <h2><span class="n">2.</span> Bileşenler, uzunluk ve yön</h2>
+    <p>Izgaradaki her ok, x boyunca ne kadar ve y boyunca ne kadar gittiğine ayrılabilir. Bu iki sayı okun <strong>bileşenleri</strong>dir ve parantez içinde yazılır: (3, 4), x boyunca 3 ve y boyunca 4 demek. Ok sola ya da aşağı gidiyorsa ilgili bileşen negatiftir.</p>
+    <p>İki bileşen ve okun kendisi bir dik üçgen oluşturur; bu yüzden okun uzunluğu, diğer adıyla <strong>büyüklüğü</strong>, Pisagor'dan gelir: (3, 4) oku 5 uzunluğundadır. Uzunluk asla negatif olmaz.</p>
+    <p>Bir vektörü kendi uzunluğuna bölersen bir <strong>birim vektör</strong> elde edersin: yön aynı, uzunluk bir. (3, 4)'ün 5'e bölümü (0.6, 0.8)'dir. Birim vektörler "ne kadar" demeden "bu yöne" der; bir sonraki bölümde de bir çerçevenin eksenleri olacaklar. Ucu sürükle ve mor birim vektörü izle: hiç uzayıp kısalmıyor, sadece dönüyor.</p>
     <div class="lab">
       <div class="card scene-card">
-        <canvas id="partsCv" width="420" height="420" class="sq-cv" role="img" aria-label="One arrow from the centre with its x and y components and its unit vector. Drag the tip, or use the arrow keys."></canvas>
+        <canvas id="partsCv" width="420" height="420" class="sq-cv" role="img" aria-label="Merkezden çıkan bir ok, x ve y bileşenleri ve birim vektörüyle. Ucu sürükle ya da ok tuşlarını kullan."></canvas>
         <div class="readout" id="partsOut"></div>
       </div>
     </div>
-    <details class="deep"><summary>Under the hood: length and unit vector</summary><div class="body">
+    <details class="deep"><summary>Perde arkası: uzunluk ve birim vektör</summary><div class="body">
       <div class="formula">\[|v| = \sqrt{v_x^2 + v_y^2}, \qquad \hat v = \frac{v}{|v|} = \left(\frac{v_x}{|v|},\; \frac{v_y}{|v|}\right).\]</div>
-      <p>The zero vector (0, 0) has length 0 and no direction, so it has no unit vector: the division would be by zero. Try dragging the tip onto the centre.</p>
+      <p>Sıfır vektörün, yani (0, 0)'ın uzunluğu 0'dır ve yönü yoktur; bu yüzden birim vektörü de yoktur: bölme sıfıra bölme olurdu. Ucu merkeze sürükleyip dene.</p>
     </div></details>
   </div>
 </section>
 
 <section class="section" id="frames">
   <div class="wrap prose">
-    <h2><span class="n">3.</span> A frame: an origin and two axes</h2>
-    <p>So far the grid has quietly told us where things are. Make that explicit and you have a <strong>coordinate frame</strong>: a point called the <strong>origin</strong>, plus one unit vector for each axis, x and y, at right angles to each other. We give frames names in curly brackets, like {A}.</p>
-    <p>The arrow from a frame's origin to a point P is P's <strong>position vector</strong> in that frame. Its components are what we usually call the coordinates of P. To say which frame we measured from, we write the frame's name as a small superscript in front: <sup>A</sup>P is P's position vector in {A}. The course slides and Craig's textbook use the same notation, so it's worth getting used to now.</p>
+    <h2><span class="n">3.</span> Çerçeve: bir orijin ve iki eksen</h2>
+    <p>Şimdiye kadar şeylerin nerede olduğunu bize sessizce ızgara söyledi. Bunu açıkça yazarsan elinde bir <strong>koordinat çerçevesi</strong> olur: <strong>orijin</strong> denen bir nokta, artı her eksen için, x ve y için, birbirine dik birer birim vektör. Çerçevelere {A} gibi süslü parantez içinde adlar veririz.</p>
+    <p>Bir çerçevenin orijininden bir P noktasına giden ok, P'nin o çerçevedeki <strong>konum vektörü</strong>dür. Bileşenleri, genelde "P'nin koordinatları" dediğimiz şeydir. Hangi çerçeveden ölçtüğümüzü belirtmek için çerçevenin adını önüne küçük bir üst simge olarak yazarız: <sup>A</sup>P, P'nin {A}'daki konum vektörüdür. Ders slaytları ve Craig'in kitabı da aynı gösterimi kullanıyor; şimdiden alışmaya değer.</p>
     <figure class="frame-fig">
-      <svg viewBox="0 0 240 180" role="img" aria-label="Frame A: its origin, its x and y unit vectors, and the position vector of a point P at 3 along x and 2 along y">
+      <svg viewBox="0 0 240 180" role="img" aria-label="A çerçevesi: orijini, x ve y birim vektörleri ve x boyunca 3, y boyunca 2 konumundaki bir P noktasının konum vektörü">
         <defs>
           <marker id="mk-a" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--classic)"/></marker>
           <marker id="mk-p" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--e2e)"/></marker>
@@ -123,47 +123,47 @@
         <circle cx="130" cy="90" r="4" style="fill:var(--ink)"/>
         <text x="137" y="86" font-size="13" style="fill:var(--ink)">P</text>
         <text x="74" y="110" font-size="13" style="fill:var(--e2e)"><tspan font-size="9" dy="-5">A</tspan><tspan dy="5">P</tspan></text>
-        <text x="46" y="168" font-size="11" style="fill:var(--ink-3)">origin of {A}</text>
+        <text x="46" y="168" font-size="11" style="fill:var(--ink-3)">{A}'nın orijini</text>
       </svg>
-      <figcaption>Frame {A}: its origin, its two unit axes (blue), and the position vector <sup>A</sup>P of a point P at (3, 2).</figcaption>
+      <figcaption>{A} çerçevesi: orijini, iki birim ekseni (mavi) ve (3, 2) noktasındaki P'nin konum vektörü <sup>A</sup>P.</figcaption>
     </figure>
   </div>
 </section>
 
 <section class="section" id="two-frames">
   <div class="wrap prose">
-    <h2><span class="n">4.</span> One point, two frames</h2>
-    <p>A robot carries many frames at once: one at its base, one on each link, one at the hand, one on the camera. The same point gets a different description in each. Here are two frames, {A} and {B}, that point the same way but sit in different places.</p>
+    <h2><span class="n">4.</span> Bir nokta, iki çerçeve</h2>
+    <p>Bir robot aynı anda birçok çerçeve taşır: tabanında bir tane, her uzvunda bir tane, elinde bir tane, kamerasında bir tane. Aynı nokta her birinde farklı tarif edilir. İşte aynı yöne bakan ama farklı yerlerde duran iki çerçeve: {A} ve {B}.</p>
     <div class="noted">
-      <p>To get from {A}'s origin to P, you can go straight there, or first go to {B}'s origin and then on to P. Both routes end at P, so head to tail: <sup>A</sup>P = <sup>A</sup>P<sub>BORG</sub> + <sup>B</sup>P, where <sup>A</sup>P<sub>BORG</sub> is {B}'s origin seen from {A}.</p>
-      <aside class="mnote" aria-label="Author's note"><p>I read the superscript as "seen from": <sup>A</sup>P is P seen from {A}. It keeps me from mixing up which frame a number belongs to.</p></aside>
+      <p>{A}'nın orijininden P'ye gitmek için doğrudan gidebilirsin, ya da önce {B}'nin orijinine, oradan da P'ye gidebilirsin. İki yol da P'de biter; yani uç uca: <sup>A</sup>P = <sup>A</sup>P<sub>BORG</sub> + <sup>B</sup>P. Burada <sup>A</sup>P<sub>BORG</sub>, {B}'nin orijininin {A}'dan görünüşüdür.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Üst simgeyi "…'dan bakınca" diye okuyorum: <sup>A</sup>P, {A}'dan bakınca P. Böylece bir sayının hangi çerçeveye ait olduğunu karıştırmıyorum.</p></aside>
     </div>
     <div class="lab">
       <div class="card scene-card">
-        <canvas id="framesCv" width="420" height="420" class="sq-cv" role="img" aria-label="Frame A at the centre, frame B and a point P. Drag frame B or P, or use the arrow keys and Enter."></canvas>
+        <canvas id="framesCv" width="420" height="420" class="sq-cv" role="img" aria-label="Merkezde A çerçevesi, ayrıca B çerçevesi ve bir P noktası. B'yi ya da P'yi sürükle, veya ok tuşlarını ve Enter'ı kullan."></canvas>
         <div class="readout" id="framesOut"></div>
       </div>
       <div class="card guide-card"><div id="framesMis"></div></div>
     </div>
-    <p>Going the other way, from {A} to {B}, you subtract instead: <sup>B</sup>P = <sup>A</sup>P − <sup>A</sup>P<sub>BORG</sub>. This only works because {A} and {B} point the same way. Frames that are turned against each other need one more ingredient, a rotation, and that is what Part 2 is about.</p>
-    <details class="deep"><summary>Under the hood: changing frames by adding</summary><div class="body">
+    <p>Ters yönde, {A}'dan {B}'ye geçerken toplamak yerine çıkarırsın: <sup>B</sup>P = <sup>A</sup>P − <sup>A</sup>P<sub>BORG</sub>. Bu yalnızca {A} ve {B} aynı yöne baktığı için işe yarıyor. Birbirine göre dönmüş çerçeveler bir malzeme daha ister, bir dönme; 2. bölümün konusu da bu.</p>
+    <details class="deep"><summary>Perde arkası: toplayarak çerçeve değiştirmek</summary><div class="body">
       <div class="formula">\[{}^{A}P = {}^{A}P_{BORG} + {}^{B}P, \qquad {}^{B}P = {}^{A}P - {}^{A}P_{BORG}.\]</div>
-      <p>Both hold component by component, as long as the axes of {A} and {B} are parallel.</p>
+      <p>İkisi de bileşen bileşen geçerlidir, yeter ki {A} ile {B}'nin eksenleri paralel olsun.</p>
     </div></details>
 
     <div class="research" data-block="research">
-      <h3>Where is the cup?</h3>
-      <p>A robot has a camera bolted above its base. The camera spots a cup and reports where it is in the camera's own frame: 0.3 m along the camera's x axis and 0.1 m along its y axis. To reach for the cup, the robot needs its position in the base frame.</p>
-      <p class="q">What else does the robot need to know, and how does it combine the numbers?</p>
-      <p class="think">Think about it for a minute before opening the answers.</p>
-      <details class="answers"><summary>Possible answers</summary><div class="body"><ul>
-        <li><strong>Where the camera is.</strong> Measure the camera's origin in the base frame and add the cup's position in the camera frame, exactly as in the lab above.</li>
-        <li><strong>Line the frames up.</strong> Mount the camera so that its frame is the base frame. Then nothing needs converting, but a camera sitting inside the robot's base can't see much.</li>
-        <li><strong>How the camera is turned.</strong> If the camera is tilted, adding is not enough: you also need its rotation. That's the general case, and it's Part 2.</li>
+      <h3>Fincan nerede?</h3>
+      <p>Bir robotun tabanının üstüne bir kamera vidalanmış. Kamera bir fincan görüyor ve onun nerede olduğunu kendi çerçevesinde bildiriyor: kameranın x ekseni boyunca 0.3 m, y ekseni boyunca 0.1 m. Fincana uzanmak için robotun, fincanın taban çerçevesindeki konumunu bilmesi gerekiyor.</p>
+      <p class="q">Robotun başka neyi bilmesi gerekir, ve sayıları nasıl birleştirir?</p>
+      <p class="think">Cevapları açmadan önce bir dakika düşün.</p>
+      <details class="answers"><summary>Olası cevaplar</summary><div class="body"><ul>
+        <li><strong>Kameranın nerede olduğu.</strong> Kameranın orijinini taban çerçevesinde ölç ve fincanın kamera çerçevesindeki konumunu buna ekle; tam yukarıdaki laboratuvardaki gibi.</li>
+        <li><strong>Çerçeveleri üst üste getir.</strong> Kamerayı, çerçevesi taban çerçevesiyle aynı olacak şekilde yerleştir. O zaman hiçbir dönüşüm gerekmez; ama robotun tabanının içine gömülü bir kamera pek bir şey göremez.</li>
+        <li><strong>Kameranın nasıl döndüğü.</strong> Kamera eğikse toplamak yetmez: dönüşünü de bilmen gerekir. Genel durum bu, ve o da 2. bölüm.</li>
       </ul></div></details>
-      <details class="actual"><summary>What was actually done</summary><div class="body">
-        <p>Robotics does the first and the third together: every object gets its own frame, and descriptions are chained from frame to frame, base to camera to cup. When the frames point the same way, as here, the chain is plain vector addition.</p>
-        <p>Some of the earliest computer vision already worked like this. Lawrence Roberts' 1963 MIT thesis, <a href="https://dspace.mit.edu/handle/1721.1/11589">Machine Perception of Three-Dimensional Solids</a>, recovered 3D objects from a camera image by relating object models and the camera through coordinate transformations. Richard Paul's 1981 textbook, <em>Robot Manipulators: Mathematics, Programming, and Control</em> (MIT Press), built robot programming on chains of such frame transformations.</p>
+      <details class="actual"><summary>Gerçekte ne yapıldı</summary><div class="body">
+        <p>Robotik birinci ve üçüncü cevabı birlikte yapar: her nesneye kendi çerçevesi verilir ve tarifler çerçeveden çerçeveye zincirlenir: tabandan kameraya, kameradan fincana. Çerçeveler buradaki gibi aynı yöne bakıyorsa zincir sade bir vektör toplamıdır.</p>
+        <p>İlk bilgisayarlı görü çalışmalarından bazıları da böyle işliyordu. Lawrence Roberts'ın 1963 tarihli MIT doktora tezi <a href="https://dspace.mit.edu/handle/1721.1/11589">Machine Perception of Three-Dimensional Solids</a>, nesne modellerini ve kamerayı koordinat dönüşümleriyle ilişkilendirerek bir kamera görüntüsünden 3B nesneleri çıkarıyordu. Richard Paul'un 1981 tarihli kitabı <em>Robot Manipulators: Mathematics, Programming, and Control</em> (MIT Press) da robot programlamayı bu tür çerçeve dönüşümü zincirlerinin üzerine kurdu.</p>
       </div></details>
     </div>
   </div>
@@ -171,30 +171,30 @@
 
 <section class="section" id="three-d">
   <div class="wrap prose">
-    <h2><span class="n">5.</span> Into 3D: right-handed frames</h2>
-    <p>A real robot works in space, so its frames get a third axis, z, at right angles to both x and y. That leaves a choice: z can point to one side of the xy plane or to the other. The two choices are mirror images of each other, and no amount of turning makes one into the other.</p>
+    <h2><span class="n">5.</span> 3B'ye geçiş: sağ elli çerçeveler</h2>
+    <p>Gerçek bir robot uzayda çalışır; bu yüzden çerçevelerine üçüncü bir eksen eklenir: hem x'e hem y'ye dik olan z. Bu da bir seçim bırakır: z, xy düzleminin bir tarafını ya da öbür tarafını gösterebilir. İki seçenek birbirinin ayna görüntüsüdür ve ne kadar döndürürsen döndür biri diğerine dönüşmez.</p>
     <div class="noted">
-      <p>The convention almost everyone uses, and the one this course uses throughout, is the <strong>right-handed frame</strong>: point the fingers of your right hand along x, curl them towards y, and your thumb points along z.</p>
-      <aside class="mnote" aria-label="Author's note"><p>Yes, everyone in a robotics lecture holds up their right hand at this point. Do it anyway; I still do.</p></aside>
+      <p>Neredeyse herkesin kullandığı, bu kursun da baştan sona kullandığı gelenek <strong>sağ elli çerçeve</strong>dir: sağ elinin parmaklarını x boyunca uzat, y'ye doğru kıvır; başparmağın z yönünü gösterir.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Evet, robotik derslerinde bu noktada herkes sağ elini havaya kaldırır. Sen de kaldır; ben hâlâ kaldırıyorum.</p></aside>
     </div>
     <div class="lab">
       <div class="card scene-card">
-        <canvas id="threeCv" width="420" height="300" class="wide-cv" role="img" aria-label="A 3D frame with x, y and z axes. Drag to turn it, or use the arrow keys."></canvas>
+        <canvas id="threeCv" width="420" height="300" class="wide-cv" role="img" aria-label="x, y ve z eksenleri olan bir 3B çerçeve. Döndürmek için sürükle ya da ok tuşlarını kullan."></canvas>
         <div class="flip-row">
-          <button class="btn sm" type="button" id="flipX" aria-pressed="false">Flip x</button>
-          <button class="btn sm" type="button" id="flipY" aria-pressed="false">Flip y</button>
-          <button class="btn sm" type="button" id="flipZ" aria-pressed="false">Flip z</button>
+          <button class="btn sm" type="button" id="flipX" aria-pressed="false">x'i ters çevir</button>
+          <button class="btn sm" type="button" id="flipY" aria-pressed="false">y'yi ters çevir</button>
+          <button class="btn sm" type="button" id="flipZ" aria-pressed="false">z'yi ters çevir</button>
         </div>
         <div class="readout" id="threeOut"></div>
       </div>
     </div>
-    <p>Flip one axis and the frame turns left-handed; flip a second and it's right-handed again. Mixing up the two conventions is a classic source of sign errors, so whenever a frame looks odd, check it with your hand.</p>
+    <p>Bir ekseni ters çevirirsen çerçeve sol elli olur; ikincisini de çevirirsen yeniden sağ elli olur. İki geleneği karıştırmak klasik bir işaret hatası kaynağıdır; bir çerçeve tuhaf görünüyorsa elinle kontrol et.</p>
   </div>
 </section>
 
 <section class="section" id="quiz">
   <div class="wrap prose">
-    <h2>Check yourself: eight common misconceptions</h2>
+    <h2>Kendini sına: sık yapılan sekiz yanılgı</h2>
     <div class="quiz" id="quizBox"></div>
     <p class="score" id="quizScore"></p>
   </div>
@@ -202,31 +202,31 @@
 
 <section class="section" id="finale">
   <div class="wrap prose">
-    <h2>What we covered</h2>
+    <h2>Neler gördük</h2>
     <ol class="takeaways">
-      <li>A vector is a length and a direction. Where you draw it doesn't matter.</li>
-      <li>Vectors add head to tail, or component by component, and the order doesn't matter.</li>
-      <li>The length comes from Pythagoras. Dividing by it gives the unit vector, which the zero vector doesn't have.</li>
-      <li>A frame is an origin plus unit axes. <sup>A</sup>P is P's position vector in {A}.</li>
-      <li>For frames that point the same way, <sup>A</sup>P = <sup>A</sup>P<sub>BORG</sub> + <sup>B</sup>P.</li>
-      <li>The course uses right-handed frames: x, y, and the thumb gives z.</li>
+      <li>Vektör bir uzunluk ve bir yöndür. Nereye çizildiği önemli değildir.</li>
+      <li>Vektörler uç uca ya da bileşen bileşen toplanır; sıranın önemi yoktur.</li>
+      <li>Uzunluk Pisagor'dan gelir. Ona bölmek birim vektörü verir; sıfır vektörün birim vektörü yoktur.</li>
+      <li>Çerçeve bir orijin artı birim eksenlerdir. <sup>A</sup>P, P'nin {A}'daki konum vektörüdür.</li>
+      <li>Aynı yöne bakan çerçeveler için <sup>A</sup>P = <sup>A</sup>P<sub>BORG</sub> + <sup>B</sup>P.</li>
+      <li>Kurs sağ elli çerçeveleri kullanır: x, y, ve başparmak z'yi verir.</li>
     </ol>
-    <h3>Open questions</h3>
-    <details class="open-q"><summary>Can three vectors add up to zero?</summary><p>Yes: when they form a closed triangle head to tail, you end where you started. A robot arm whose hand touches its own base is an example.</p></details>
-    <details class="open-q"><summary>What changes in section 4 if {B} is turned against {A}?</summary><p>Adding alone no longer works: P's components in {B} are measured along turned axes, so they first have to be turned into {A}'s directions. That's the rotation matrix, coming in M.3 and Part 2.</p></details>
-    <h3>Further reading</h3>
+    <h3>Açık sorular</h3>
+    <details class="open-q"><summary>Üç vektörün toplamı sıfır olabilir mi?</summary><p>Evet: uç uca dizildiklerinde kapalı bir üçgen oluşturuyorlarsa, başladığın yere dönersin. Eli kendi tabanına değen bir robot kolu buna bir örnek.</p></details>
+    <details class="open-q"><summary>{B}, {A}'ya göre dönmüşse 4. bölümde ne değişir?</summary><p>Sadece toplamak artık yetmez: P'nin {B}'deki bileşenleri dönmüş eksenler boyunca ölçülmüştür, bu yüzden önce {A}'nın yönlerine çevrilmeleri gerekir. Bu da dönme matrisi; M.3'te ve 2. bölümde geliyor.</p></details>
+    <h3>Ek okuma</h3>
     <ul class="links">
-      <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch and F. Park, 2017: free book and videos; chapter 3 describes frames and how points move between them</span></li>
-      <li>Robot Manipulators: Mathematics, Programming, and Control<span>R. P. Paul, MIT Press, 1981: the first chapters build everything on frames and transformations</span></li>
+      <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch ve F. Park, 2017: ücretsiz kitap ve videolar (İngilizce); 3. bölüm çerçeveleri ve noktaların çerçeveler arasında nasıl taşındığını anlatıyor</span></li>
+      <li>Robot Manipulators: Mathematics, Programming, and Control<span>R. P. Paul, MIT Press, 1981 (İngilizce): ilk bölümler her şeyi çerçeveler ve dönüşümler üzerine kuruyor</span></li>
     </ul>
-    <p>Next: <!--if:m-2-trigonometry.html--><a href="m-2-trigonometry.html">M.2 Trigonometry for robot arms</a>.<!--/if--> Turning things needs angles, so the next lesson is about sine and cosine.</p>
+    <p>Sıradaki: <!--if:m-2-trigonometry.html--><a href="m-2-trigonometry.html">M.2 Robot kolları için trigonometri</a>.<!--/if--> Bir şeyi döndürmek için açılar gerekir; bu yüzden sonraki ders sinüs ve kosinüs üzerine.</p>
   </div>
 </section>
 
 </main>
 
 <footer>
-  Lesson M.1 of the Kinematics Workshop. All scenes run locally in your browser.
+  Kinematik Atölyesi, M.1 dersi. Bütün sahneler tarayıcında, kendi bilgisayarında çalışır.
 </footer>
 <div class="tooltip" id="tooltip" role="tooltip"></div>
 <script>

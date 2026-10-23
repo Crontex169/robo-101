@@ -1,19 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kinematics Workshop — learn robot arm kinematics from zero</title>
-<meta name="description" content="A free, interactive course on robot arm kinematics for complete beginners: frames and rotations, forward and inverse kinematics, and the Jacobian, with live labs in your browser.">
+<title>Kinematik Atölyesi — robot kolu kinematiğini sıfırdan öğren</title>
+<meta name="description" content="Yeni başlayanlar için robot kolu kinematiği üzerine ücretsiz, etkileşimli bir kurs: çerçeveler ve dönmeler, ileri ve ters kinematik, Jakobiyen; tarayıcında canlı laboratuvarlarla.">
 <script>(function(){try{var t=localStorage.getItem('kw-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Kinematics Workshop">
-<meta property="og:title" content="Kinematics Workshop — learn robot arm kinematics from zero">
-<meta property="og:description" content="Frames, rotations, forward and inverse kinematics and the Jacobian, with live labs in your browser. Free, no sign-up.">
+<meta property="og:site_name" content="Kinematik Atölyesi">
+<meta property="og:title" content="Kinematik Atölyesi — robot kolu kinematiğini sıfırdan öğren">
+<meta property="og:description" content="Çerçeveler, dönmeler, ileri ve ters kinematik ve Jakobiyen; tarayıcında canlı laboratuvarlarla. Ücretsiz, kayıt yok.">
 <meta property="og:url" content="{{SITE_URL}}/">
 <meta property="og:image" content="{{SITE_URL}}/assets/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="tr_TR">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="{{SITE_URL}}/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -46,19 +46,19 @@ figcaption { font-size: 14.5px; color: var(--ink-3); margin-bottom: 1em; }
 </head>
 <body>
 <header class="nav"><div class="nav-in">
-  <a class="logo" href="index.html">Kinematics Workshop</a>
-  <nav class="nav-links" aria-label="Sections">
-    <a href="#how">How it works</a><a href="#program">Program</a><a href="#who">Who it's for</a><a href="#faq">Questions</a><a href="lessons/glossary.html">Glossary</a>
+  <a class="logo" href="index.html">Kinematik Atölyesi</a>
+  <nav class="nav-links" aria-label="Bölümler">
+    <a href="#how">Nasıl işler</a><a href="#program">Program</a><a href="#who">Kimin için</a><a href="#faq">Sorular</a><a href="lessons/glossary.html">Sözlük</a>
   </nav>
-  <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="Temayı değiştir">◐</button>
 </div></header>
 
 <main>
 <section class="intro" id="top"><div class="wrap">
-  <h1>Kinematics Workshop</h1>
-  <p class="lead">I wrote this course for anyone who wants to know how a robot arm knows where its hand is, and which joint angles put it where you want. We start from zero: vectors and rotations first, then forward and inverse kinematics, then the Jacobian. Every idea comes with a live scene you can drag and test.</p>
+  <h1>Kinematik Atölyesi</h1>
+  <p class="lead">Bu kursu, bir robot kolunun elinin nerede olduğunu nasıl bildiğini ve elini istediğin yere hangi eklem açılarının koyduğunu merak eden herkes için yazdım. Sıfırdan başlıyoruz: önce vektörler ve dönmeler, sonra ileri ve ters kinematik, en son da Jakobiyen. Her fikrin yanında sürükleyip deneyebileceğin canlı bir sahne var.</p>
   <figure>
-    <svg class="hero-art" viewBox="0 0 420 360" role="img" aria-label="A three-link robot arm with joint angles theta 1, theta 2 and theta 3 reaching for a target">
+    <svg class="hero-art" viewBox="0 0 420 360" role="img" aria-label="Teta 1, teta 2 ve teta 3 eklem açılarıyla bir hedefe uzanan üç uzuvlu bir robot kolu">
       <line class="ax" x1="40" y1="300" x2="400" y2="300" stroke-width="1.5"/>
       <line class="ax" x1="80" y1="330" x2="80" y2="30" stroke-width="1.5"/>
       <circle class="target" cx="338" cy="96" r="18" stroke-width="2.5"/>
@@ -71,51 +71,52 @@ figcaption { font-size: 14.5px; color: var(--ink-3); margin-bottom: 1em; }
       <circle class="joint" cx="290" cy="130" r="7" stroke-width="3"/>
       <text x="104" y="282">θ₁</text><text x="188" y="182">θ₂</text><text x="300" y="160">θ₃</text>
     </svg>
-    <figcaption>A three-link arm reaching for a target. By Part 3 you'll compute where its hand is from θ₁, θ₂ and θ₃.</figcaption>
+    <figcaption>Bir hedefe uzanan üç uzuvlu bir kol. 3. bölüme geldiğinde elinin nerede olduğunu θ₁, θ₂ ve θ₃'ten hesaplayacaksın.</figcaption>
   </figure>
-  <p class="cta"><a id="ctaMain" href="#program"><span>See the program</span> →</a></p>
+  <p class="cta"><a id="ctaMain" href="#program"><span>Programa bak</span> →</a></p>
   <p class="cta-progress" id="ctaProgress" hidden></p>
-  <p class="muted">Free, no sign-up, works on your phone. All labs run in your browser.</p>
+  <p class="muted">Ücretsiz, kayıt yok, telefonda da çalışır. Bütün laboratuvarlar tarayıcında çalışır.</p>
 </div></section>
 
 <section class="section" id="how"><div class="wrap">
-  <h2>How a lesson works</h2>
-  <p>Each lesson takes 30–50 minutes and is about one idea. A short warm-up checks what stuck from the previous lesson.</p>
-  <p><strong>Read first.</strong> The main text builds intuition with words and pictures. No idea is used before it has been explained.</p>
-  <p><strong>Then try it.</strong> Labs put a live arm on the page. Each mission has a goal, often a prediction to make first, and an explanation once you've done it.</p>
-  <p><strong>Under the hood.</strong> Formulas and derivations sit in fold-out blocks. Open them when you want the math, skip them when you don't.</p>
-  <p><strong>Check yourself.</strong> A quiz on common misconceptions closes the lesson. Some lessons also point to the papers the ideas came from, and ask you to think like the people who first solved the problem.</p>
+  <h2>Bir ders nasıl işler</h2>
+  <p>Her ders 30–50 dakika sürer ve tek bir fikir üzerinedir. Kısa bir ısınma, önceki dersten aklında kalanları yoklar.</p>
+  <p><strong>Önce oku.</strong> Ana metin sezgiyi kelimelerle ve resimlerle kurar. Hiçbir fikir anlatılmadan kullanılmaz.</p>
+  <p><strong>Sonra dene.</strong> Laboratuvarlar sayfaya canlı bir kol koyar. Her görevin bir hedefi var; çoğunda önce bir tahmin yaparsın, başardığında da bir açıklama gelir.</p>
+  <p><strong>Perde arkası.</strong> Formüller ve türetmeler açılır bloklarda durur. Matematiği istediğinde aç, istemediğinde geç.</p>
+  <p><strong>Kendini sına.</strong> Ders, sık yapılan yanılgılar üzerine bir testle kapanır. Bazı dersler fikirlerin geldiği makalelere de yönlendirir ve problemi ilk çözen insanlar gibi düşünmeni ister.</p>
 </div></section>
 
 <section class="section" id="program"><div class="wrap">
   <h2>Program</h2>
-  <p>Seven parts. Two short toolkits cover the math and physics you'll need, then five parts take you from what a robot arm is to steering one with its Jacobian. Each part ends with a checkpoint.</p>
-  <p>Terms from the lessons, with short definitions, are collected in the <a href="lessons/glossary.html">course glossary</a>.</p>
-  <p class="progress-reset" id="progressReset" hidden>"Completed" and "started" marks are stored only in this browser. <button type="button">Reset progress</button></p>
+  <p>Yedi bölüm. İki kısa araç kutusu ihtiyacın olacak matematiği ve fiziği veriyor; ardından beş bölüm seni robot kolunun ne olduğundan, onu Jakobiyeniyle yönlendirmeye kadar götürüyor. Her bölüm bir ara sınavla biter.</p>
+  <p>Derslerdeki terimler kısa tanımlarıyla <a href="lessons/glossary.html">kurs sözlüğünde</a> toplanıyor.</p>
+  <p class="progress-reset" id="progressReset" hidden>"Tamamlandı" ve "başlandı" işaretleri yalnızca bu tarayıcıda saklanır. <button type="button">İlerlemeyi sıfırla</button></p>
   <div class="parts" id="parts"></div>
 </div></section>
 
 <section class="section" id="who"><div class="wrap">
-  <h2>Who is this for</h2>
-  <p>Anyone curious about how robot arms move, starting from zero. If you remember a little school algebra and trigonometry, that's enough: everything else is taught along the way.</p>
-  <h3>You'll learn to</h3>
-  <ul><li>describe where things are and how they're turned, with frames and rotation matrices;</li><li>compute where an arm's hand is from its joint angles;</li><li>find joint angles that put the hand where you want, and see when there are several answers or none;</li><li>use the Jacobian to relate joint speeds to hand speeds and joint torques to hand forces.</li></ul>
-  <h3>You don't need</h3>
-  <ul><li>a robot: every lab runs in the browser;</li><li>prior robotics or linear algebra: the M and F parts cover what's needed;</li><li>to install anything or sign up.</li></ul>
+  <h2>Kimin için</h2>
+  <p>Robot kollarının nasıl hareket ettiğini merak eden, sıfırdan başlayan herkes için. Biraz okul cebiri ve trigonometrisi hatırlıyorsan yeter: gerisi yol boyunca öğretiliyor.</p>
+  <h3>Öğreneceklerin</h3>
+  <ul><li>bir şeyin nerede olduğunu ve nasıl döndüğünü çerçeveler ve dönme matrisleriyle tarif etmek;</li><li>bir kolun elinin nerede olduğunu eklem açılarından hesaplamak;</li><li>eli istediğin yere koyan eklem açılarını bulmak, ve birden çok cevabın ya da hiç cevabın olmadığı durumları görmek;</li><li>Jakobiyeni kullanarak eklem hızlarını el hızlarına, eklem torklarını da el kuvvetlerine bağlamak.</li></ul>
+  <h3>İhtiyacın olmayanlar</h3>
+  <ul><li>bir robot: bütün laboratuvarlar tarayıcıda çalışıyor;</li><li>önceden robotik ya da lineer cebir bilgisi: M ve F bölümleri gerekenleri veriyor;</li><li>bir şey kurmak ya da kayıt olmak.</li></ul>
 </div></section>
 
 <section class="section" id="faq"><div class="wrap">
-  <h2>Questions</h2>
+  <h2>Sorular</h2>
   <div class="faq">
-    <details><summary>What do I need to know before starting?</summary><div>Basic school algebra and the idea of sine and cosine. Part M (math toolkit) and Part F (physics toolkit) cover vectors, matrices, derivatives, rotation and torque before the main parts use them.</div></details>
-    <details><summary>How long does it take?</summary><div>A lesson takes 30–50 minutes. You can stop anywhere: your progress is remembered in this browser.</div></details>
-    <details><summary>Is it free?</summary><div>Yes. There's no sign-up and nothing to install. The site doesn't collect any data about you.</div></details>
+    <details><summary>Başlamadan önce neyi bilmem gerekiyor?</summary><div>Temel okul cebiri ve sinüs ile kosinüsün ne olduğu. M bölümü (matematik araç kutusu) ve F bölümü (fizik araç kutusu), ana bölümler kullanmadan önce vektörleri, matrisleri, türevleri, dönmeyi ve torku anlatıyor.</div></details>
+    <details><summary>Ne kadar sürer?</summary><div>Bir ders 30–50 dakika sürer. İstediğin yerde durabilirsin: ilerlemen bu tarayıcıda hatırlanır.</div></details>
+    <details><summary>Ücretsiz mi?</summary><div>Evet. Kayıt yok, kurulacak bir şey yok. Site senin hakkında hiçbir veri toplamıyor.</div></details>
+    <details><summary>Kaynaklar neden İngilizce?</summary><div>Robotiğin temel kaynakları, Craig'in kitabı ve ders slaytları dahil, çoğunlukla İngilizce. Bu yüzden sözlükteki her terimin yanında İngilizcesi de yazıyor; kaynaklara geçtiğinde yabancılık çekmezsin.</div></details>
   </div>
 </div></section>
 </main>
 
 <footer class="foot"><div class="wrap">
-  © 2026 Kinematics Workshop · Code: MIT · <a href="lessons/glossary.html">Glossary</a> · <a href="{{REPO}}">Source code on GitHub</a>
+  © 2026 Kinematik Atölyesi · Kod: MIT · <a href="lessons/glossary.html">Sözlük</a> · <a href="{{REPO}}">GitHub'da kaynak kod</a>
 </div></footer>
 
 <script>
@@ -138,13 +139,13 @@ document.getElementById('themeBtn').addEventListener('click', () => {
 /* ---------- Program ---------- */
 const READY = {{READY_JSON}}; // published lessons: the PUBLISHED list in site/config.json
 const PARTS = [
-  { id: 'M', t: 'Math toolkit', q: 'The vectors, angles, matrices and derivatives the rest of the course uses', L: [['M.1', 'Vectors and coordinate frames'], ['M.2', 'Trigonometry for robot arms'], ['M.3', 'Matrices as transformations'], ['M.4', 'Special matrices'], ['M.5', 'Derivatives and small changes'], ['CPM', 'Checkpoint: math toolkit', 'check']] },
-  { id: 'F', t: 'Physics toolkit', q: 'How rigid bodies move and turn, and how forces and torques balance', L: [['F.1', 'Rigid bodies and relative motion'], ['F.2', 'Rotation and angular velocity'], ['F.3', 'Force, torque and equilibrium'], ['CPF', 'Checkpoint: physics toolkit', 'check']] },
-  { id: '1', t: 'Manipulators', q: 'What a robot arm is made of and what it can reach', L: [['1.1', 'Joints and degrees of freedom'], ['1.2', 'Arm types and workspaces'], ['CP1', 'Checkpoint: Part 1', 'check']] },
-  { id: '2', t: 'Position and orientation', q: 'How to say where something is and which way it points', L: [['2.1', 'Rotation matrices'], ['2.2', 'Homogeneous transforms'], ['2.3', 'Euler and fixed angles'], ['2.4', 'Axis–angle and quaternions'], ['CP2', 'Checkpoint: Part 2', 'check']] },
-  { id: '3', t: 'Forward kinematics', q: 'From joint angles to where the hand is', L: [['3.1', 'Denavit–Hartenberg parameters'], ['3.2', 'Attaching frames to links'], ['3.3', 'Joint space and Cartesian space'], ['3.4', 'Where is the tool?'], ['CP3', 'Checkpoint: Part 3', 'check']] },
-  { id: '4', t: 'Inverse kinematics', q: 'From where the hand should be to joint angles', L: [['4.1', 'Can the arm reach it?'], ['4.2', 'Multiple solutions'], ['4.3', 'Geometric and algebraic solutions'], ['4.4', "PUMA 560 and Pieper's method"], ['CP4', 'Checkpoint: Part 4', 'check']] },
-  { id: '5', t: 'The Jacobian', q: 'Speeds, singularities and forces', L: [['5.1', 'Velocity and the Jacobian'], ['5.2', 'Singularities'], ['5.3', 'Velocity propagation'], ['5.4', 'Static forces'], ['5.5', 'Driving the arm with the Jacobian'], ['CP5', 'Checkpoint: Part 5', 'check']] },
+  { id: 'M', t: 'Matematik araç kutusu', q: 'Kursun geri kalanının kullandığı vektörler, açılar, matrisler ve türevler', L: [['M.1', 'Vektörler ve koordinat çerçeveleri'], ['M.2', 'Robot kolları için trigonometri'], ['M.3', 'Dönüşüm olarak matrisler'], ['M.4', 'Özel matrisler'], ['M.5', 'Türevler ve küçük değişimler'], ['CPM', 'Ara sınav: matematik araç kutusu', 'check']] },
+  { id: 'F', t: 'Fizik araç kutusu', q: 'Katı cisimler nasıl hareket eder ve döner, kuvvetler ve torklar nasıl dengelenir', L: [['F.1', 'Katı cisimler ve göreli hareket'], ['F.2', 'Dönme ve açısal hız'], ['F.3', 'Kuvvet, tork ve denge'], ['CPF', 'Ara sınav: fizik araç kutusu', 'check']] },
+  { id: '1', t: 'Manipülatörler', q: 'Bir robot kolu neyden yapılır ve nereye ulaşabilir', L: [['1.1', 'Eklemler ve serbestlik dereceleri'], ['1.2', 'Kol tipleri ve çalışma uzayları'], ['CP1', 'Ara sınav: 1. bölüm', 'check']] },
+  { id: '2', t: 'Konum ve yönelim', q: 'Bir şeyin nerede olduğu ve hangi yöne baktığı nasıl söylenir', L: [['2.1', 'Dönme matrisleri'], ['2.2', 'Homojen dönüşümler'], ['2.3', 'Euler ve sabit açılar'], ['2.4', 'Eksen–açı ve kuaterniyonlar'], ['CP2', 'Ara sınav: 2. bölüm', 'check']] },
+  { id: '3', t: 'İleri kinematik', q: 'Eklem açılarından elin nerede olduğuna', L: [['3.1', 'Denavit–Hartenberg parametreleri'], ['3.2', 'Uzuvlara çerçeve yerleştirmek'], ['3.3', 'Eklem uzayı ve Kartezyen uzay'], ['3.4', 'Alet nerede?'], ['CP3', 'Ara sınav: 3. bölüm', 'check']] },
+  { id: '4', t: 'Ters kinematik', q: 'Elin olması gereken yerden eklem açılarına', L: [['4.1', 'Kol oraya ulaşabilir mi?'], ['4.2', 'Birden çok çözüm'], ['4.3', 'Geometrik ve cebirsel çözümler'], ['4.4', 'PUMA 560 ve Pieper yöntemi'], ['CP4', 'Ara sınav: 4. bölüm', 'check']] },
+  { id: '5', t: 'Jakobiyen', q: 'Hızlar, tekillikler ve kuvvetler', L: [['5.1', 'Hız ve Jakobiyen'], ['5.2', 'Tekillikler'], ['5.3', 'Hızın yayılması'], ['5.4', 'Statik kuvvetler'], ['5.5', 'Kolu Jakobiyenle sürmek'], ['CP5', 'Ara sınav: 5. bölüm', 'check']] },
 ];
 (function () {
   const box = document.getElementById('parts');
@@ -156,20 +157,20 @@ const PARTS = [
     const part = document.createElement('div'); part.className = 'part';
     const nLessons = p.L.filter((l) => l[2] !== 'check').length;
     const passed = p.L.filter((l) => l[2] !== 'check' && prog(l[0]) && prog(l[0]).f).length;
-    const h = document.createElement('h3'); h.innerHTML = `<span class="num">${/\d/.test(p.id) ? 'Part ' + p.id : p.id}.</span> `; h.append(p.t);
-    const q = document.createElement('p'); q.className = 'q'; q.textContent = `${p.q}. ${nLessons} lessons${passed ? `, ${passed} completed` : ''}.`;
+    const h = document.createElement('h3'); h.innerHTML = `<span class="num">${/\d/.test(p.id) ? p.id + '. bölüm' : p.id + '.'}</span> `; h.append(p.t);
+    const q = document.createElement('p'); q.className = 'q'; q.textContent = `${p.q}. ${nLessons} ders${passed ? `, ${passed} tamamlandı` : ''}.`;
     const ul = document.createElement('ol'); ul.className = 'lessons';
     p.L.forEach(([n, title, kind]) => {
       const li = document.createElement('li'); li.dataset.n = n;
       li.innerHTML = `<span class="n">${kind === 'check' ? '' : n}</span><span></span>`;
       if (READY[n]) {
         const pr = prog(n);
-        if (pr) li.children[1].insertAdjacentHTML('beforeend', pr.f ? '<span class="lsn-st done" title="Completed" aria-hidden="true">✓</span><span class="sr">Completed. </span>' : '<span class="lsn-st started" title="Started" aria-hidden="true">◐</span><span class="sr">Started. </span>');
+        if (pr) li.children[1].insertAdjacentHTML('beforeend', pr.f ? '<span class="lsn-st done" title="Tamamlandı" aria-hidden="true">✓</span><span class="sr">Tamamlandı. </span>' : '<span class="lsn-st started" title="Başlandı" aria-hidden="true">◐</span><span class="sr">Başlandı. </span>');
         li.dataset.state = pr ? (pr.f ? 'completed' : 'started') : 'available';
         const a = document.createElement('a'); a.href = READY[n]; a.textContent = title; li.children[1].append(a);
       } else {
         li.className = 'na'; li.dataset.state = 'soon';
-        li.children[1].append(title); li.children[1].insertAdjacentHTML('beforeend', ' <span class="tag">· coming soon</span>');
+        li.children[1].append(title); li.children[1].insertAdjacentHTML('beforeend', ' <span class="tag">· yakında</span>');
       }
       ul.append(li);
     });
@@ -179,32 +180,32 @@ const PARTS = [
   // Hero button: continue the started lesson from its furthest section, or open the next unfinished one
   const order = PARTS.flatMap((p) => p.L).filter((l) => READY[l[0]] && l[2] !== 'check');
   const btn = document.getElementById('ctaMain'), note = document.getElementById('ctaProgress');
-  if (order.length) { btn.href = READY[order[0][0]]; btn.querySelector('span').textContent = `Start with ${order[0][0]}`; }
+  if (order.length) { btn.href = READY[order[0][0]]; btn.querySelector('span').textContent = `${order[0][0]} ile başla`; }
   const started = order.filter((l) => prog(l[0]));
   if (!started.length) return;
   const done = order.filter((l) => (prog(l[0]) || {}).f);
   const cur = started.filter((l) => !prog(l[0]).f).sort((a, b) => prog(b[0]).t - prog(a[0]).t)[0];
   const next = order.find((l) => !(prog(l[0]) && prog(l[0]).f));
-  const passed = `Lessons completed: ${done.length} of ${order.length}`;
+  const passed = `Tamamlanan dersler: ${order.length} dersten ${done.length}`;
   if (cur) {
     const pr = prog(cur[0]);
     btn.href = READY[cur[0]] + (pr.sec && pr.sec !== 'top' ? '#' + pr.sec : '');
-    btn.querySelector('span').textContent = `Continue lesson ${cur[0]}`;
-    note.textContent = `${passed}. Now: ${cur[0]} ${cur[1]}.`;
+    btn.querySelector('span').textContent = `${cur[0]} dersine devam et`;
+    note.textContent = `${passed}. Şu an: ${cur[0]} ${cur[1]}.`;
   } else if (next) {
     btn.href = READY[next[0]];
-    btn.querySelector('span').textContent = `Next lesson: ${next[0]}`;
-    note.textContent = `${passed}. Next: ${next[0]} ${next[1]}.`;
+    btn.querySelector('span').textContent = `Sıradaki ders: ${next[0]}`;
+    note.textContent = `${passed}. Sıradaki: ${next[0]} ${next[1]}.`;
   } else {
     btn.href = '#program';
-    btn.querySelector('span').textContent = 'See the program';
-    note.textContent = `All ${order.length} published lessons completed. New ones are on the way.`;
+    btn.querySelector('span').textContent = 'Programa bak';
+    note.textContent = `Yayımlanan ${order.length} dersin hepsi tamamlandı. Yenileri yolda.`;
   }
   note.hidden = false;
   const reset = document.getElementById('progressReset');
   reset.hidden = false;
   reset.querySelector('button').addEventListener('click', () => {
-    if (!confirm('Reset the completed-lesson marks in this browser?')) return;
+    if (!confirm('Bu tarayıcıdaki tamamlanan ders işaretleri sıfırlansın mı?')) return;
     try { localStorage.removeItem('kw-progress'); } catch (e) { /* nothing to reset */ }
     location.reload();
   });

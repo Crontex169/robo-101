@@ -10,18 +10,18 @@
   const doc = document.documentElement;
   window.addEventListener('scroll', () => { $('#progress').style.width = (doc.scrollTop / Math.max(1, doc.scrollHeight - doc.clientHeight) * 100).toFixed(2) + '%'; }, { passive: true });
   if (!G.length) { $('#glEmpty').hidden = false; $('#glSearch').hidden = true; return; }
-  const norm = (s) => s.toLowerCase();
-  const first = (t) => { const c = t.trim()[0].toUpperCase(); return /[A-Z]/.test(c) ? c : '#'; };
-  const items = G.slice().sort((a, b) => a.t.localeCompare(b.t, 'en'));
+  const norm = (s) => s.toLocaleLowerCase('tr');
+  const first = (t) => { const c = t.trim()[0].toLocaleUpperCase('tr'); return /[A-ZÇĞİÖŞÜ]/.test(c) ? c : '#'; };
+  const items = G.slice().sort((a, b) => a.t.localeCompare(b.t, 'tr'));
   const list = $('#glList'), abc = $('#glAbc');
   const groups = [];
   items.forEach((g) => { const L = first(g.t); let grp = groups[groups.length - 1]; if (!grp || grp.L !== L) { grp = { L, items: [] }; groups.push(grp); } grp.items.push(g); });
   groups.forEach((grp) => {
     const box = h('div', { class: 'gl-group', id: 'letter-' + grp.L }, h('div', { class: 'gl-letter' }, grp.L));
     grp.items.forEach((g) => {
-      box.append(h('article', { class: 'card gl-item', id: g.id, 'data-s': norm([g.t, g.d].join(' ')) },
-        h('h3', null, g.t), h('p', null, g.d),
-        h('a', { class: 'gl-from', href: g.href }, `Lesson ${g.n}${g.st ? ` · ${g.st}` : ''} →`)));
+      box.append(h('article', { class: 'card gl-item', id: g.id, 'data-s': norm([g.t, g.en || '', g.d].join(' ')) },
+        h('h3', null, g.t, g.en ? h('span', { class: 'gl-en' }, ` (${g.en})`) : ''), h('p', null, g.d),
+        h('a', { class: 'gl-from', href: g.href }, `Ders ${g.n}${g.st ? ` · ${g.st}` : ''} →`)));
     });
     list.append(box);
     abc.append(h('a', { href: '#letter-' + grp.L }, grp.L));
@@ -30,7 +30,7 @@
   function filter() {
     const s = norm(q.value.trim()); let n = 0;
     $$('.gl-group').forEach((grp) => { let k = 0; $$('.gl-item', grp).forEach((it) => { const ok = !s || it.dataset.s.includes(s); it.hidden = !ok; if (ok) k++; }); grp.hidden = !k; n += k; });
-    count.textContent = s ? `${n} of ${items.length}` : `${items.length} ${items.length === 1 ? 'term' : 'terms'}`;
+    count.textContent = s ? `${items.length} terimden ${n} tanesi` : `${items.length} terim`;
     $('#glNone').hidden = n > 0;
   }
   q.addEventListener('input', filter); filter();

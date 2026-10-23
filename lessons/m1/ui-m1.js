@@ -87,7 +87,7 @@ const Arrows = (() => {
       text(c, k, 'a', Vec.scale(st.a1, 0.5), P.a, -12, -12); text(c, k, 'b', Vec.add(st.a1, Vec.scale(st.b, 0.5)), P.b, 12, -12);
       knob(c, P, st.a1, act === 'a'); knob(c, P, end, act === 'b');
     }
-    const r = st.mode === 'match' ? `a = <b>${fmt(a())}</b> · dashed arrow = <b>${fmt(MATCH)}</b>`
+    const r = st.mode === 'match' ? `a = <b>${fmt(a())}</b> · kesikli ok = <b>${fmt(MATCH)}</b>`
       : st.mode === 'sum' ? `a = <b>${fmt(A2)}</b> · b = <b>${fmt(B2)}</b>${st.added ? ` · a + b = <b>${fmt(Vec.add(A2, B2))}</b>` : ''}`
       : `a = <b>${fmt(st.a1)}</b> · b = <b>${fmt(st.b)}</b> · a + b = <b>${fmt(Vec.add(st.a1, st.b))}</b>`;
     setOut($('#arrowsOut'), r);
@@ -104,30 +104,30 @@ const Arrows = (() => {
     },
   };
   const missions = [
-    { short: 'Match', title: 'Same vector, different place', text: 'The dashed arrow is a vector. Drag the two ends of the blue arrow <b>a</b> until it is the same vector: same length, same direction. It doesn\'t have to sit on top of the dashed one.',
+    { short: 'Eşle', title: 'Aynı vektör, farklı yer', text: 'Kesikli ok bir vektör. Mavi <b>a</b> okunun iki ucunu, aynı vektör olana kadar sürükle: aynı uzunluk, aynı yön. Kesikli okun üstüne oturması gerekmiyor.',
       onEnter: () => { st.mode = 'match'; sync(); },
-      criteria: [{ label: 'a has the same length and direction as the dashed arrow', test: (r, s) => Vec.near(s.a, MATCH, 0.25) }],
-      hint: 'Put the tip 3 squares to the right of the tail and 2 squares above it.',
-      explain: (s) => `a = ${fmt(s.a)}, the same as the dashed arrow, although the two start in different places. A vector is only a length and a direction; where you draw it is up to you.` },
-    { short: 'Predict', title: 'Predict the sum', text: 'Arrow <b>a</b> goes 3 right and 1 up from the dot in the middle. Arrow <b>b</b> goes 1 left and 2 up. You\'re about to slide b so that it starts where a ends. The sum a + b is the arrow from the dot to b\'s new tip.',
+      criteria: [{ label: 'a, kesikli okla aynı uzunlukta ve aynı yönde', test: (r, s) => Vec.near(s.a, MATCH, 0.25) }],
+      hint: 'Ucu, kuyruğun 3 kare sağına ve 2 kare yukarısına koy.',
+      explain: (s) => `a = ${fmt(s.a)}, kesikli okla aynı; oysa ikisi farklı yerlerden başlıyor. Vektör yalnızca bir uzunluk ve bir yön; nereye çizeceğin sana kalmış.` },
+    { short: 'Tahmin', title: 'Toplamı tahmin et', text: '<b>a</b> oku ortadaki noktadan 3 sağa ve 1 yukarı gidiyor. <b>b</b> oku 1 sola ve 2 yukarı gidiyor. Şimdi b\'yi, a\'nın bittiği yerden başlayacak şekilde kaydıracaksın. a + b toplamı, noktadan b\'nin yeni ucuna giden oktur.',
       onEnter: () => { st.mode = 'sum'; st.bTail = B2_PARK; st.added = false; sync(); },
-      bet: { q: 'Where does a + b end?', options: ['(4, 3)', '(2, 3)', '(−3, 2)'], answer: () => 1 },
-      action: { label: 'Put b on the tip of a', run: () => api.addB() },
-      criteria: [{ label: 'You added the two arrows', test: (r) => r != null }],
-      explain: (r) => `a + b = (3 − 1, 1 + 2) = ${fmt(r.sum)}. Head to tail on the grid, and in numbers: add the x parts, then add the y parts.` },
-    { short: 'Reach', title: 'Two arrows to the target', text: 'Now <b>a</b> starts at the dot and <b>b</b> starts wherever a ends. Drag the two tips so that b ends on the green target. Each arrow must be at least one square long.',
+      bet: { q: 'a + b nerede biter?', options: ['(4, 3)', '(2, 3)', '(−3, 2)'], answer: () => 1 },
+      action: { label: 'b\'yi a\'nın ucuna koy', run: () => api.addB() },
+      criteria: [{ label: 'İki oku topladın', test: (r) => r != null }],
+      explain: (r) => `a + b = (3 − 1, 1 + 2) = ${fmt(r.sum)}. Izgarada uç uca; sayılarda ise önce x parçalarını, sonra y parçalarını topla.` },
+    { short: 'Ulaş', title: 'İki okla hedefe', text: 'Şimdi <b>a</b> noktadan başlıyor, <b>b</b> de a nerede bitiyorsa oradan. İki ucu, b yeşil hedefte bitecek şekilde sürükle. Her ok en az bir kare uzunluğunda olmalı.',
       onEnter: () => { st.mode = 'chain'; st.a1 = [2, 0]; st.b = [0, 1]; sync(); },
       criteria: [
-        { label: 'b ends on the target', test: (r, s) => Vec.near(s.end, TARGET, 0.25) },
-        { label: 'Both arrows are at least 1 square long', test: (r, s) => Vec.len(s.a) >= 1 && Vec.len(s.b) >= 1 },
+        { label: 'b hedefte bitiyor', test: (r, s) => Vec.near(s.end, TARGET, 0.25) },
+        { label: 'İki ok da en az 1 kare uzunluğunda', test: (r, s) => Vec.len(s.a) >= 1 && Vec.len(s.b) >= 1 },
       ],
-      hint: 'The target is 4 right and 3 up. Any a works if b makes up the rest: try a = (2, 2) and b = (2, 1).',
-      explain: (s) => `a = ${fmt(s.a)} and b = ${fmt(s.b)} add up to ${fmt(Vec.add(s.a, s.b))}. Many pairs reach the target; it only fixes the sum. A robot arm works the same way: each link is a vector, and the hand sits at the sum of the links.` },
-    { short: 'Free play', title: 'Free play', text: 'Move both tips. The dashed orange arrow is always a + b. Can you make the sum zero?', final: true, onEnter: () => { st.mode = 'free'; sync(); } },
+      hint: 'Hedef 4 sağda ve 3 yukarıda. b geri kalanı tamamladığı sürece her a olur: a = (2, 2) ve b = (2, 1) dene.',
+      explain: (s) => `a = ${fmt(s.a)} ve b = ${fmt(s.b)}, toplamda ${fmt(Vec.add(s.a, s.b))} ediyor. Hedefe ulaşan pek çok çift var; hedef yalnızca toplamı belirliyor. Robot kolu da böyle çalışır: her uzuv bir vektördür ve el, uzuvların toplamında durur.` },
+    { short: 'Serbest', title: 'Serbest oyun', text: 'İki ucu da hareket ettir. Kesikli turuncu ok her zaman a + b. Toplamı sıfır yapabilir misin?', final: true, onEnter: () => { st.mode = 'free'; sync(); } },
   ];
   function init() {
     const cv = $('#arrowsCv');
-    kb = handles(cv, { names, pos, set, redraw: draw, say: (n) => `${n === 'tail' ? 'Tail of a' : n === 'tip' || n === 'a' ? 'Tip of a' : 'Tip of b'} at ${fmt(pos(n))}` });
+    kb = handles(cv, { names, pos, set, redraw: draw, say: (n) => `${n === 'tail' ? 'a\'nın kuyruğu' : n === 'tip' || n === 'a' ? 'a\'nın ucu' : 'b\'nin ucu'}: ${fmt(pos(n))}` });
     HeroKit.onTheme(draw); window.addEventListener('resize', draw);
     ctl = Missions.mount('#arrowsMis', missions, api);
     sync();
@@ -148,11 +148,11 @@ const Parts = (() => {
     arrow(c, [0, 0], v, P.ink, 3);
     if (u) { arrow(c, [0, 0], u, P.b, 5); }
     knob(c, P, v, kb && kb.active === 'tip');
-    setOut($('#partsOut'), `v = <b>${fmt(v)}</b> · length <b>${Vec.num(L, 2)}</b> · unit vector ${u ? `<b>${fmt(u, 2)}</b>` : '<b>undefined</b>: an arrow of length zero points nowhere'}`);
+    setOut($('#partsOut'), `v = <b>${fmt(v)}</b> · uzunluk <b>${Vec.num(L, 2)}</b> · birim vektör ${u ? `<b>${fmt(u, 2)}</b>` : '<b>tanımsız</b>: uzunluğu sıfır olan bir ok hiçbir yöne bakmaz'}`);
   }
   function set(n, p) { v = p; draw(); }
   function init() {
-    kb = handles($('#partsCv'), { names: () => ['tip'], pos: () => v, set, redraw: draw, say: () => `Tip at ${fmt(v)}, length ${Vec.num(Vec.len(v), 2)}` });
+    kb = handles($('#partsCv'), { names: () => ['tip'], pos: () => v, set, redraw: draw, say: () => `Uç: ${fmt(v)}, uzunluk ${Vec.num(Vec.len(v), 2)}` });
     HeroKit.onTheme(draw); window.addEventListener('resize', draw);
     draw();
     return { set: (p) => set('tip', p) };
@@ -191,21 +191,21 @@ const TwoFrames = (() => {
     async show() { st.reveal = true; draw(); return { pA: Vec.toParent(pB(), st.oB) }; },
   };
   const missions = [
-    { short: 'Predict', title: 'P seen from {A}', text: '{B}\'s origin sits at (2, 1) in {A}, and P sits at (1, 3) in {B}. Where is P in {A}?',
+    { short: 'Tahmin', title: '{A}\'dan bakınca P', text: '{B}\'nin orijini {A}\'da (2, 1) noktasında, P ise {B}\'de (1, 3) noktasında. P, {A}\'da nerede?',
       onEnter: () => { st.mode = 'predict'; st.oB = [2, 1]; st.P = [3, 4]; st.reveal = false; sync(); },
-      bet: { q: 'Where is P in {A}?', options: ['(1, 2)', '(3, 4)', '(−1, −2)'], answer: () => 1 },
-      action: { label: 'Show P in {A}', run: () => api.show() },
-      criteria: [{ label: 'You revealed P in {A}', test: (r) => r != null }],
-      explain: (r) => `${sup('A')} = (2, 1) + (1, 3) = ${fmt(r.pA)}. From {A}'s origin, walk to {B}'s origin, then on to P: two arrows head to tail, as in the first lab.` },
-    { short: 'Place {B}', title: 'Move the frame, not the point', text: 'P is fixed at (1, 1) in {A}. Drag frame {B} until P sits at (−1, 2) in {B}: one unit to the left of {B}\'s origin and two up.',
+      bet: { q: 'P, {A}\'da nerede?', options: ['(1, 2)', '(3, 4)', '(−1, −2)'], answer: () => 1 },
+      action: { label: 'P\'yi {A}\'da göster', run: () => api.show() },
+      criteria: [{ label: 'P\'nin {A}\'daki yerini açtın', test: (r) => r != null }],
+      explain: (r) => `${sup('A')} = (2, 1) + (1, 3) = ${fmt(r.pA)}. {A}'nın orijininden {B}'nin orijinine, oradan da P'ye yürü: ilk laboratuvardaki gibi uç uca iki ok.` },
+    { short: '{B}\'yi yerleştir', title: 'Noktayı değil çerçeveyi taşı', text: 'P, {A}\'da (1, 1) noktasında sabit. {B} çerçevesini, P {B}\'de (−1, 2) noktasına gelene kadar sürükle: {B}\'nin orijininin bir birim solu ve iki birim yukarısı.',
       onEnter: () => { st.mode = 'place'; st.P = [1, 1]; st.oB = [-3, -2]; sync(); },
       criteria: [{ label: `${sup('B')} = (−1, 2)`, test: (r, s) => Vec.near(s.pB, [-1, 2], 0.25) }],
-      hint: 'P must be 1 to the left of {B}\'s origin, so the origin is 1 to the right of P; and 2 below it.',
-      explain: (s) => `{B}'s origin is at ${fmt(s.oB)} in {A}. Check: (1, 1) − (2, −1) = (−1, 2). Going from {A} to {B}, you subtract {B}'s origin instead of adding it.` },
-    { short: 'Free play', title: 'Free play', text: 'Drag {B} and P anywhere. The three readouts always fit together: the first plus the second is the third.', final: true, onEnter: () => { st.mode = 'free'; sync(); } },
+      hint: 'P, {B}\'nin orijininin 1 solunda olmalı; yani orijin P\'nin 1 sağında, ve 2 aşağısında.',
+      explain: (s) => `{B}'nin orijini {A}'da ${fmt(s.oB)} noktasında. Kontrol: (1, 1) − (2, −1) = (−1, 2). {A}'dan {B}'ye geçerken {B}'nin orijinini eklemek yerine çıkarırsın.` },
+    { short: 'Serbest', title: 'Serbest oyun', text: '{B}\'yi ve P\'yi istediğin yere sürükle. Üç okuma her zaman birbirini tutar: birincisi artı ikincisi üçüncüyü verir.', final: true, onEnter: () => { st.mode = 'free'; sync(); } },
   ];
   function init() {
-    kb = handles($('#framesCv'), { names, pos, set, redraw: draw, say: (n) => (n === 'B' ? `Origin of {B} at ${fmt(st.oB)} in {A}` : `P at ${fmt(st.P)} in {A}, ${fmt(pB())} in {B}`) });
+    kb = handles($('#framesCv'), { names, pos, set, redraw: draw, say: (n) => (n === 'B' ? `{B}'nin orijini, {A}'da ${fmt(st.oB)}` : `P, {A}'da ${fmt(st.P)}, {B}'de ${fmt(pB())}`) });
     HeroKit.onTheme(draw); window.addEventListener('resize', draw);
     ctl = Missions.mount('#framesMis', missions, api);
     sync();
@@ -240,8 +240,8 @@ const ThreeD = (() => {
     c.beginPath(); c.arc(O3.x, O3.y, 5, 0, 7); c.fillStyle = P.ink; c.fill();
     const h = Vec.handedness(...ax), flipped = 'xyz'.split('').filter((_, i) => st.flip[i] < 0);
     setOut($('#threeOut'), h === 'right'
-      ? `<b>Right-handed.</b> Curl your right hand's fingers from x towards y: your thumb points along z.${flipped.length ? ` (Flipped: ${flipped.join(' and ')}.)` : ''}`
-      : `<b>Left-handed.</b> Flipped: ${flipped.join(', ')}. Your right thumb now points against z; only the left hand fits.`);
+      ? `<b>Sağ elli.</b> Sağ elinin parmaklarını x'ten y'ye doğru kıvır: başparmağın z yönünü gösterir.${flipped.length ? ` (Ters çevrilen: ${flipped.join(' ve ')}.)` : ''}`
+      : `<b>Sol elli.</b> Ters çevrilen: ${flipped.join(', ')}. Sağ başparmağın artık z'nin tersini gösteriyor; yalnızca sol el uyuyor.`);
     ['X', 'Y', 'Z'].forEach((n, i) => $('#flip' + n).setAttribute('aria-pressed', String(st.flip[i] < 0)));
   }
   function turn(dyaw, dpitch) { st.yaw = (st.yaw + dyaw) % 360; st.pitch = Math.max(-80, Math.min(80, st.pitch + dpitch)); draw(); }
@@ -263,14 +263,14 @@ const ThreeD = (() => {
 
 /* ---------- Quiz ---------- */
 const QUIZ = [
-  { q: 'Two arrows have the same length and point the same way, but start in different places. Are they the same vector?', o: ['No, the start matters', 'Yes', 'Only if they also end in the same place'], a: 1, e: 'A vector is a length and a direction, nothing more. Where you draw it doesn\'t change it.' },
-  { q: 'Can the length of a vector be negative?', o: ['Yes, when it points left', 'No, a length is never negative', 'Only in 3D'], a: 1, e: 'A vector pointing left has a negative x component, but its length is a distance, so it is zero or more.' },
-  { q: 'Is a + b the same as b + a?', o: ['Yes', 'No, the order matters', 'Only for unit vectors'], a: 0, e: 'Head to tail in either order ends at the same point, and in numbers each component is a plain sum.' },
-  { q: 'What is (2, −1) + (−3, 4)?', o: ['(−1, 3)', '(5, −5)', '(−1, −5)'], a: 0, e: 'Add the x parts and the y parts separately: (2 − 3, −1 + 4) = (−1, 3).' },
-  { q: 'How long is the vector (5, 12)?', o: ['17', '13', '60'], a: 1, e: 'Pythagoras: √(25 + 144) = √169 = 13. Adding the components (17) is a common slip.' },
-  { q: 'You flip only the z axis of a right-handed frame. What do you get?', o: ['A right-handed frame', 'A left-handed frame', 'No frame at all'], a: 1, e: 'One flip turns a right-handed frame into its mirror image. A second flip turns it back.' },
-  { q: '{B}\'s origin is at (4, 0) in {A}, and a point is at (1, 2) in {B}. Where is it in {A}?', o: ['(3, −2)', '(5, 2)', '(4, 2)'], a: 1, e: 'Head to tail: (4, 0) + (1, 2) = (5, 2).' },
-  { q: 'A point is at (3, 3) in {A}, and {B}\'s origin is at (1, 2) in {A}. Where is the point in {B}?', o: ['(4, 5)', '(2, 1)', '(−2, −1)'], a: 1, e: 'Going from {A} to {B}, subtract {B}\'s origin: (3 − 1, 3 − 2) = (2, 1). The same point has different coordinates in different frames.' },
+  { q: 'İki okun uzunluğu aynı ve aynı yöne bakıyorlar, ama farklı yerlerden başlıyorlar. Aynı vektör müdürler?', o: ['Hayır, başlangıç önemli', 'Evet', 'Ancak aynı yerde de bitiyorlarsa'], a: 1, e: 'Vektör bir uzunluk ve bir yöndür, fazlası değil. Nereye çizdiğin onu değiştirmez.' },
+  { q: 'Bir vektörün uzunluğu negatif olabilir mi?', o: ['Evet, sola bakıyorsa', 'Hayır, uzunluk asla negatif olmaz', 'Sadece 3B\'de'], a: 1, e: 'Sola bakan bir vektörün x bileşeni negatiftir, ama uzunluğu bir mesafedir; sıfır ya da daha büyüktür.' },
+  { q: 'a + b ile b + a aynı mıdır?', o: ['Evet', 'Hayır, sıra önemli', 'Sadece birim vektörler için'], a: 0, e: 'Hangi sırayla uç uca koyarsan koy aynı noktada bitersin; sayılarda da her bileşen düz bir toplamdır.' },
+  { q: '(2, −1) + (−3, 4) kaçtır?', o: ['(−1, 3)', '(5, −5)', '(−1, −5)'], a: 0, e: 'x parçalarını ve y parçalarını ayrı ayrı topla: (2 − 3, −1 + 4) = (−1, 3).' },
+  { q: '(5, 12) vektörünün uzunluğu kaçtır?', o: ['17', '13', '60'], a: 1, e: 'Pisagor: √(25 + 144) = √169 = 13. Bileşenleri toplamak (17) sık yapılan bir hata.' },
+  { q: 'Sağ elli bir çerçevenin yalnızca z eksenini ters çeviriyorsun. Ne elde edersin?', o: ['Sağ elli bir çerçeve', 'Sol elli bir çerçeve', 'Hiç çerçeve kalmaz'], a: 1, e: 'Tek bir ters çevirme, sağ elli çerçeveyi ayna görüntüsüne dönüştürür. İkinci bir ters çevirme geri getirir.' },
+  { q: '{B}\'nin orijini {A}\'da (4, 0) noktasında, bir nokta da {B}\'de (1, 2) noktasında. Bu nokta {A}\'da nerede?', o: ['(3, −2)', '(5, 2)', '(4, 2)'], a: 1, e: 'Uç uca: (4, 0) + (1, 2) = (5, 2).' },
+  { q: 'Bir nokta {A}\'da (3, 3) noktasında, {B}\'nin orijini de {A}\'da (1, 2) noktasında. Nokta {B}\'de nerede?', o: ['(4, 5)', '(2, 1)', '(−2, −1)'], a: 1, e: '{A}\'dan {B}\'ye geçerken {B}\'nin orijinini çıkar: (3 − 1, 3 − 2) = (2, 1). Aynı noktanın farklı çerçevelerde farklı koordinatları vardır.' },
 ];
 function initQuiz() { Quiz.render('#quizBox', QUIZ, '#quizScore'); }
 

@@ -41,7 +41,7 @@ const Arm = (() => {
     const [tx, ty] = toPx(TARGET); c.setLineDash([5, 4]); c.strokeStyle = P.good; c.lineWidth = 2.5; c.beginPath(); c.arc(tx, ty, 0.03 * S, 0, 7); c.stroke(); c.setLineDash([]);
     drawArm(c, P, [L1, L2], st.q);
     const [x, y] = tip();
-    setOut($('#armOut'), `Hand: x = <b>${fmt(x)} m</b>, y = <b>${fmt(y)} m</b> · distance to target <b>${fmt(dist() * 100, 0)} cm</b>`);
+    setOut($('#armOut'), `El: x = <b>${fmt(x)} m</b>, y = <b>${fmt(y)} m</b> · hedefe uzaklık <b>${fmt(dist() * 100, 0)} cm</b>`);
   }
   function sync() {
     [['#armQ1', 0], ['#armQ2', 1]].forEach(([sel, i]) => { const inp = $(sel); inp.value = Math.round(deg(st.q[i])); inp.nextElementSibling.textContent = `${inp.value}°`; setRangeFill(inp); });
@@ -60,17 +60,17 @@ const Arm = (() => {
     },
   };
   const missions = [
-    { short: 'Target', title: 'Touch the target', text: 'Turn the joints until the hand is within 3 cm of the green target. Drag the elbow or the hand, or use the sliders.',
-      criteria: [{ label: 'Hand within 3 cm of the target', test: (r, s) => s.dist < 0.03 }],
-      hint: 'The target is up and to the left of the base. Swing the shoulder past 90° first, then bend the elbow back.',
-      explain: (s) => `Joint angles θ₁ = ${fmt(s.q[0], 0)}°, θ₂ = ${fmt(s.q[1], 0)}°. Two numbers fixed the whole pose, and the hand's position followed from them: that's forward kinematics.` },
-    { short: 'Predict', title: 'Predict, then check', text: 'The arm is now stretched along the table with the elbow bent a little. You are about to bend the elbow by another 20°.',
+    { short: 'Hedef', title: 'Hedefe dokun', text: 'Eklemleri, el yeşil hedefin 3 cm yakınına gelene kadar döndür. Dirseği ya da eli sürükle, veya kaydırıcıları kullan.',
+      criteria: [{ label: 'El hedefin 3 cm yakınında', test: (r, s) => s.dist < 0.03 }],
+      hint: 'Hedef tabanın sol yukarısında. Önce omzu 90°\'nin ötesine savur, sonra dirseği geri bük.',
+      explain: (s) => `Eklem açıları θ₁ = ${fmt(s.q[0], 0)}°, θ₂ = ${fmt(s.q[1], 0)}°. İki sayı bütün duruşu belirledi, elin konumu da onlardan çıktı: ileri kinematik bu.` },
+    { short: 'Tahmin', title: 'Önce tahmin, sonra kontrol', text: 'Kol şimdi masa boyunca uzanmış, dirsek biraz bükülü. Dirseği 20° daha bükmek üzeresin.',
       onEnter: () => setAngles(0, 30),
-      bet: { q: 'Where will the hand go?', options: ['Up', 'Down', 'Nowhere'], answer: (r) => (r.dy > 0 ? 0 : 1) },
-      action: { label: 'Bend the elbow +20°', run: () => api.bend(20) },
-      criteria: [{ label: 'You bent the elbow and watched the hand', test: (r) => r != null }],
-      explain: (r) => `The hand went up by ${fmt(r.dy * 100, 0)} cm. A positive angle turns the forearm counterclockwise around the elbow, and from this pose that lifts the hand.` },
-    { short: 'Free play', title: 'Free play', text: 'Move the arm however you like. Can you find two different poses that put the hand on the same point?', final: true },
+      bet: { q: 'El nereye gidecek?', options: ['Yukarı', 'Aşağı', 'Hiçbir yere'], answer: (r) => (r.dy > 0 ? 0 : 1) },
+      action: { label: 'Dirseği +20° bük', run: () => api.bend(20) },
+      criteria: [{ label: 'Dirseği büktün ve eli izledin', test: (r) => r != null }],
+      explain: (r) => `El ${fmt(r.dy * 100, 0)} cm yukarı çıktı. Pozitif bir açı ön kolu dirsek etrafında saat yönünün tersine döndürür; bu duruşta bu, eli kaldırır.` },
+    { short: 'Serbest', title: 'Serbest oyun', text: 'Kolu istediğin gibi hareket ettir. Eli aynı noktaya koyan iki farklı duruş bulabilir misin?', final: true },
   ];
   function init() {
     const cv = $('#armCv');
@@ -87,7 +87,7 @@ const Arm = (() => {
     HeroKit.keys(cv, { // keyboard twin of the drag: the elbow handle turns the shoulder, the hand handle turns the elbow, 5° per key (1° with Shift)
       handles: ['elbow', 'hand'],
       move(n, dx, dy) { if (animating) return; const d = (dx + dy) * 10, q = st.q.map(deg); if (n === 'elbow') setAngles(q[0] + d, q[1]); else setAngles(q[0], q[1] + d); },
-      describe: (n) => (n === 'elbow' ? `Shoulder θ₁ = ${Math.round(deg(st.q[0]))}°` : `Elbow θ₂ = ${Math.round(deg(st.q[1]))}°`),
+      describe: (n) => (n === 'elbow' ? `Omuz θ₁ = ${Math.round(deg(st.q[0]))}°` : `Dirsek θ₂ = ${Math.round(deg(st.q[1]))}°`),
     });
     HeroKit.onTheme(draw); window.addEventListener('resize', draw);
     ctl = Missions.mount('#armMis', missions, api);
@@ -109,7 +109,7 @@ const Reach = (() => {
     c.strokeStyle = P.good; c.lineWidth = 2; c.beginPath(); c.arc(O.x, O.y, r.outer * S, 0, 7); c.stroke();
     if (r.inner > 0) { c.beginPath(); c.arc(O.x, O.y, r.inner * S, 0, 7); c.stroke(); }
     drawArm(c, P, [L1, l2], [rad(35), rad(110)]);
-    setOut($('#reachOut'), `The hand reaches from <b>${fmt(r.inner)} m</b> to <b>${fmt(r.outer)} m</b> from the base.${r.inner === 0 ? ' Equal links: the ring is a full disc.' : ''}`);
+    setOut($('#reachOut'), `El, tabandan <b>${fmt(r.inner)} m</b> ile <b>${fmt(r.outer)} m</b> arasına ulaşıyor.${r.inner === 0 ? ' Uzuvlar eşit: halka dolu bir disk.' : ''}`);
   }
   function init() {
     const inp = $('#reachL2');
@@ -123,14 +123,14 @@ const Reach = (() => {
 /* ---------- Quiz ---------- */
 function initQuiz() {
   Quiz.render('#quizBox', [
-    { q: 'What does forward kinematics compute?', o: ['Joint angles from the hand position', 'The hand position from the joint angles', 'The forces in the joints'], a: 1, e: 'Forward: angles in, hand position out. The other direction is inverse kinematics.' },
-    { q: 'Does the elbow angle θ₂ in this lesson measure the forearm against the table?', o: ['Yes', 'No, against the first link', 'No, against the target'], a: 1, e: 'Each joint angle is measured relative to the previous link, so the forearm points along θ₁ + θ₂.' },
-    { q: 'How far can a 0.5 m + 0.4 m arm reach?', o: ['0.4 m', '0.5 m', '0.9 m'], a: 2, e: 'Fully stretched, the links line up: 0.5 + 0.4 = 0.9 m.' },
-    { q: 'Can that arm touch a point 5 cm from its base?', o: ['Yes, by folding', 'No, the closest it gets is 0.1 m', 'Only with a third joint'], a: 1, e: 'Folded back, the hand is |0.5 − 0.4| = 0.1 m from the base. Anything closer is outside the workspace.' },
-    { q: 'What is the workspace of a two-link planar arm?', o: ['A ring around the base', 'A square', 'A single circle line'], a: 0, e: 'Between the folded and the stretched radius every distance is possible, in every direction: a ring.' },
-    { q: 'If both links are equally long, the workspace is…', o: ['a ring with a hole', 'a full disc', 'empty'], a: 1, e: 'The inner radius |L₁ − L₂| is zero, so the hand can reach the base itself.' },
-    { q: 'How many joint angles fix the pose of this arm?', o: ['One', 'Two', 'Four'], a: 1, e: 'One per joint: θ₁ and θ₂.' },
-    { q: 'Can two different poses put the hand on the same point?', o: ['Never', 'Yes, elbow up and elbow down', 'Only at the base'], a: 1, e: 'Inside the ring there are two solutions, mirrored across the line from the base to the hand. Part 4 is all about this.' },
+    { q: 'İleri kinematik neyi hesaplar?', o: ['El konumundan eklem açılarını', 'Eklem açılarından el konumunu', 'Eklemlerdeki kuvvetleri'], a: 1, e: 'İleri: açılar girer, el konumu çıkar. Öbür yön ters kinematik.' },
+    { q: 'Bu dersteki dirsek açısı θ₂, ön kolu masaya göre mi ölçer?', o: ['Evet', 'Hayır, birinci uzva göre', 'Hayır, hedefe göre'], a: 1, e: 'Her eklem açısı bir önceki uzva göre ölçülür; bu yüzden ön kol θ₁ + θ₂ yönünde uzanır.' },
+    { q: '0.5 m + 0.4 m\'lik bir kol ne kadar uzağa ulaşabilir?', o: ['0.4 m', '0.5 m', '0.9 m'], a: 2, e: 'Tamamen gerildiğinde uzuvlar aynı doğrultuya gelir: 0.5 + 0.4 = 0.9 m.' },
+    { q: 'Bu kol tabanından 5 cm uzaktaki bir noktaya dokunabilir mi?', o: ['Evet, katlanarak', 'Hayır, en yakın 0.1 m\'ye gelebilir', 'Ancak üçüncü bir eklemle'], a: 1, e: 'Geri katlandığında el tabandan |0.5 − 0.4| = 0.1 m uzaktadır. Daha yakını çalışma uzayının dışında.' },
+    { q: 'İki uzuvlu düzlemsel bir kolun çalışma uzayı nedir?', o: ['Tabanın çevresinde bir halka', 'Bir kare', 'Tek bir çember çizgisi'], a: 0, e: 'Katlanmış ve gerilmiş yarıçap arasındaki her uzaklık, her yönde mümkün: bir halka.' },
+    { q: 'İki uzuv eşit uzunluktaysa çalışma uzayı…', o: ['delikli bir halkadır', 'dolu bir disktir', 'boştur'], a: 1, e: 'İç yarıçap |L₁ − L₂| sıfır olur; el tabanın kendisine ulaşabilir.' },
+    { q: 'Bu kolun duruşunu kaç eklem açısı belirler?', o: ['Bir', 'İki', 'Dört'], a: 1, e: 'Eklem başına bir: θ₁ ve θ₂.' },
+    { q: 'İki farklı duruş eli aynı noktaya koyabilir mi?', o: ['Asla', 'Evet, dirsek yukarı ve dirsek aşağı', 'Sadece tabanda'], a: 1, e: 'Halkanın içinde, tabandan ele giden doğruya göre birbirinin aynası olan iki çözüm var. 4. bölüm tamamen bununla ilgili.' },
   ], '#quizScore');
 }
 

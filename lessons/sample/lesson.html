@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sample lesson — Kinematics Workshop</title>
-<meta name="description" content="Template lesson for authors: every building block a Kinematics Workshop lesson can use, on a two-link planar arm. Not part of the course.">
+<title>Örnek ders — Kinematik Atölyesi</title>
+<meta name="description" content="Yazarlar için şablon ders: bir Kinematik Atölyesi dersinin kullanabileceği bütün yapı taşları, iki uzuvlu düzlemsel bir kol üzerinde. Kursun bir parçası değil.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -18,25 +18,26 @@
 <body>
 <!--
   Sample lesson: copy this file to start a new lesson. It shows every block a lesson can use:
-  plain header, warm-up, a lab with missions, a small interactive, prose with "Under the hood",
-  a margin note (<aside class="mnote">), a research thinking block (<div class="research">),
-  the quiz, related papers (<article class="paper">) and the wrap-up.
+  plain header, warm-up, a lab with missions, a small interactive, prose with "Under the hood"
+  ("Perde arkası"), a margin note (<aside class="mnote">), a research thinking block
+  (<div class="research">), the quiz, related papers (<article class="paper">) and the wrap-up.
   Markup for the three research blocks: specs/002-plain-redesign/contracts/lesson-blocks.md.
+  Reader-facing text is Turkish (constitution, Scope and Language); paper titles stay as published.
   Keep the page plain (constitution VII): no labels above headings, no badges, no shadows.
 -->
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="../index.html#program" title="Back to the course program">Kinematics Workshop<small>Sample lesson</small></a>
-    <nav class="toc" aria-label="Lesson sections">
-      <a href="#arm">Lab</a>
-      <a href="#reach">Reach</a>
-      <a href="#why">Formulas</a>
-      <a href="#quiz">Quiz</a>
-      <a href="#papers" data-block="papers">Papers</a>
-      <a href="#finale">Wrap-up</a>
+    <a class="brand" href="../index.html#program" title="Kurs programına dön">Kinematik Atölyesi<small>Örnek ders</small></a>
+    <nav class="toc" aria-label="Ders bölümleri">
+      <a href="#arm">Laboratuvar</a>
+      <a href="#reach">Erişim</a>
+      <a href="#why">Formüller</a>
+      <a href="#quiz">Test</a>
+      <a href="#papers" data-block="papers">Makaleler</a>
+      <a href="#finale">Özet</a>
     </nav>
-    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Temayı değiştir">◐</button>
   </div>
   <div class="progress" id="progress"></div>
 </header>
@@ -45,73 +46,73 @@
 
 <section class="intro" id="top">
   <div class="wrap">
-    <p class="lesson-n">Sample lesson · a template for authors, not part of the course</p>
-    <h1>A two-link arm</h1>
-    <p class="lead">This page shows every block a lesson can use, so a new lesson can start as a copy of it. It walks through a planar arm with two links: you move its joints, see where the hand ends up, and find out which points it can reach at all.</p>
-    <p class="meta">About 10 minutes · 1 lab and 1 interactive scene · 3 missions</p>
-    <p>In this lesson you will:</p>
+    <p class="lesson-n">Örnek ders · yazarlar için şablon, kursun bir parçası değil</p>
+    <h1>İki uzuvlu bir kol</h1>
+    <p class="lead">Bu sayfa bir dersin kullanabileceği bütün blokları gösteriyor; yeni bir ders bunun bir kopyası olarak başlayabilir. İki uzuvlu düzlemsel bir kolu ele alıyor: eklemlerini hareket ettiriyorsun, elin nereye vardığını görüyorsun ve hangi noktalara hiç ulaşabildiğini buluyorsun.</p>
+    <p class="meta">Yaklaşık 10 dakika · 1 laboratuvar ve 1 etkileşimli sahne · 3 görev</p>
+    <p>Bu derste:</p>
     <ul>
-      <li>turn the two joints and put the hand on a target, then predict what bending the elbow does;</li>
-      <li>change the second link's length and watch the reachable ring grow and shrink.</li>
+      <li>iki eklemi döndürüp eli bir hedefe koyacak, sonra dirseği bükmenin ne yapacağını tahmin edeceksin;</li>
+      <li>ikinci uzvun uzunluğunu değiştirip ulaşılabilen halkanın büyüyüp küçülmesini izleyeceksin.</li>
     </ul>
   </div>
 </section>
 
-<section class="recall-sec" id="recall" aria-label="Warm-up on the previous lesson">
+<section class="recall-sec" id="recall" aria-label="Önceki derse ısınma">
   <div class="wrap"><div class="card recall" data-recall></div></div>
-  <script type="application/json" id="recallData">{"n": "S", "title": "Course program", "href": "../index.html", "q": [{"q": "How many links does the arm in this lesson have?", "o": ["One", "Two", "Three"], "a": 1, "e": "A two-link planar arm: a shoulder joint, an elbow joint and two rigid links.", "sec": "program", "secTitle": "Program"}, {"q": "Where do the formulas live in a lesson?", "o": ["In the main text", "In fold-out \"Under the hood\" blocks", "Only in the quiz"], "a": 1, "e": "The main text builds intuition; the math sits in fold-out blocks.", "sec": "how", "secTitle": "How a lesson works"}, {"q": "What do you do before running a mission with a prediction?", "o": ["Nothing", "Pick what you think will happen", "Read the explanation"], "a": 1, "e": "Predicting first makes the result stick, whether you were right or not.", "sec": "how", "secTitle": "How a lesson works"}]}</script>
+  <script type="application/json" id="recallData">{"n": "S", "title": "Kurs programı", "href": "../index.html", "q": [{"q": "Bu dersteki kolun kaç uzvu var?", "o": ["Bir", "İki", "Üç"], "a": 1, "e": "İki uzuvlu düzlemsel bir kol: bir omuz eklemi, bir dirsek eklemi ve iki katı uzuv.", "sec": "program", "secTitle": "Program"}, {"q": "Bir derste formüller nerede durur?", "o": ["Ana metinde", "Açılır \"Perde arkası\" bloklarında", "Sadece testte"], "a": 1, "e": "Ana metin sezgiyi kurar; matematik açılır bloklarda durur.", "sec": "how", "secTitle": "Bir ders nasıl işler"}, {"q": "Tahminli bir görevi çalıştırmadan önce ne yaparsın?", "o": ["Hiçbir şey", "Ne olacağını düşündüğünü seçerim", "Açıklamayı okurum"], "a": 1, "e": "Önce tahmin etmek, haklı da çıksan yanılsan da sonucun akılda kalmasını sağlar.", "sec": "how", "secTitle": "Bir ders nasıl işler"}]}</script>
 </section>
 
 <section class="section" id="arm">
   <div class="wrap prose">
-    <h2><span class="n">1.</span> Joint angles and where the hand ends up</h2>
-    <p>Our arm lies flat on a table. A shoulder joint at the base turns the first link, and an elbow joint turns the second link relative to the first. Two numbers, the joint angles θ₁ and θ₂, decide the whole pose.</p>
+    <h2><span class="n">1.</span> Eklem açıları ve elin vardığı yer</h2>
+    <p>Kolumuz bir masanın üstünde düz yatıyor. Tabandaki omuz eklemi birinci uzvu, dirsek eklemi de ikinci uzvu birinciye göre döndürüyor. İki sayı, yani θ₁ ve θ₂ eklem açıları, bütün duruşu belirliyor.</p>
     <div class="noted">
-      <p>Going from joint angles to the position of the hand is called <strong>forward kinematics</strong>. The links simply add up, one after the other. Try it: drag the elbow or the hand, or use the sliders, and put the hand on the green target.</p>
-      <aside class="mnote" aria-label="Author's note"><p>The first time I did this, I only turned the shoulder and wondered why the hand never got closer. The shoulder can't change the distance to the base: that's the elbow's job.</p></aside>
+      <p>Eklem açılarından elin konumuna gitmeye <strong>ileri kinematik</strong> denir. Uzuvlar art arda basitçe toplanır. Dene: dirseği ya da eli sürükle, veya kaydırıcıları kullan, ve eli yeşil hedefin üstüne getir.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>İlk denediğimde sadece omzu döndürdüm ve elin neden bir türlü yaklaşmadığını merak ettim. Omuz, tabana olan uzaklığı değiştiremez: o dirseğin işi.</p></aside>
     </div>
     <div class="lab lab-narrow">
       <div class="card scene-card">
-        <canvas id="armCv" width="420" height="420" class="sq-cv" role="img" aria-label="Two-link arm seen from above, with a green target to reach"></canvas>
+        <canvas id="armCv" width="420" height="420" class="sq-cv" role="img" aria-label="Yukarıdan bakılan iki uzuvlu kol ve ulaşılacak yeşil bir hedef"></canvas>
         <div class="arm-ctl">
-          <label class="hd-range"><span>Shoulder θ₁</span><input id="armQ1" type="range" min="-180" max="180" step="1" value="20"><output></output></label>
-          <label class="hd-range"><span>Elbow θ₂</span><input id="armQ2" type="range" min="-170" max="170" step="1" value="60"><output></output></label>
+          <label class="hd-range"><span>Omuz θ₁</span><input id="armQ1" type="range" min="-180" max="180" step="1" value="20"><output></output></label>
+          <label class="hd-range"><span>Dirsek θ₂</span><input id="armQ2" type="range" min="-170" max="170" step="1" value="60"><output></output></label>
         </div>
         <div class="readout" id="armOut"></div>
       </div>
       <div class="card guide-card"><div id="armMis"></div></div>
     </div>
-    <p>Guessing angles by hand works, but it's slow.</p>
+    <p>Açıları elle tahmin etmek işe yarıyor ama yavaş.</p>
 
     <div class="research" data-block="research">
-      <h3>Let the computer find the angles</h3>
-      <p>You just searched for θ₁ and θ₂ by hand, watching the hand creep toward the target. A robot controller has to do the same many times a second, and for arms with six joints, not two.</p>
-      <p class="q">How could a computer find joint angles that put the hand on a given target?</p>
-      <p class="think">Think about it for a minute before opening the answers.</p>
-      <details class="answers"><summary>Possible answers</summary><div class="body"><ul>
-        <li><strong>Solve the triangle.</strong> The shoulder, the elbow and the target form a triangle whose three sides you know: the two link lengths and the distance to the target. Trigonometry gives the angles exactly, and it shows there are two answers, elbow up and elbow down.</li>
-        <li><strong>Take small steps.</strong> Nudge each joint a little, watch how the hand moves, and keep turning the joints in the direction that brings the hand closer. It works for any arm but needs many steps.</li>
-        <li><strong>Pull the chain.</strong> Put the hand on the target, drag the elbow after it so the link keeps its length, then pull the chain back so the shoulder sits on the base again. Repeat until it settles. No angles at all during the search.</li>
+      <h3>Açıları bilgisayar bulsun</h3>
+      <p>Az önce θ₁ ve θ₂'yi elle aradın, elin hedefe yavaş yavaş yaklaşmasını izleyerek. Bir robot denetleyicisi aynı şeyi saniyede pek çok kez yapmak zorunda, üstelik iki değil altı eklemli kollar için.</p>
+      <p class="q">Bir bilgisayar, eli verilen bir hedefe koyan eklem açılarını nasıl bulabilir?</p>
+      <p class="think">Cevapları açmadan önce bir dakika düşün.</p>
+      <details class="answers"><summary>Olası cevaplar</summary><div class="body"><ul>
+        <li><strong>Üçgeni çöz.</strong> Omuz, dirsek ve hedef, üç kenarını bildiğin bir üçgen oluşturur: iki uzuv uzunluğu ve hedefe olan uzaklık. Trigonometri açıları tam olarak verir ve iki cevap olduğunu gösterir: dirsek yukarıda ve dirsek aşağıda.</li>
+        <li><strong>Küçük adımlar at.</strong> Her eklemi biraz oynat, elin nasıl hareket ettiğine bak ve eklemleri eli yaklaştıran yönde döndürmeye devam et. Her kolda işe yarar ama çok adım ister.</li>
+        <li><strong>Zinciri çek.</strong> Eli hedefe koy, uzuv boyu korunacak şekilde dirseği arkasından sürükle, sonra omuz yeniden tabana otursun diye zinciri geri çek. Yerine oturana kadar tekrarla. Arama boyunca hiç açı hesaplanmaz.</li>
       </ul></div></details>
-      <details class="actual"><summary>What was actually done</summary><div class="body">
-        <p>All three ideas are real methods. In his 1968 Stanford thesis, Donald Pieper showed that a six-joint arm whose last three joint axes meet in one point can be solved exactly with formulas, much like our triangle. That result is one reason so many industrial arms have such a "spherical wrist" (<a href="#paper-pieper1968">Pieper, 1968</a>).</p>
-        <p>A year later, Daniel Whitney described <em>resolved motion rate control</em>: don't solve for the angles at all, but compute small joint speeds that move the hand the way you want, again and again (<a href="#paper-whitney1969">Whitney, 1969</a>).</p>
-        <p>The chain-pulling idea came much later, from computer animation: FABRIK by Andreas Aristidou and Joan Lasenby (<a href="#paper-aristidou2011">Aristidou and Lasenby, 2011</a>). You'll meet the first two methods properly in Parts 4 and 5.</p>
+      <details class="actual"><summary>Gerçekte ne yapıldı</summary><div class="body">
+        <p>Üç fikir de gerçek yöntemler. Donald Pieper 1968 tarihli Stanford tezinde, son üç eklem ekseni tek bir noktada kesişen altı eklemli bir kolun, tıpkı bizim üçgen gibi formüllerle tam olarak çözülebileceğini gösterdi. Bu sonuç, bu kadar çok endüstriyel kolun böyle bir "küresel bileğe" sahip olmasının nedenlerinden biri (<a href="#paper-pieper1968">Pieper, 1968</a>).</p>
+        <p>Bir yıl sonra Daniel Whitney <em>çözümlenmiş hareket hızı kontrolünü</em> (resolved motion rate control) anlattı: açıları hiç çözme, eli istediğin yöne götüren küçük eklem hızlarını hesapla, tekrar tekrar (<a href="#paper-whitney1969">Whitney, 1969</a>).</p>
+        <p>Zinciri çekme fikri çok sonra, bilgisayar animasyonundan geldi: Andreas Aristidou ve Joan Lasenby'nin FABRIK yöntemi (<a href="#paper-aristidou2011">Aristidou ve Lasenby, 2011</a>). İlk iki yöntemi 4. ve 5. bölümlerde gerçekten tanıyacaksın.</p>
       </div></details>
     </div>
 
-    <p>Next, let's see which points the hand can reach at all.</p>
+    <p>Şimdi elin hangi noktalara hiç ulaşabildiğine bakalım.</p>
   </div>
 </section>
 
 <section class="section" id="reach">
   <div class="wrap prose">
-    <h2><span class="n">2.</span> The reachable ring</h2>
-    <p>Swing both joints through every angle and the hand sweeps out a ring around the base. This set of points is the arm's <strong>workspace</strong>. Its outer edge is where the arm is fully stretched, its inner edge where it's folded back on itself. Change the second link's length and watch the ring.</p>
+    <h2><span class="n">2.</span> Ulaşılabilen halka</h2>
+    <p>İki eklemi de bütün açılardan geçirirsen el, tabanın çevresinde bir halka süpürür. Bu noktalar kümesi kolun <strong>çalışma uzayı</strong>dır. Dış kenarı kolun tamamen gerildiği, iç kenarı ise kendi üstüne katlandığı yerdir. İkinci uzvun uzunluğunu değiştir ve halkayı izle.</p>
     <div class="lab">
       <div class="card scene-card">
-        <canvas id="reachCv" width="420" height="420" class="sq-cv" role="img" aria-label="The ring of points the two-link arm can reach"></canvas>
-        <label class="hd-range reach-ctl"><span>Second link L₂</span><input id="reachL2" type="range" min="0.1" max="0.5" step="0.01" value="0.4"><output></output></label>
+        <canvas id="reachCv" width="420" height="420" class="sq-cv" role="img" aria-label="İki uzuvlu kolun ulaşabildiği noktaların halkası"></canvas>
+        <label class="hd-range reach-ctl"><span>İkinci uzuv L₂</span><input id="reachL2" type="range" min="0.1" max="0.5" step="0.01" value="0.4"><output></output></label>
         <div class="readout" id="reachOut"></div>
       </div>
     </div>
@@ -120,21 +121,21 @@
 
 <section class="section" id="why">
   <div class="wrap prose">
-    <h2><span class="n">3.</span> Adding up the links</h2>
+    <h2><span class="n">3.</span> Uzuvları toplamak</h2>
     <div class="noted">
-      <p>Each link points in the direction of all the angles before it added together. The hand's position is the sum of the two link vectors. With our lengths, 0.5 m and 0.4 m, the hand can be at most 0.9 m from the base and at least 0.1 m.</p>
-      <aside class="mnote" aria-label="Author's note"><p>I expected the arm to reach everything inside its circle. The hole in the middle surprised me: with a shorter second link, the hand can never fold back onto the base.</p></aside>
+      <p>Her uzuv, kendinden önceki bütün açıların toplamı yönünde uzanır. Elin konumu iki uzuv vektörünün toplamıdır. Bizim uzunluklarımızla, 0.5 m ve 0.4 m, el tabandan en fazla 0.9 m, en az 0.1 m uzakta olabilir.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Kolun çemberinin içindeki her yere ulaşacağını sanıyordum. Ortadaki delik beni şaşırttı: ikinci uzuv daha kısaysa el asla tabanın üstüne katlanamaz.</p></aside>
     </div>
-    <details class="deep"><summary>Under the hood: forward kinematics of a two-link arm</summary><div class="body">
+    <details class="deep"><summary>Perde arkası: iki uzuvlu kolun ileri kinematiği</summary><div class="body">
       <div class="formula">\[\begin{aligned} x &= L_1\cos\theta_1 + L_2\cos(\theta_1 + \theta_2),\\ y &= L_1\sin\theta_1 + L_2\sin(\theta_1 + \theta_2). \end{aligned}\]</div>
-      <p>The workspace is the ring between radii \(|L_1 - L_2|\) and \(L_1 + L_2\).</p>
+      <p>Çalışma uzayı, \(|L_1 - L_2|\) ve \(L_1 + L_2\) yarıçapları arasındaki halkadır.</p>
     </div></details>
   </div>
 </section>
 
 <section class="section" id="quiz">
   <div class="wrap prose">
-    <h2>Check yourself: eight common misconceptions</h2>
+    <h2>Kendini sına: sık yapılan sekiz yanılgı</h2>
     <div class="quiz" id="quizBox"></div>
     <p class="score" id="quizScore"></p>
   </div>
@@ -142,45 +143,45 @@
 
 <section class="section" id="papers" data-block="papers">
   <div class="wrap prose">
-    <h2>Related papers</h2>
-    <p>The papers behind the ideas on this page. Each card says in one sentence what the paper brought; open "More details" for how it connects to our two-link arm.</p>
+    <h2>İlgili makaleler</h2>
+    <p>Bu sayfadaki fikirlerin arkasındaki makaleler (hepsi İngilizce). Her kart, makalenin ne getirdiğini tek cümleyle söylüyor; iki uzuvlu kolumuzla nasıl bağlandığı için "Daha fazla ayrıntı"yı aç.</p>
 
     <article class="paper" id="paper-dh1955">
-      <h3><a href="https://doi.org/10.1115/1.4011045">A Kinematic Notation for Lower-Pair Mechanisms Based on Matrices</a> <span class="pay">(may need a subscription)</span></h3>
+      <h3><a href="https://doi.org/10.1115/1.4011045">A Kinematic Notation for Lower-Pair Mechanisms Based on Matrices</a> <span class="pay">(abonelik gerekebilir)</span></h3>
       <p class="meta"><span class="authors">J. Denavit, R. S. Hartenberg</span> · <span class="venue">Journal of Applied Mechanics 22(2)</span> · <span class="year">1955</span></p>
-      <p class="takeaway">Any chain of joints and links can be described with four numbers per joint, and the pose at the end of the chain is the product of one matrix per joint.</p>
-      <details class="more"><summary>More details</summary><div class="body">
-        <p>Our two-link arm is easy: add two vectors. With six joints in 3D, each turning about a different axis, you need careful bookkeeping. Denavit and Hartenberg, writing about mechanisms in general before industrial robots existed, proposed describing every joint-to-joint step with the same four numbers and one 4×4 matrix, then multiplying the matrices along the chain.</p>
-        <p>This course uses a later variant of their convention, the "modified" one from Craig's textbook. It comes in Part 3.</p>
+      <p class="takeaway">Eklemlerden ve uzuvlardan oluşan her zincir, eklem başına dört sayıyla tarif edilebilir; zincirin sonundaki duruş da eklem başına bir matrisin çarpımıdır.</p>
+      <details class="more"><summary>Daha fazla ayrıntı</summary><div class="body">
+        <p>İki uzuvlu kolumuz kolay: iki vektörü topla. Altı eklemli, her biri farklı bir eksen etrafında dönen 3B bir kolda ise dikkatli bir hesap tutmak gerekir. Endüstriyel robotlar daha ortada yokken genel olarak mekanizmalar üzerine yazan Denavit ve Hartenberg, eklemden ekleme her adımı aynı dört sayı ve tek bir 4×4 matrisle tarif etmeyi, sonra matrisleri zincir boyunca çarpmayı önerdi.</p>
+        <p>Bu kurs onların geleneğinin daha sonraki bir çeşidini, Craig'in kitabındaki "değiştirilmiş" (modified) olanı kullanıyor. O da 3. bölümde geliyor.</p>
       </div></details>
     </article>
 
     <article class="paper" id="paper-pieper1968">
       <h3><a href="https://apps.dtic.mil/sti/pdfs/AD0680036.pdf">The Kinematics of Manipulators Under Computer Control</a></h3>
-      <p class="meta"><span class="authors">D. L. Pieper</span> · <span class="venue">PhD thesis, Stanford University</span> · <span class="year">1968</span></p>
-      <p class="takeaway">Arms whose last three joint axes meet in one point have an exact, formula-based solution to "which angles put the hand here?"</p>
-      <details class="more"><summary>More details</summary><div class="body">
-        <p>Our arm has a formula solution too: the triangle from the research question gives the elbow angle from the law of cosines and the shoulder angle from the triangle's other angles, with two answers, elbow up and elbow down.</p>
-        <p>Pieper looked at six-joint arms, where such formulas usually don't exist, and found arm shapes for which they do. The thesis also builds a model of a six-joint arm and plans motions around obstacles. It was published as Stanford AI Memo AIM-72; the link is a free scan.</p>
+      <p class="meta"><span class="authors">D. L. Pieper</span> · <span class="venue">Doktora tezi, Stanford University</span> · <span class="year">1968</span></p>
+      <p class="takeaway">Son üç eklem ekseni tek bir noktada kesişen kolların, "eli buraya hangi açılar koyar?" sorusuna formüllerle verilen tam bir çözümü vardır.</p>
+      <details class="more"><summary>Daha fazla ayrıntı</summary><div class="body">
+        <p>Bizim kolun da formüllü bir çözümü var: araştırma sorusundaki üçgen, dirsek açısını kosinüs teoreminden, omuz açısını da üçgenin diğer açılarından verir; iki cevapla: dirsek yukarıda ve dirsek aşağıda.</p>
+        <p>Pieper, böyle formüllerin genelde bulunmadığı altı eklemli kollara baktı ve bulundukları kol biçimlerini ortaya koydu. Tez ayrıca altı eklemli bir kolun modelini kuruyor ve engellerin çevresinden dolanan hareketler planlıyor. Stanford AI Memo AIM-72 olarak yayımlandı; bağlantı ücretsiz bir taramaya gidiyor.</p>
       </div></details>
     </article>
 
     <article class="paper" id="paper-whitney1969">
-      <h3><a href="https://doi.org/10.1109/TMMS.1969.299896">Resolved Motion Rate Control of Manipulators and Human Prostheses</a> <span class="pay">(may need a subscription)</span></h3>
+      <h3><a href="https://doi.org/10.1109/TMMS.1969.299896">Resolved Motion Rate Control of Manipulators and Human Prostheses</a> <span class="pay">(abonelik gerekebilir)</span></h3>
       <p class="meta"><span class="authors">D. E. Whitney</span> · <span class="venue">IEEE Transactions on Man-Machine Systems 10(2)</span> · <span class="year">1969</span></p>
-      <p class="takeaway">Instead of solving for the angles, ask which small joint speeds move the hand the way you want, and repeat.</p>
-      <details class="more"><summary>More details</summary><div class="body">
-        <p>The table that links joint speeds to hand speed is the <em>Jacobian</em>, the subject of Part 5. For our arm it's a 2×2 table that changes with the pose. Whitney turned it into a way to steer manipulators and arm prostheses: the operator asks for a hand velocity, and the controller inverts the table to get joint speeds.</p>
-        <p>When the arm is fully stretched or folded, the table can't be inverted and the method breaks down. Later papers found ways around that.</p>
+      <p class="takeaway">Açıları çözmek yerine, eli istediğin gibi hareket ettiren küçük eklem hızlarını sor ve tekrarla.</p>
+      <details class="more"><summary>Daha fazla ayrıntı</summary><div class="body">
+        <p>Eklem hızlarını el hızına bağlayan tablo <em>Jakobiyen</em>'dir; 5. bölümün konusu. Bizim kol için bu, duruşla değişen 2×2'lik bir tablo. Whitney bunu manipülatörleri ve kol protezlerini yönlendirmenin bir yoluna dönüştürdü: kullanıcı bir el hızı ister, denetleyici tabloyu ters çevirip eklem hızlarını bulur.</p>
+        <p>Kol tamamen gerildiğinde ya da katlandığında tablo ters çevrilemez ve yöntem çöker. Sonraki makaleler bunu aşmanın yollarını buldu.</p>
       </div></details>
     </article>
 
     <article class="paper" id="paper-aristidou2011">
       <h3><a href="https://www.andreasaristidou.com/FABRIK">FABRIK: A Fast, Iterative Solver for the Inverse Kinematics Problem</a></h3>
       <p class="meta"><span class="authors">A. Aristidou, J. Lasenby</span> · <span class="venue">Graphical Models 73(5)</span> · <span class="year">2011</span></p>
-      <p class="takeaway">Move the hand to the target, drag each joint after it, then drag the chain back to the base; a few passes are usually enough.</p>
+      <p class="takeaway">Eli hedefe taşı, her eklemi arkasından sürükle, sonra zinciri tabana geri çek; genelde birkaç tur yeter.</p>
       <figure class="paper-fig">
-        <svg viewBox="0 0 240 120" role="img" aria-label="A two-link chain before and after a forward pass: the hand is moved onto the target and the elbow and base are dragged after it">
+        <svg viewBox="0 0 240 120" role="img" aria-label="İleri bir turdan önce ve sonra iki uzuvlu bir zincir: el hedefe taşınıyor, dirsek ve taban arkasından sürükleniyor">
           <line x1="30" y1="100" x2="90" y2="60" style="stroke:var(--ink-3)" stroke-width="4" stroke-linecap="round"/>
           <line x1="90" y1="60" x2="150" y2="90" style="stroke:var(--ink-3)" stroke-width="4" stroke-linecap="round"/>
           <line x1="190" y1="40" x2="124" y2="53" style="stroke:var(--classic)" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round"/>
@@ -189,11 +190,11 @@
           <circle cx="30" cy="100" r="4" style="fill:var(--ink)"/>
           <circle cx="60" cy="85" r="3.5" fill="none" style="stroke:var(--classic)" stroke-width="2"/>
         </svg>
-        <figcaption>Forward pass: the hand jumps onto the target (green) and the links are dragged after it (dashed). The backward pass then puts the base back in place.</figcaption>
+        <figcaption>İleri tur: el hedefe (yeşil) atlar, uzuvlar da arkasından sürüklenir (kesikli). Geri tur tabanı yeniden yerine koyar.</figcaption>
       </figure>
-      <details class="more"><summary>More details</summary><div class="body">
-        <p>FABRIK stands for Forward And Backward Reaching Inverse Kinematics. During the search it never computes an angle: each step just places a joint on the line towards its neighbour, at the right link length. It was written for computer animation, where long chains such as spines and fingers have to follow targets in real time, and it can respect joint limits.</p>
-        <p>Try it in your head on our arm: hand onto the target, elbow pulled along, shoulder pulled back onto the base.</p>
+      <details class="more"><summary>Daha fazla ayrıntı</summary><div class="body">
+        <p>FABRIK, Forward And Backward Reaching Inverse Kinematics'in kısaltması. Arama boyunca hiç açı hesaplamaz: her adım bir eklemi, komşusuna doğru olan doğrunun üzerinde, doğru uzuv uzunluğunda bir yere koyar. Omurga ve parmak gibi uzun zincirlerin hedefleri gerçek zamanda izlemesi gereken bilgisayar animasyonu için yazıldı ve eklem sınırlarına uyabiliyor.</p>
+        <p>Bizim kolda kafanda dene: el hedefe, dirsek arkasından, omuz yeniden tabana.</p>
       </div></details>
     </article>
   </div>
@@ -201,25 +202,25 @@
 
 <section class="section" id="finale">
   <div class="wrap prose">
-    <h2>What we covered</h2>
+    <h2>Neler gördük</h2>
     <ol class="takeaways">
-      <li>Forward kinematics turns joint angles into the hand's position by <strong>adding up the links</strong>.</li>
-      <li>A two-link arm reaches a <strong>ring</strong>: no farther than L₁ + L₂, no closer than |L₁ − L₂|.</li>
+      <li>İleri kinematik, <strong>uzuvları toplayarak</strong> eklem açılarını elin konumuna çevirir.</li>
+      <li>İki uzuvlu bir kol bir <strong>halkaya</strong> ulaşır: L₁ + L₂'den uzağa değil, |L₁ − L₂|'den yakına değil.</li>
     </ol>
-    <h3>Open questions</h3>
-    <details class="open-q"><summary>What shape is the workspace when both links have the same length?</summary><p>The inner radius |L₁ − L₂| becomes zero, so the ring turns into a full disc: the hand can reach the base itself.</p></details>
-    <h3>Further reading</h3>
+    <h3>Açık sorular</h3>
+    <details class="open-q"><summary>İki uzuv eşit uzunluktaysa çalışma uzayı nasıl bir şekildir?</summary><p>İç yarıçap |L₁ − L₂| sıfır olur; halka dolu bir diske dönüşür: el tabanın kendisine de ulaşabilir.</p></details>
+    <h3>Ek okuma</h3>
     <ul class="links">
-      <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch and F. Park, 2017: free book and videos; forward kinematics is chapter 4</span></li>
+      <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch ve F. Park, 2017: ücretsiz kitap ve videolar (İngilizce); ileri kinematik 4. bölümde</span></li>
     </ul>
-    <p>Next: <!--if:m-1-vectors-and-frames.html--><a href="m-1-vectors-and-frames.html">M.1 Vectors and coordinate frames</a>.<!--/if--> The real course starts with the math toolkit.</p>
+    <p>Sıradaki: <!--if:m-1-vectors-and-frames.html--><a href="m-1-vectors-and-frames.html">M.1 Vektörler ve koordinat çerçeveleri</a>.<!--/if--> Asıl kurs matematik araç kutusuyla başlıyor.</p>
   </div>
 </section>
 
 </main>
 
 <footer>
-  Sample lesson of the Kinematics Workshop. All scenes run locally in your browser.
+  Kinematik Atölyesi'nin örnek dersi. Bütün sahneler tarayıcında, kendi bilgisayarında çalışır.
 </footer>
 <div class="tooltip" id="tooltip" role="tooltip"></div>
 <script>
