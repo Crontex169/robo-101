@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M.2 Robot kolları için trigonometri — Kinematik Atölyesi</title>
+<meta name="description" content="Kinematik Atölyesi, M.2 dersi: derece ve radyan, birim çemberde sinüs ve kosinüs, bir uzvu uzunluk ve açıyla tarif etmek, atan2 ile açıyı geri bulmak ve dirsek açısı için kosinüs teoremi. Canlı laboratuvarlarla.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<script>
+  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {} })();
+</script>
+<style>
+/*@@CSS@@*/
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html#program" title="Kurs programına dön">Kinematik Atölyesi<small>M.2</small></a>
+    <nav class="toc" aria-label="Ders bölümleri">
+      <a href="#angles">Açılar</a>
+      <a href="#circle">Birim çember</a>
+      <a href="#links">Uzuvlar</a>
+      <a href="#atan2">atan2</a>
+      <a href="#cosrule">Kosinüs teoremi</a>
+      <a href="#quiz">Test</a>
+      <a href="#papers" data-block="papers">Makale</a>
+      <a href="#finale">Özet</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Temayı değiştir">◐</button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+
+<section class="intro" id="top">
+  <div class="wrap">
+    <p class="lesson-n">M.2 dersi · Bölüm M, matematik araç kutusu</p>
+    <h1>Robot kolları için trigonometri</h1>
+    <p class="lead">M.1'de her oku bileşenleriyle verdik. Ama bir robot eklemi bileşen bilmez, bir açı bilir. Bu ders ikisini birbirine bağlıyor: açıdan oka, oktan açıya, ve üç uzunluktan dirsek açısına.</p>
+    <p class="meta">Yaklaşık 50 dakika · 2 laboratuvar ve 2 küçük etkileşimli sahne · 5 görev</p>
+    <p>Bu derste:</p>
+    <ul>
+      <li>açıları derece ve radyanla ölçeceksin;</li>
+      <li>bir çember üzerinde gezinen bir noktanın koordinatlarından sinüsü ve kosinüsü okuyacaksın;</li>
+      <li>bir uzvu uzunluğu ve açısıyla tarif edip iki uzuvlu bir kolun elini bulacaksın;</li>
+      <li>bileşenlerden açıyı doğru çeyrekte geri bulacaksın;</li>
+      <li>üç uzunluktan dirseğin ne kadar bükülmesi gerektiğini hesaplayacaksın.</li>
+    </ul>
+    <p class="muted small">Sahneler fareyle, parmakla ya da klavyeyle çalışır: sahneye tıkla ya da Tab ile gel, ok tuşlarıyla hareket ettir (küçük adımlar için Shift), Enter ile sonraki tutamağa geç.</p>
+  </div>
+</section>
+
+<section class="recall-sec" id="recall" aria-label="Önceki derse ısınma">
+  <div class="wrap"><div class="card recall" data-recall></div></div>
+  <script type="application/json" id="recallData">{"n": "M.1", "title": "Vektörler ve koordinat çerçeveleri", "href": "m-1-vectors-and-frames.html", "q": [{"q": "(3, 4) vektörünün uzunluğu kaçtır?", "o": ["7", "5", "12"], "a": 1, "e": "Pisagor: √(9 + 16) = √25 = 5. Bileşenleri toplamak (7) sık yapılan bir hata.", "sec": "parts", "secTitle": "Bileşenler, uzunluk ve yön"}, {"q": "{B}'nin orijini {A}'da (1, 1) noktasında, P de {B}'de (2, 0) noktasında. P, {A}'da nerede?", "o": ["(1, −1)", "(3, 1)", "(2, 0)"], "a": 1, "e": "Uç uca: (1, 1) + (2, 0) = (3, 1).", "sec": "two-frames", "secTitle": "Bir nokta, iki çerçeve"}, {"q": "Bir birim vektörün uzunluğu kaçtır?", "o": ["0", "1", "Yönüne bağlı"], "a": 1, "e": "Birim vektör, her zaman uzunluğu bir olan vektördür; sadece yön taşır.", "sec": "parts", "secTitle": "Bileşenler, uzunluk ve yön"}]}</script>
+</section>
+
+<section class="section" id="angles">
+  <div class="wrap prose">
+    <h2><span class="n">1.</span> Açılar: derece ve radyan</h2>
+    <p>Bir eklem bir açıyla döner. Açıyı ölçmenin en bilinen yolu derecedir: tam tur 360°. Robotikte açıyı hep aynı yerden, x ekseninden ölçeriz ve saat yönünün tersine dönüş pozitiftir. Saat yönünde dönüş negatif açı verir: −90° aşağıyı gösterir.</p>
+    <div class="noted">
+      <p>Formüller ve bilgisayarlar ise çoğunlukla <strong>radyan</strong> kullanır. Fikir basit: yarıçapı 1 olan bir çemberde, açının gördüğü yay ne kadar uzunsa açı o kadar radyandır. Tam turun çevresi 2π olduğu için 360° = 2π rad, 180° = π rad ve 1 rad ≈ 57.3°.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Radyana uzun süre direndim; derece daha "gerçek" geliyordu. Sonra fark ettim ki her programlama dilinin sin ve cos fonksiyonu radyan istiyor. Ekranda derece göster, hesapta radyan kullan.</p></aside>
+    </div>
+    <figure class="frame-fig">
+      <svg viewBox="0 0 240 170" role="img" aria-label="Yarıçapı 1 olan bir çemberde 1 radyanlık açı: açının gördüğü yay yarıçap kadar uzun">
+        <line x1="20" y1="120" x2="225" y2="120" style="stroke:var(--axis)" stroke-width="1.2"/>
+        <circle cx="110" cy="120" r="70" fill="none" style="stroke:var(--line-2)" stroke-width="1.5"/>
+        <line x1="110" y1="120" x2="180" y2="120" style="stroke:var(--ink)" stroke-width="2.5"/>
+        <line x1="110" y1="120" x2="147.8" y2="61.1" style="stroke:var(--ink)" stroke-width="2.5"/>
+        <path d="M180 120 A70 70 0 0 0 147.8 61.1" fill="none" style="stroke:var(--hybrid)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M134 120 A24 24 0 0 0 123 99.8" fill="none" style="stroke:var(--ink-3)" stroke-width="1.5"/>
+        <text x="138" y="112" font-size="11" style="fill:var(--ink-3)">1 rad</text>
+        <text x="172" y="86" font-size="12" style="fill:var(--hybrid)">yay = 1</text>
+        <text x="132" y="136" font-size="12" style="fill:var(--ink-3)">yarıçap = 1</text>
+        <circle cx="110" cy="120" r="3.5" style="fill:var(--ink)"/>
+      </svg>
+      <figcaption>Yay (mor) yarıçap kadar uzun olduğunda açı 1 radyandır, yaklaşık 57.3°.</figcaption>
+    </figure>
+    <details class="deep"><summary>Perde arkası: derece ↔ radyan</summary><div class="body">
+      <div class="formula">\[\theta_{\text{rad}} = \theta_{\text{derece}} \cdot \frac{\pi}{180}, \qquad \theta_{\text{derece}} = \theta_{\text{rad}} \cdot \frac{180}{\pi}.\]</div>
+      <p>Örneğin 90° = π/2 ≈ 1.571 rad.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="circle">
+  <div class="wrap prose">
+    <h2><span class="n">2.</span> Birim çember: kosinüs ve sinüs</h2>
+    <p>Merkezi orijinde, yarıçapı 1 olan bir çember düşün: <strong>birim çember</strong>. x ekseninden θ açısıyla dönen yarıçapın ucu bu çemberin üzerinde bir noktadır. O noktanın x koordinatına θ'nın <strong>kosinüsü</strong>, y koordinatına da <strong>sinüsü</strong> denir: nokta (cos θ, sin θ)'dır.</p>
+    <p>M.1'in diliyle söylersek, (cos θ, sin θ) θ yönündeki birim vektördür. Bileşenleri bulunduğu çeyreğe göre işaret değiştirir: çemberin sol yarısında kosinüs, alt yarısında sinüs negatiftir.</p>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="circleCv" width="420" height="420" class="sq-cv" role="img" aria-label="Birim çember ve üzerinde sürüklenebilen bir nokta. Ok tuşları açıyı 5 derece, Shift ile 1 derece değiştirir."></canvas>
+        <div class="readout" id="circleOut"></div>
+      </div>
+      <div class="card guide-card"><div id="circleMis"></div></div>
+    </div>
+
+    <div class="research" data-block="research">
+      <h3>Hesap makinesinin içinde</h3>
+      <p>Sinüsü ve kosinüsü bir düğmeyle hesaplıyoruz. Ama 1950'lerin bilgisayarları, bugün de bazı küçük denetleyiciler, çarpmayı hızlı yapamaz. Toplamak ve bir sayıyı ikiye bölmek (bitleri kaydırmak) ise çok ucuzdur.</p>
+      <p class="q">Sadece toplama ve ikiye bölmeyle sin θ ve cos θ nasıl hesaplanabilir?</p>
+      <p class="think">Cevapları açmadan önce bir dakika düşün.</p>
+      <details class="answers"><summary>Olası cevaplar</summary><div class="body"><ul>
+        <li><strong>Tablo.</strong> Önceden hesaplanmış bir tablo sakla, aradaki değerleri tahmin et. Hızlıdır ama bellek ister, hassasiyeti de tablonun sıklığına bağlıdır.</li>
+        <li><strong>Seri.</strong> sin θ'yı θ − θ³/6 + … gibi bir seriyle yaklaşık hesapla. Doğrudur ama bol çarpma ister.</li>
+        <li><strong>Adım adım döndür.</strong> (1, 0) vektörünü, önceden bilinen ve giderek küçülen açılarla θ'ya ulaşana kadar döndür. Açılar, tanjantları 1, 1/2, 1/4, … olacak şekilde seçilirse her adım yalnızca kaydırma ve toplama olur. Sonunda vektör (cos θ, sin θ)'yı gösterir.</li>
+      </ul></div></details>
+      <details class="actual"><summary>Gerçekte ne yapıldı</summary><div class="body">
+        <p>Üçüncüsü. Jack Volder bu yöntemi 1959'da CORDIC adıyla yayımladı (<a href="#paper-volder1959">Volder, 1959</a>). Yöntem, B-58 uçağının analog seyir bilgisayarının yerine dijital bir bilgisayar yapılırken doğdu ve hızlı çarpıcısı olmayan donanımlarda bugün de kullanılıyor. Birim çember fikri burada da iş başında: CORDIC çemberin üzerinde yürüyerek sinüsü ve kosinüsü bulur.</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="links">
+  <div class="wrap prose">
+    <h2><span class="n">3.</span> Bir uzuv: uzunluk ve açı</h2>
+    <p>Bir robot uzvu, M.1'deki gibi bir vektördür; ama eklem bize bileşenleri değil bir açıyı verir. Uzunluğu L olan ve x ekseninden θ açısıyla duran bir uzvun ucu (L cos θ, L sin θ) noktasındadır: birim vektörü L ile çarpmak yeter. Bir noktayı böyle bir uzunluk ve bir açıyla vermeye <strong>kutupsal koordinatlar</strong> denir.</p>
+    <div class="noted">
+      <p>İki uzuvlu bir kolda ikinci eklem açısı θ₂, x eksenine göre değil birinci uzva göre ölçülür. Bu yüzden ikinci uzuv x ekseninden θ₁ + θ₂ açısıyla uzanır ve el, iki uzuv vektörünün toplamındadır. Aşağıdaki kolun iki uzvu da 1 birim uzunluğunda.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Kolda açıların toplandığını görmek benim için bir "aha" anıydı: her eklem, kendinden sonra gelen her şeyi döndürür.</p></aside>
+    </div>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="linksCv" width="420" height="420" class="sq-cv" role="img" aria-label="Her biri 1 birim uzunluğunda iki uzuvlu bir kol. Dirseği ya da eli sürükle, kaydırıcıları ya da ok tuşlarını kullan."></canvas>
+        <div class="arm-ctl">
+          <label class="hd-range"><span>Omuz θ₁</span><input id="q1In" type="range" min="-180" max="180" step="1" value="0"><output></output></label>
+          <label class="hd-range"><span>Dirsek θ₂</span><input id="q2In" type="range" min="-180" max="180" step="1" value="0"><output></output></label>
+        </div>
+        <div class="readout" id="linksOut"></div>
+      </div>
+      <div class="card guide-card"><div id="linksMis"></div></div>
+    </div>
+    <details class="deep"><summary>Perde arkası: iki uzuvlu kolun eli</summary><div class="body">
+      <div class="formula">\[x = L_1\cos\theta_1 + L_2\cos(\theta_1+\theta_2), \qquad y = L_1\sin\theta_1 + L_2\sin(\theta_1+\theta_2).\]</div>
+      <p>Her terim bir uzvun kutupsal koordinatlardan bileşenlere çevrilmiş hali; toplam, M.1'deki uç uca toplama. 3. bölümde bunu istediğimiz kadar uzuva genelleştireceğiz.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="atan2">
+  <div class="wrap prose">
+    <h2><span class="n">4.</span> Açıyı geri bulmak: atan2</h2>
+    <p>Ters yön de lazım: bileşenler belli, açı ne? İlk akla gelen cevap şu: tan θ = y/x olduğuna göre θ = arctan(y/x). Ama bu iki yerde yanılır. Birincisi, (1, 1) ile (−1, −1) için y/x aynıdır (1), oysa biri 45°'de, öbürü −135°'de durur. İkincisi, x = 0 olduğunda bölme yapılamaz.</p>
+    <div class="noted">
+      <p>Çözüm <strong>atan2</strong>(y, x): y'yi ve x'i ayrı ayrı alır, ikisinin işaretine bakıp doğru çeyreği bulur ve −180° ile 180° arasında bir açı verir. Neredeyse her programlama dilinde bu adla bulunur. Noktayı sol yarıya sürükle ve iki cevabın ayrıldığını izle.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>İlk yazdığım kol kodunda arctan kullanmıştım. Kol, hedeflerin yarısına ters taraftan uzanıyordu. O günden beri atan2'yi unutmuyorum.</p></aside>
+    </div>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="atanCv" width="420" height="420" class="sq-cv" role="img" aria-label="Sürüklenebilen bir nokta; arctan ve atan2 cevapları yan yana. Noktayı ok tuşlarıyla da taşıyabilirsin."></canvas>
+        <div class="readout" id="atanOut"></div>
+      </div>
+    </div>
+    <details class="deep"><summary>Perde arkası: atan2 çeyrekleri nasıl ayırır</summary><div class="body">
+      <div class="formula">\[\operatorname{atan2}(y, x) = \begin{cases} \arctan(y/x), & x > 0, \\ \arctan(y/x) + 180^\circ, & x < 0,\ y \ge 0, \\ \arctan(y/x) - 180^\circ, & x < 0,\ y < 0, \\ +90^\circ \text{ ya da } -90^\circ, & x = 0 \text{ (y'nin işaretine göre)}. \end{cases}\]</div>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="cosrule">
+  <div class="wrap prose">
+    <h2><span class="n">5.</span> Kosinüs teoremi ve dirsek</h2>
+    <p>Son araç, ters kinematiğin ilk adımı. Kolun eli tabandan d uzaklığındaki bir hedefe ulaşacak. Taban, dirsek ve el bir üçgen oluşturur ve üç kenarı da bellidir: L₁, L₂ ve d. Kenarları bilinen bir üçgenin açılarını <strong>kosinüs teoremi</strong> verir.</p>
+    <p>L₁ = L₂ = 1 ve d = √2 ≈ 1.41 için uzuvlar arasındaki açı γ = 90° çıkar. Dirsek açısı θ₂ ise ikinci uzvun, birinci uzvun uzantısıyla yaptığı açıdır, yani 180° − γ = 90°. d = 2 olduğunda kol tamamen gerilir (θ₂ = 0°); d 2'den büyükse böyle bir üçgen yoktur ve hedefe ulaşılamaz.</p>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="cosCv" width="420" height="300" class="wide-cv" role="img" aria-label="Taban, dirsek ve hedeften oluşan üçgen. Kaydırıcı hedefin uzaklığını değiştirir."></canvas>
+        <div class="arm-ctl">
+          <label class="hd-range"><span>Uzaklık d</span><input id="dIn" type="range" min="0" max="2.4" step="0.01" value="1.2"><output></output></label>
+        </div>
+        <p class="flip-row"><button class="btn sm" type="button" id="dSqrt2">d = √2</button></p>
+        <div class="readout" id="cosOut"></div>
+      </div>
+    </div>
+    <details class="deep"><summary>Perde arkası: kosinüs teoremi</summary><div class="body">
+      <div class="formula">\[d^2 = L_1^2 + L_2^2 - 2L_1L_2\cos\gamma \quad\Longrightarrow\quad \cos\gamma = \frac{L_1^2 + L_2^2 - d^2}{2L_1L_2}.\]</div>
+      <p>Sağ taraf −1 ile 1 arasında değilse γ yoktur: hedef ya çok uzakta ya da çok yakındadır. 3-4-5 üçgeninde cos γ = 0 çıkar, yani γ = 90°.</p>
+    </div></details>
+    <p>Dirseğin üstte mi altta mı duracağı (iki çözüm) ve omuz açısı θ₁, 4. bölümün konusu; atan2 orada yeniden karşına çıkacak.</p>
+  </div>
+</section>
+
+<section class="section" id="quiz">
+  <div class="wrap prose">
+    <h2>Kendini sına: sık yapılan sekiz yanılgı</h2>
+    <div class="quiz" id="quizBox"></div>
+    <p class="score" id="quizScore"></p>
+  </div>
+</section>
+
+<section class="section" id="papers" data-block="papers">
+  <div class="wrap prose">
+    <h2>İlgili makale</h2>
+    <p>Araştırma sorusunun arkasındaki makale (İngilizce).</p>
+    <article class="paper" id="paper-volder1959">
+      <h3><a href="https://doi.org/10.1109/TEC.1959.5222693">The CORDIC Trigonometric Computing Technique</a> <span class="pay">(abonelik gerekebilir)</span></h3>
+      <p class="meta"><span class="authors">J. E. Volder</span> · <span class="venue">IRE Transactions on Electronic Computers EC-8(3)</span> · <span class="year">1959</span></p>
+      <p class="takeaway">Sinüs ve kosinüs, bir vektörü tanjantları ikinin kuvvetleri olan ve giderek küçülen açılarla döndürerek, yalnızca kaydırma ve toplamayla hesaplanabilir.</p>
+      <details class="more"><summary>Daha fazla ayrıntı</summary><div class="body">
+        <p>Her adımda vektör ya saat yönünde ya da tersine biraz döner; hangisi olacağına, hedef açıya kalan farkın işaretine bakılarak karar verilir. Adım açısının tanjantı ikinin bir kuvveti olduğu için döndürme bir kaydırma ve bir toplamaya iner. Her adım sonuca yaklaşık bir bit hassasiyet ekler.</p>
+        <p>Aynı yöntem ters yönde de çalışır: bir vektörü x eksenine döndürerek açısını ve uzunluğunu bulur. Bu, bu dersteki atan2'nin donanımdaki karşılığı.</p>
+      </div></details>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="finale">
+  <div class="wrap prose">
+    <h2>Neler gördük</h2>
+    <ol class="takeaways">
+      <li>Açılar x ekseninden, saat yönünün tersine ölçülür. 180° = π rad, 1 rad ≈ 57.3°.</li>
+      <li>Birim çember üzerindeki nokta (cos θ, sin θ)'dır; işaretleri çeyreğe göre değişir.</li>
+      <li>Uzunluğu L, açısı θ olan bir uzvun ucu (L cos θ, L sin θ)'dır. İki uzuvlu kolda ikinci uzuv θ₁ + θ₂ yönündedir.</li>
+      <li>Bileşenlerden açıyı atan2(y, x) bulur; arctan(y/x) yarı düzlemde yanılır.</li>
+      <li>Üç kenarı bilinen üçgenin açısını kosinüs teoremi verir; dirsek açısı θ₂ = 180° − γ.</li>
+    </ol>
+    <h3>Açık sorular</h3>
+    <details class="open-q"><summary>cos²θ + sin²θ neden her zaman 1'dir?</summary><p>(cos θ, sin θ) birim çemberin üzerinde, yani uzunluğu 1. Pisagor'a göre uzunluğun karesi bileşenlerin karelerinin toplamıdır.</p></details>
+    <details class="open-q"><summary>Kol tamamen gerilmişken (d = 2) hedefe kaç farklı duruşla ulaşılır?</summary><p>Bir tek: dirsek açısı 0°. Dirsek yukarı ve dirsek aşağı çözümleri burada birleşir. 5. bölümde bunun tekillik denen özel bir duruş olduğunu göreceksin.</p></details>
+    <h3>Ek okuma</h3>
+    <ul class="links">
+      <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch ve F. Park, 2017: ücretsiz kitap ve videolar (İngilizce); 6. bölüm ters kinematiğe ayrılmış</span></li>
+    </ul>
+    <p>Sıradaki: <!--if:m-3-matrices-as-transformations.html--><a href="m-3-matrices-as-transformations.html">M.3 Dönüşüm olarak matrisler</a>.<!--/if--> Bir vektörü döndürmeyi tek bir tabloyla yazmanın yolu: matrisler.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Kinematik Atölyesi, M.2 dersi. Bütün sahneler tarayıcında, kendi bilgisayarında çalışır.
+</footer>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+<script>
+/*@@JS@@*/
+</script>
+</body>
+</html>

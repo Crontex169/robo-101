@@ -13,6 +13,14 @@ const { spawnSync } = require('child_process');
 const { launch, sleep } = require('./cdp');
 const sample = require('./lesson_sample');
 const m1 = require('./lesson_m1');
+const m2 = require('./lesson_m2');
+const fs = require('fs');
+
+// What each build should show, derived from the published lists and the glossary (not hard-coded counts)
+const readJSON = (f) => JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', f), 'utf-8'));
+const LESSON_FILE = Object.fromEntries([...fs.readFileSync(path.resolve(__dirname, '../lessons/build.py'), 'utf-8').matchAll(/'(\w+)': \('([\w.-]+\.html)'/g)].map((m) => [m[1], m[2]]));
+const published = (cfg) => readJSON(cfg).PUBLISHED.filter((p) => p.n !== 'G');
+const termsOf = (cfg) => { const files = new Set(published(cfg).map((p) => path.basename(p.file))); return readJSON('lessons/shared/glossary.json').filter((g) => files.has(LESSON_FILE[g.l])).length; };
 const plain = require('./plain_scan');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -45,15 +53,19 @@ function assemble(out, config) {
     console.log('Lesson M.1');
     await m1.run(B, fileUrl('dist-check/lessons/m-1-vectors-and-frames.html'), check);
 
+    console.log('Lesson M.2');
+    await m2.run(B, fileUrl('dist-check/lessons/m-2-trigonometry.html'), check);
+
     console.log('Home page');
     const home = await B.page(fileUrl('dist-check/index.html'), { width: 1280, height: 900, light: true });
     await home.waitFor("document.querySelectorAll('#parts li').length > 0");
-    const st = await home.eval(`(() => { const li = [...document.querySelectorAll('#parts li')];
-      const pub = li.filter((x) => x.dataset.n === 'M.1' || x.dataset.n === 'M.2');
-      return { states: pub.map((x) => x.dataset.state), link: pub.length === 2 && pub.every((x) => !!x.querySelector('a')), others: li.filter((x) => !pub.includes(x)).every((x) => x.dataset.state === 'soon' && !x.querySelector('a')), total: li.length }; })()`);
-    check(st.link, 'M.1 and M.2 (the sample, in the check build) are links');
-    check(st.states.every((x) => x === 'started' || x === 'completed'), `M.1 and M.2 show progress from the visits: ${st.states.join(', ')}`);
-    check(st.others, `the other ${st.total - 2} program entries say "Coming soon" and aren't links`);
+    const pubN = published('tools/fixtures/config.check.json').map((p) => p.n);
+    const st = await home.eval(`(() => { const N = ${JSON.stringify(pubN)}, li = [...document.querySelectorAll('#parts li')];
+      const pub = li.filter((x) => N.includes(x.dataset.n));
+      return { states: pub.map((x) => x.dataset.state), link: pub.length === N.length && pub.every((x) => !!x.querySelector('a')), others: li.filter((x) => !pub.includes(x)).every((x) => x.dataset.state === 'soon' && !x.querySelector('a')), total: li.length }; })()`);
+    check(st.link, `${pubN.join(', ')} (published in the check build) are links`);
+    check(st.states.every((x) => x === 'started' || x === 'completed'), `${pubN.join(', ')} show progress from the visits: ${st.states.join(', ')}`);
+    check(st.others, `the other ${st.total - pubN.length} program entries say "Coming soon" and aren't links`);
     await home.shot(shot('home-light.png'));
     const t0 = await home.eval("document.documentElement.dataset.theme || 'light'");
     await home.click('#themeBtn');
@@ -66,15 +78,16 @@ function assemble(out, config) {
     console.log('Glossary');
     const gl = await B.page(fileUrl('dist/lessons/glossary.html'), { width: 1280, height: 900 });
     await gl.waitFor("document.readyState === 'complete'");
-    const realM1 = require('../site/config.json').PUBLISHED.some((x) => x.n === 'M.1');
-    check(await gl.eval(realM1 ? "document.querySelectorAll('.gl-item').length === 8" : "!document.getElementById('glEmpty').hidden && document.querySelectorAll('.gl-item').length === 0"),
-      realM1 ? 'real build: the glossary lists the 8 terms of M.1' : 'real build: the glossary shows its empty state');
+    const realN = termsOf('site/config.json');
+    check(await gl.eval(realN ? `document.querySelectorAll('.gl-item').length === ${realN}` : "!document.getElementById('glEmpty').hidden && document.querySelectorAll('.gl-item').length === 0"),
+      realN ? `real build: the glossary lists the ${realN} terms of the published lessons` : 'real build: the glossary shows its empty state');
     const glc = await B.page(fileUrl('dist-check/lessons/glossary.html'), { width: 1280, height: 900 });
     await glc.waitFor("document.readyState === 'complete'");
-    check(await glc.eval("document.querySelectorAll('.gl-item').length === 10"), 'check build: the glossary lists 10 terms (M.1 and the sample)');
+    const checkN = termsOf('tools/fixtures/config.check.json');
+    check(await glc.eval(`document.querySelectorAll('.gl-item').length === ${checkN}`), `check build: the glossary lists ${checkN} terms`);
 
     console.log('Plain pages');
-    for (const page of ['dist-check/index.html', 'dist-check/404.html', 'dist-check/lessons/glossary.html', 'dist-check/lessons/sample.html', 'dist-check/lessons/m-1-vectors-and-frames.html']) {
+    for (const page of ['dist-check/index.html', 'dist-check/404.html', 'dist-check/lessons/glossary.html', 'dist-check/lessons/sample.html', 'dist-check/lessons/m-1-vectors-and-frames.html', 'dist-check/lessons/m-2-trigonometry.html']) {
       for (const theme of ['light', 'dark']) {
         const pp = await B.page(fileUrl(page), { width: 1280, height: 900, [theme]: true });
         await pp.waitFor("document.readyState === 'complete'");

@@ -88,5 +88,68 @@
   "l": "m1",
   "sec": "three-d",
   "a": "sağ elli çerçeve\\w*"
+ },
+ {
+  "id": "radian",
+  "t": "Radyan",
+  "en": "Radian",
+  "d": "Yarıçapı 1 olan bir çemberde açının gördüğü yayın uzunluğu. 180° = π rad, 1 rad ≈ 57.3°.",
+  "l": "m2",
+  "sec": "angles",
+  "a": "radyan\\w*"
+ },
+ {
+  "id": "unit-circle",
+  "t": "Birim çember",
+  "en": "Unit circle",
+  "d": "Merkezi orijinde, yarıçapı 1 olan çember. θ açısındaki noktası (cos θ, sin θ)'dır.",
+  "l": "m2",
+  "sec": "circle",
+  "a": "birim çember\\w*"
+ },
+ {
+  "id": "cosine",
+  "t": "Kosinüs",
+  "en": "Cosine",
+  "d": "Birim çemberde θ açısındaki noktanın x koordinatı: cos θ.",
+  "l": "m2",
+  "sec": "circle",
+  "a": "kosinüs\\w*"
+ },
+ {
+  "id": "sine",
+  "t": "Sinüs",
+  "en": "Sine",
+  "d": "Birim çemberde θ açısındaki noktanın y koordinatı: sin θ.",
+  "l": "m2",
+  "sec": "circle",
+  "a": "sinüs\\w*"
+ },
+ {
+  "id": "polar-coordinates",
+  "t": "Kutupsal koordinatlar",
+  "en": "Polar coordinates",
+  "d": "Bir noktayı orijinden uzaklığı ve x ekseniyle yaptığı açıyla vermek: (r, θ), yani (r cos θ, r sin θ).",
+  "l": "m2",
+  "sec": "links",
+  "a": "kutupsal koordinat\\w*"
+ },
+ {
+  "id": "atan2",
+  "t": "atan2",
+  "en": "atan2",
+  "d": "Bileşenlerden açıyı bulan fonksiyon: atan2(y, x). İşaretlere bakıp doğru çeyreği seçer, −180° ile 180° arasında bir açı verir.",
+  "l": "m2",
+  "sec": "atan2",
+  "a": "atan2"
+ },
+ {
+  "id": "law-of-cosines",
+  "t": "Kosinüs teoremi",
+  "en": "Law of cosines",
+  "d": "Kenarları a, b, c olan üçgende c² = a² + b² − 2ab cos γ; γ, c'nin karşısındaki açı. Üç kenardan açıyı bulmaya yarar.",
+  "l": "m2",
+  "sec": "cosrule",
+  "a": "kosinüs teorem\\w*"
  }
 ]
