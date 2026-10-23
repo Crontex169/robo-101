@@ -5,6 +5,8 @@
    { "n": "3.1", "title": "Denavit–Hartenberg parameters", "href": "3-1-dh-parameters.html",
      "q": [{ "q": "question", "o": ["option", ...], "a": 1, "e": "explanation",
              "sec": "dh", "secTitle": "section title" }] }
+   The first lesson has no previous lesson: it sets "head" (the heading) and "miss" (the line
+   shown after a wrong answer) instead, and its questions carry no "sec" links.
    The block renders into [data-recall]. Answers are not stored anywhere.
    ===================================================================== */
 (function () {
@@ -15,7 +17,7 @@
   try { D = JSON.parse(src.textContent); } catch (e) { return; }
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
   const head = el('div', 'rc-head');
-  head.append(el('div', 'g-kicker', 'Warm-up'), el('h3', null, `Recall lesson ${D.n}: ${D.title}`),
+  head.append(el('div', 'g-kicker', 'Warm-up'), el('h3', null, D.head || `Recall lesson ${D.n}: ${D.title}`),
     el('p', 'rc-sub', `${D.q.length} ${D.q.length === 1 ? 'question' : 'questions'} to connect the lessons. You can skip them and read on.`));
   box.append(head);
   const total = el('p', 'rc-total'); total.hidden = true;
@@ -40,7 +42,7 @@
         exp.append(el('b', null, ok ? 'Correct. ' : 'Not quite. '), document.createTextNode(q.e + ' '));
         if (q.sec) { const a = el('a', null, `Section "${q.secTitle}" of lesson ${D.n} →`); a.href = `${D.href}#${q.sec}`; exp.append(a); }
         exp.hidden = false;
-        if (answered === D.q.length) { total.textContent = `${right} of ${D.q.length} correct. ${right === D.q.length ? 'Ready to move on.' : 'If something slipped, the links lead to the right sections of the previous lesson.'}`; total.hidden = false; }
+        if (answered === D.q.length) { total.textContent = `${right} of ${D.q.length} correct. ${right === D.q.length ? 'Ready to move on.' : (D.miss || 'If something slipped, the links lead to the right sections of the previous lesson.')}`; total.hidden = false; }
       });
       opts.append(b);
     });

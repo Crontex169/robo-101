@@ -14,5 +14,69 @@
   "l": "sample",
   "sec": "reach",
   "a": "workspaces?"
+ },
+ {
+  "id": "vector",
+  "t": "Vector",
+  "d": "A quantity with a length and a direction, drawn as an arrow. Where the arrow starts doesn't matter.",
+  "l": "m1",
+  "sec": "arrows",
+  "a": "vectors?"
+ },
+ {
+  "id": "component",
+  "t": "Component",
+  "d": "How far a vector goes along one axis, for example its x component. It can be negative.",
+  "l": "m1",
+  "sec": "parts",
+  "a": "components?"
+ },
+ {
+  "id": "magnitude",
+  "t": "Length (magnitude)",
+  "d": "How long a vector is: the square root of the sum of its squared components. Never negative.",
+  "l": "m1",
+  "sec": "parts",
+  "a": "magnitude"
+ },
+ {
+  "id": "unit-vector",
+  "t": "Unit vector",
+  "d": "A vector of length one. It gives a direction without a distance; frame axes are unit vectors.",
+  "l": "m1",
+  "sec": "parts",
+  "a": "unit vectors?"
+ },
+ {
+  "id": "coordinate-frame",
+  "t": "Coordinate frame",
+  "d": "An origin plus one unit vector per axis, at right angles to each other. Positions are measured from it; frames are named like {A}.",
+  "l": "m1",
+  "sec": "frames",
+  "a": "coordinate frames?"
+ },
+ {
+  "id": "origin",
+  "t": "Origin",
+  "d": "The point a frame measures from: where its axes start.",
+  "l": "m1",
+  "sec": "frames",
+  "a": "origins?"
+ },
+ {
+  "id": "position-vector",
+  "t": "Position vector",
+  "d": "The vector from a frame's origin to a point. Its components are the point's coordinates in that frame.",
+  "l": "m1",
+  "sec": "frames",
+  "a": "position vectors?"
+ },
+ {
+  "id": "right-handed-frame",
+  "t": "Right-handed frame",
+  "d": "A 3D frame where the right hand's fingers curl from x to y and the thumb points along z. The course uses only these.",
+  "l": "m1",
+  "sec": "three-d",
+  "a": "right-handed frames?"
  }
 ]

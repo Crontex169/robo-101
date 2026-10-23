@@ -4,6 +4,10 @@
   "REPO": "https://github.com/Crontex169/robo-101",
   "PUBLISHED": [
     {
+      "n": "M.1",
+      "file": "lessons/m-1-vectors-and-frames.html"
+    },
+    {
       "n": "G",
       "file": "lessons/glossary.html"
     }

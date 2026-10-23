@@ -11,6 +11,9 @@ LESSONS = {
     'sample': ('sample.html', ['shared/lesson.css', 'shared/lab.css', 'shared/research.css', 'sample/sample.css'], {
         '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/planar-arm.js', 'shared/missions.js', 'shared/quiz.js', 'sample/ui-sample.js'],
     }),
+    'm1': ('m-1-vectors-and-frames.html', ['shared/lesson.css', 'shared/lab.css', 'shared/research.css', 'm1/m1.css'], {
+        '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/vec.js', 'shared/missions.js', 'shared/quiz.js', 'm1/ui-m1.js'],
+    }),
     # glossary: every published term from shared/glossary.json
     'gl': ('glossary.html', ['shared/lesson.css', 'gl/gl.css'], {
         '/*@@JS@@*/': ['shared/ui-core.js', 'gl/ui-gl.js'],

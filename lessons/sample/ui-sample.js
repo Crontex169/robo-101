@@ -84,6 +84,11 @@ const Arm = (() => {
         else { const e = PlanarArm.fk([L1], [st.q[0]]).tip; setAngles(deg(st.q[0]), wrapDeg(deg(Math.atan2(y - e[1], x - e[0]) - st.q[0]))); }
       },
     });
+    HeroKit.keys(cv, { // keyboard twin of the drag: the elbow handle turns the shoulder, the hand handle turns the elbow, 5° per key (1° with Shift)
+      handles: ['elbow', 'hand'],
+      move(n, dx, dy) { if (animating) return; const d = (dx + dy) * 10, q = st.q.map(deg); if (n === 'elbow') setAngles(q[0] + d, q[1]); else setAngles(q[0], q[1] + d); },
+      describe: (n) => (n === 'elbow' ? `Shoulder θ₁ = ${Math.round(deg(st.q[0]))}°` : `Elbow θ₂ = ${Math.round(deg(st.q[1]))}°`),
+    });
     HeroKit.onTheme(draw); window.addEventListener('resize', draw);
     ctl = Missions.mount('#armMis', missions, api);
     sync();

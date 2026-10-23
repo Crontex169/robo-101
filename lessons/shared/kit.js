@@ -60,6 +60,27 @@ window.HeroKit = (function () {
     return { get active() { return !!cur; } };
   }
 
+  /** Keyboard for a scene's handles (the keyboard twin of drag). The canvas becomes focusable;
+   *  arrow keys call move(name, dx, dy) in scene units (step 0.5, with Shift 0.1), Enter/Space
+   *  switch to the next handle, Tab still leaves. describe(name) is read out after every key. */
+  function keys(cv, o) {
+    let i = 0;
+    if (!cv.hasAttribute('tabindex')) cv.tabIndex = 0;
+    let live = cv.nextElementSibling;
+    if (!live || !live.classList.contains('kb-live')) { live = el('p', { class: 'sr kb-live', 'aria-live': 'polite' }); cv.after(live); }
+    // o.handles may be a getter: the movable handles can change from mission to mission
+    const cur = () => { const hs = o.handles; if (!hs.length) return null; i %= hs.length; return hs[i]; };
+    const say = () => { const h = cur(); live.textContent = h == null ? 'Nothing to move in this step.' : (o.describe ? o.describe(h) : ''); };
+    const D = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] };
+    cv.addEventListener('keydown', (e) => {
+      if (D[e.key]) { const h = cur(), s = e.shiftKey ? 0.1 : 0.5; if (h != null) o.move(h, D[e.key][0] * s, D[e.key][1] * s); say(); e.preventDefault(); }
+      else if (e.key === 'Enter' || e.key === ' ') { if (o.handles.length > 1) i = (i + 1) % o.handles.length; say(); if (o.redraw) o.redraw(); e.preventDefault(); }
+    });
+    cv.addEventListener('focus', () => { say(); if (o.redraw) o.redraw(); });
+    cv.addEventListener('blur', () => { if (o.redraw) o.redraw(); });
+    return { get active() { return document.activeElement === cv ? cur() : null; }, select(name) { const k = o.handles.indexOf(name); if (k >= 0) i = k; } };
+  }
+
   /** Animation loop that runs only while the element is visible on screen. */
   function loop(el, frame) {
     let vis = false, raf = 0, alive = true, last = 0;
@@ -76,7 +97,7 @@ window.HeroKit = (function () {
 
   /** Canvas labels: font size is given in screen pixels. */
   function font(c, k, px, weight, mono) {
-    c.font = `${weight || 600} ${px * k}px ${mono ? '"JetBrains Mono", ui-monospace, Menlo, monospace' : 'Inter, system-ui, -apple-system, sans-serif'}`;
+    c.font = `${weight || 600} ${px * k}px ${mono ? 'ui-monospace, Menlo, Consolas, monospace' : 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'}`;
   }
   /** Text on a background-coloured plate, so the label reads over lines. */
   function label(c, k, text, x, y, o) {
@@ -105,5 +126,5 @@ window.HeroKit = (function () {
   function onTheme(fn) { const mo = new MutationObserver(fn); mo.observe(root, { attributes: true, attributeFilter: ['data-theme'] }); return () => mo.disconnect(); }
   function el(tag, attrs, html) { const e = document.createElement(tag); if (attrs) for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (html != null) e.innerHTML = html; return e; }
 
-  return { css, dark, reduced, fit, rng, randn, drag, loop, font, label, grid, hatch, cross, check, onTheme, el };
+  return { css, dark, reduced, fit, rng, randn, drag, keys, loop, font, label, grid, hatch, cross, check, onTheme, el };
 })();

@@ -5,6 +5,10 @@
   "PUBLISHED": [
     {
       "n": "M.1",
+      "file": "lessons/m-1-vectors-and-frames.html"
+    },
+    {
+      "n": "M.2",
       "file": "lessons/sample.html"
     },
     {
@@ -12,5 +16,6 @@
       "file": "lessons/glossary.html"
     }
   ],
-  "_comment_published": "Published pages: marked available on the home page, listed in sitemap.xml and copied to dist/ by tools/assemble.py."
+  "_comment_published": "Published pages: marked available on the home page, listed in sitemap.xml and copied to dist/ by tools/assemble.py.",
+  "_comment_check": "Check build only: the sample lesson is published as M.2 so it is built and played."
 }

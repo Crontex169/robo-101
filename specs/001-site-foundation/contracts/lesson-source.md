@@ -31,8 +31,10 @@ The required pieces, in order:
 3. A top bar with the brand link, section links (`<nav class="toc">`) and
    `<button class="theme-btn">` **(enforced)**.
 4. `<main>`, containing:
-   - `<section class="hero" id="top">`: kicker with the lesson number and part, `<h1>`, a lead
-     paragraph, `hero-meta` (time, labs, missions) and `hero-list`
+   - `<section class="intro" id="top">`: a plain `<p class="lesson-n">` line with the lesson
+     number and part, `<h1>`, a `lead` paragraph, a `<p class="meta">` line (time, labs,
+     missions) and a short "In this lesson you will" list. Since spec 002 the page is plain
+     (constitution VII): no kicker labels, badges or hero cards.
    - optionally `<section class="recall-sec" id="recall">` with `#recallData` JSON (see
      [data-model](../data-model.md))
    - `<section class="section" id="…">` blocks. Each one is a lab, a small interactive or prose
