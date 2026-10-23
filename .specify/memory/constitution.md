@@ -1,15 +1,16 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.1 → 1.1.0 (MINOR: site language changed from Turkish to English)
-- Modified principles: none
-- Modified sections: Scope and Language (site language, glossary entries)
-- Added sections: none
+- Version change: 1.1.0 → 1.2.0 (MINOR: new principle VII, Plain Pages)
+- Modified principles: II. Explain First, Then Let Them Try It (structure follows the reference
+  site; visual style now follows Principle VII)
+- Added sections: VII. Plain Pages
 - Removed sections: none
 - Templates requiring updates:
   ✅ .specify/templates/plan-template.md — Constitution Check gates are derived per plan; no edit needed
   ✅ .specify/templates/spec-template.md — no mandatory section added or removed
   ✅ .specify/templates/tasks-template.md — check-script tasks map to Principle III and the workflow section; no edit needed
-- Follow-up TODOs: none
+- Follow-up TODOs: README.md lists Inter/JetBrains Mono under assets; update when spec 002 drops
+  text web fonts.
 -->
 
 # Kinematics Workshop Constitution
@@ -29,7 +30,8 @@ second.
 
 ### II. Explain First, Then Let Them Try It
 
-Lessons follow the format of the reference site (modern-robotics): an intro with time estimate
+Lessons follow the structure of the reference site (modern-robotics), not its look; the visual
+style follows Principle VII. The structure is: an intro with time estimate
 and lab/mission counts, a three-question warm-up on the previous lesson, numbered sections, an
 eight-question misconceptions quiz, and a wrap-up with takeaways, open questions, further reading
 and a bridge to the next lesson.
@@ -89,6 +91,29 @@ carry an `aria-label`. Animation loops run only while the scene is on screen.
 Why: readers often open a lesson on their phone. Accessibility is part of the baseline, not
 something we add at the end.
 
+### VII. Plain Pages
+
+Every page reads like a teacher's notes. The model is Lena Voita's NLP course
+(lena-voita.github.io/nlp_course.html): we follow its plainness, not its layout or content.
+
+- One narrow text column (about 75 characters per line); figures and labs may be wider.
+- The reader's system font stack. No web fonts for text; KaTeX's math fonts are the only
+  exception.
+- Plain links. Sections separated by thin horizontal rules.
+- One ink colour for headings and body text. Colour MUST carry meaning: the per-lesson meaning
+  colours in figures, labs and formulas, the link colour, pass/fail states, and the light tint of
+  research blocks.
+- Banned: gradient text, uppercase "eyebrow" labels above headings, pill or chip badges,
+  shadowed content cards, corner rounding beyond a few pixels, pairs of big call-to-action
+  buttons.
+- Personality comes from the writing, the figures and the author's first-person margin notes.
+- Lessons MAY carry Related papers, Research thinking and margin note blocks. Every citation
+  (title, authors, venue, year) MUST match the original publication; every summary is in our
+  own words.
+
+Why: decoration made the site look like a generated product page. A plain page keeps the
+reader's attention on the idea.
+
 ## Scope and Language
 
 - **Site language:** English, for everything: lesson text, UI, glossary, code and docs.
@@ -120,4 +145,4 @@ are made in this file along with an updated Sync Impact Report. Versioning is se
 for removing or redefining a principle, MINOR for adding a principle or section, PATCH for
 wording fixes.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-21 | **Last Amended**: 2026-10-21
+**Version**: 1.2.0 | **Ratified**: 2026-10-21 | **Last Amended**: 2026-10-23

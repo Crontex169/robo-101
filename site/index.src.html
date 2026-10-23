@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kinematics Workshop — learn robot arm kinematics from zero</title>
 <meta name="description" content="A free, interactive course on robot arm kinematics for complete beginners: frames and rotations, forward and inverse kinematics, and the Jacobian, with live labs in your browser.">
-<script>(function(){try{var t=localStorage.getItem('kw-theme');if(t)document.documentElement.dataset.theme=t;else if(matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.dataset.theme='dark';}catch(e){}})();</script>
-<link rel="stylesheet" href="assets/fonts/fonts.css">
+<script>(function(){try{var t=localStorage.getItem('kw-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Kinematics Workshop">
 <meta property="og:title" content="Kinematics Workshop — learn robot arm kinematics from zero">
@@ -21,177 +20,114 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-/* ---------- Hero ---------- */
-.hero { padding: 64px 0 76px; position: relative; overflow: hidden; }
-.hero::before { content: ""; position: absolute; inset: -30% -10% auto; height: 120%; pointer-events: none; background: radial-gradient(38% 50% at 15% 30%, rgba(42,120,214,.10), transparent 70%), radial-gradient(38% 50% at 85% 25%, rgba(235,104,52,.08), transparent 70%); }
-.hero .wrap { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; gap: 44px; align-items: center; }
-.hero .wrap > * { min-width: 0; }
-.hero h1 { font-size: clamp(44px, 6.2vw, 78px); font-weight: 820; letter-spacing: -0.04em; line-height: 1.02; margin-bottom: 20px; }
-.hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--classic), var(--hybrid) 55%, var(--e2e)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.hero .lead { font-size: 21.5px; }
-@media (max-width: 400px) { .hero .lead { font-size: 19px; } .chips span { font-size: 13px; } }
-.cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 22px; }
-.hero-art { width: 100%; height: auto; display: block; }
+/* ---------- Home page: a plain document ---------- */
+.intro { padding: 40px 0 32px; }
+figure { margin: 0; }
+.hero-art { width: 100%; max-width: 300px; height: auto; margin: 8px 0 6px; }
 .hero-art .link1 { stroke: var(--classic); } .hero-art .link2 { stroke: var(--hybrid); } .hero-art .link3 { stroke: var(--e2e); }
-.hero-art .joint { fill: var(--surface); stroke: var(--ink); } .hero-art .base { fill: var(--ink-3); }
-.hero-art .ax { stroke: var(--ink-3); } .hero-art text { fill: var(--ink-3); font: 600 15px Inter, system-ui, sans-serif; }
+.hero-art .joint { fill: var(--bg); stroke: var(--ink); } .hero-art .base { fill: var(--ink-3); }
+.hero-art .ax { stroke: var(--line-2); } .hero-art text { fill: var(--ink-3); font: 15px var(--font); }
 .hero-art .target { fill: none; stroke: var(--good); stroke-dasharray: 5 4; }
-/* ---------- How a lesson works ---------- */
-.feature { padding: 22px 22px 20px; }
-.feature .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--line); margin-bottom: 14px; }
-.feature .ic svg { width: 23px; height: 23px; }
-.feature p { font-size: 15.5px; margin: 0; }
+figcaption { font-size: 14.5px; color: var(--ink-3); margin-bottom: 1em; }
+.cta { font-size: 1.05rem; margin: 1.2em 0 .3em; }
+.cta-progress, .progress-reset { font-size: 15px; color: var(--ink-3); }
+.progress-reset button { padding: 0; border: 0; background: none; color: var(--link); text-decoration: underline; cursor: pointer; }
 /* ---------- Program ---------- */
-.parts { display: grid; gap: 12px; }
-.part { padding: 0; overflow: hidden; }
-.part summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: center; padding: 16px 20px; }
-.part summary::-webkit-details-marker { display: none; }
-.part .num { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-weight: 800; font-size: 19px; background: var(--ink); color: var(--bg); }
-.part .t { font-size: 19.5px; font-weight: 720; letter-spacing: -0.015em; line-height: 1.25; }
-.part .q { font-size: 14.5px; color: var(--ink-3); margin-top: 3px; }
-.part .count { font-size: 13.5px; font-weight: 650; color: var(--ink-3); text-align: right; white-space: nowrap; }
-.part .chev { display: inline-block; transition: transform .2s; margin-left: 8px; }
-.part[open] .chev { transform: rotate(90deg); }
-.lessons { list-style: none; margin: 0; padding: 0 20px 18px 92px; display: grid; gap: 6px; }
-.lessons li { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; align-items: baseline; font-size: 16px; padding: 7px 0; border-top: 1px solid var(--line); }
-.lessons .n { color: var(--ink-3); font-variant-numeric: tabular-nums; font-weight: 600; font-size: 14.5px; }
-.lessons .tag { font-size: 12.5px; font-weight: 650; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
-.tag.soon { background: var(--bg-2); color: var(--ink-3); }
-.tag.check { background: color-mix(in srgb, var(--good) 13%, transparent); color: color-mix(in srgb, var(--good) 80%, var(--ink)); }
-.lessons a { color: var(--ink); font-weight: 650; }
+.part h3 .num { color: var(--ink-3); font-weight: 400; }
+.part .q { margin: 0 0 .4em; color: var(--ink-3); }
+.lessons { list-style: none; padding: 0; margin: 0 0 .6em; }
+.lessons li { display: grid; grid-template-columns: 3.2em 1fr; gap: 8px; margin: 0; padding: 3px 0; }
+.lessons .n { color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .lessons li.na > span:nth-child(2) { color: var(--ink-3); }
-.part.later { background: transparent; box-shadow: none; }
-.part.later .num { background: transparent; color: var(--ink-3); border: 1.5px dashed var(--line-2); }
-.part.later .t { color: var(--ink-2); }
-/* progress in this browser (lessons/shared/progress.js writes it, the home page reads it) */
-.cta-progress { margin: -10px 0 18px; font-size: 15px; color: var(--ink-3); }
-.lsn-st { display: inline-grid; place-items: center; width: 19px; height: 19px; margin-right: 8px; border-radius: 50%; vertical-align: -4px; }
-.lsn-st.done { background: color-mix(in srgb, var(--good) 14%, var(--surface)); color: var(--good); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--good) 55%, transparent); }
-.lsn-st.done svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.lsn-st.started { background: conic-gradient(var(--ink-3) 0 50%, transparent 0); box-shadow: inset 0 0 0 1.5px var(--ink-3); }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.program-links, .progress-reset { margin: -10px 0 18px; font-size: 15px; color: var(--ink-3); }
-.program-links a { color: var(--ink-2); }
-.progress-reset button { padding: 0; border: 0; background: none; color: var(--ink-2); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-/* ---------- Audience ---------- */
-.aud { padding: 24px 24px 20px; }
-.aud ul { margin: 0; padding-left: 1.1em; color: var(--ink-2); font-size: 16.5px; }
-.aud li { margin: .3em 0; }
-html { scroll-padding-top: 76px; scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-.nav-links a.on { background: var(--bg-2); color: var(--ink); }
-/* ---------- FAQ ---------- */
-.faq { display: grid; gap: 10px; max-width: 860px; }
-.faq details { padding: 0; }
-.faq summary { list-style: none; cursor: pointer; padding: 17px 20px; font-weight: 680; font-size: 17.5px; display: flex; justify-content: space-between; gap: 14px; }
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font-weight: 500; color: var(--ink-3); font-size: 22px; line-height: 1; }
-.faq details[open] summary::after { content: "−"; }
-.faq .a { padding: 0 20px 18px; font-size: 16.5px; color: var(--ink-2); }
-@media (max-width: 960px) { .hero .wrap { grid-template-columns: 1fr; } .lessons { padding-left: 20px; } .part summary { grid-template-columns: 48px 1fr; } .part .count { grid-column: 2; text-align: left; } }
-@media (max-width: 480px) { .lessons li { grid-template-columns: 44px 1fr; } .lessons li > span:last-child { grid-column: 2; } }
+.lessons .tag { font-size: 14px; color: var(--ink-3); }
+.lsn-st { margin-right: 6px; color: var(--ink-3); }
+.lsn-st.done { color: var(--good-ink); }
 </style>
 </head>
 <body>
-<!--SPRITE-->
 <header class="nav"><div class="nav-in">
   <a class="logo" href="index.html">Kinematics Workshop</a>
   <nav class="nav-links" aria-label="Sections">
-    <a href="#how">Format</a><a href="#program">Program</a><a href="#who">Who it's for</a><a href="#faq">FAQ</a><a href="lessons/glossary.html">Glossary</a>
+    <a href="#how">How it works</a><a href="#program">Program</a><a href="#who">Who it's for</a><a href="#faq">Questions</a><a href="lessons/glossary.html">Glossary</a>
   </nav>
-  <a class="icon-btn" href="{{REPO}}" title="Source code on GitHub" aria-label="Source code on GitHub"><svg><use href="#i-github"/></svg></a>
-  <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme"><svg><use href="#i-moon"/></svg></button>
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
 </div></header>
 
 <main>
-<section class="hero"><div class="wrap">
-  <div>
-    <div class="kicker">Free interactive course</div>
-    <h1>Kinematics <em>Workshop</em></h1>
-    <p class="lead">How does a robot arm know where its hand is, and which joint angles put it where you want? This course answers that from the ground up: vectors and rotations first, then forward and inverse kinematics and the Jacobian. Every idea comes with a live scene you can drag and test.</p>
-    <div class="cta">
-      <a class="btn primary" id="ctaMain" href="#program"><svg><use href="#i-play"/></svg><span>Start with M.1</span></a>
-      <a class="btn" href="#program">See the program<svg><use href="#i-arrow"/></svg></a>
-    </div>
-    <p class="cta-progress" id="ctaProgress" hidden></p>
-    <div class="chips">
-      <span><svg><use href="#i-free"/></svg>Free, no sign-up</span>
-      <span><svg><use href="#i-lab"/></svg>Labs in your browser</span>
-      <span><svg><use href="#i-phone"/></svg>Works on your phone</span>
-    </div>
-  </div>
-  <svg class="hero-art" viewBox="0 0 420 360" role="img" aria-label="A three-link robot arm with joint angles theta 1, theta 2 and theta 3 reaching for a target">
-    <line class="ax" x1="40" y1="300" x2="400" y2="300" stroke-width="1.5"/>
-    <line class="ax" x1="80" y1="330" x2="80" y2="30" stroke-width="1.5"/>
-    <circle class="target" cx="338" cy="96" r="18" stroke-width="2.5"/>
-    <line class="link1" x1="80" y1="300" x2="170" y2="150" stroke-width="16" stroke-linecap="round"/>
-    <line class="link2" x1="170" y1="150" x2="290" y2="130" stroke-width="13" stroke-linecap="round"/>
-    <line class="link3" x1="290" y1="130" x2="334" y2="100" stroke-width="10" stroke-linecap="round"/>
-    <rect class="base" x="56" y="300" width="48" height="16" rx="4"/>
-    <circle class="joint" cx="80" cy="300" r="10" stroke-width="3"/>
-    <circle class="joint" cx="170" cy="150" r="9" stroke-width="3"/>
-    <circle class="joint" cx="290" cy="130" r="8" stroke-width="3"/>
-    <text x="104" y="282">θ₁</text><text x="188" y="182">θ₂</text><text x="300" y="160">θ₃</text>
-  </svg>
+<section class="intro" id="top"><div class="wrap">
+  <h1>Kinematics Workshop</h1>
+  <p class="lead">I wrote this course for anyone who wants to know how a robot arm knows where its hand is, and which joint angles put it where you want. We start from zero: vectors and rotations first, then forward and inverse kinematics, then the Jacobian. Every idea comes with a live scene you can drag and test.</p>
+  <figure>
+    <svg class="hero-art" viewBox="0 0 420 360" role="img" aria-label="A three-link robot arm with joint angles theta 1, theta 2 and theta 3 reaching for a target">
+      <line class="ax" x1="40" y1="300" x2="400" y2="300" stroke-width="1.5"/>
+      <line class="ax" x1="80" y1="330" x2="80" y2="30" stroke-width="1.5"/>
+      <circle class="target" cx="338" cy="96" r="18" stroke-width="2.5"/>
+      <line class="link1" x1="80" y1="300" x2="170" y2="150" stroke-width="14" stroke-linecap="round"/>
+      <line class="link2" x1="170" y1="150" x2="290" y2="130" stroke-width="11" stroke-linecap="round"/>
+      <line class="link3" x1="290" y1="130" x2="334" y2="100" stroke-width="8" stroke-linecap="round"/>
+      <rect class="base" x="56" y="300" width="48" height="14"/>
+      <circle class="joint" cx="80" cy="300" r="9" stroke-width="3"/>
+      <circle class="joint" cx="170" cy="150" r="8" stroke-width="3"/>
+      <circle class="joint" cx="290" cy="130" r="7" stroke-width="3"/>
+      <text x="104" y="282">θ₁</text><text x="188" y="182">θ₂</text><text x="300" y="160">θ₃</text>
+    </svg>
+    <figcaption>A three-link arm reaching for a target. By Part 3 you'll compute where its hand is from θ₁, θ₂ and θ₃.</figcaption>
+  </figure>
+  <p class="cta"><a id="ctaMain" href="#program"><span>See the program</span> →</a></p>
+  <p class="cta-progress" id="ctaProgress" hidden></p>
+  <p class="muted">Free, no sign-up, works on your phone. All labs run in your browser.</p>
 </div></section>
 
-<section class="section alt" id="how"><div class="wrap">
-  <div class="kicker">Format</div>
+<section class="section" id="how"><div class="wrap">
   <h2>How a lesson works</h2>
-  <p class="lead">Each lesson takes 30–50 minutes and is about one idea. You read a short explanation first, then try it yourself in a live scene, and finish by checking what stuck.</p>
-  <div class="grid-4" style="margin-top:26px">
-    <div class="card feature"><div class="ic"><svg style="color:var(--classic)"><use href="#i-bulb"/></svg></div><h3>Read first</h3><p>The main text builds intuition with words and pictures. No idea is used before it has been explained.</p></div>
-    <div class="card feature"><div class="ic"><svg style="color:var(--e2e)"><use href="#i-lab"/></svg></div><h3>Then try it</h3><p>Labs put a live arm on the page. Each mission has a goal, a prediction to make first, and an explanation when you get there.</p></div>
-    <div class="card feature"><div class="ic"><svg style="color:var(--hybrid)"><use href="#i-gear"/></svg></div><h3>Under the hood</h3><p>Formulas and derivations sit in fold-out blocks. Open them when you want the math behind what you just saw.</p></div>
-    <div class="card feature"><div class="ic"><svg style="color:var(--good)"><use href="#i-ok"/></svg></div><h3>Check yourself</h3><p>A short warm-up opens each lesson, and a quiz on common misconceptions closes it, with the reasoning for every answer.</p></div>
-  </div>
+  <p>Each lesson takes 30–50 minutes and is about one idea. A short warm-up checks what stuck from the previous lesson.</p>
+  <p><strong>Read first.</strong> The main text builds intuition with words and pictures. No idea is used before it has been explained.</p>
+  <p><strong>Then try it.</strong> Labs put a live arm on the page. Each mission has a goal, often a prediction to make first, and an explanation once you've done it.</p>
+  <p><strong>Under the hood.</strong> Formulas and derivations sit in fold-out blocks. Open them when you want the math, skip them when you don't.</p>
+  <p><strong>Check yourself.</strong> A quiz on common misconceptions closes the lesson. Some lessons also point to the papers the ideas came from, and ask you to think like the people who first solved the problem.</p>
 </div></section>
 
 <section class="section" id="program"><div class="wrap">
-  <div class="kicker">Program</div>
   <h2>Program</h2>
-  <p class="lead">Seven parts. Two short toolkits cover the math and physics you'll need, then five parts take you from what a robot arm is to steering one with its Jacobian. Each part ends with a checkpoint.</p>
-  <p class="program-links">Terms from the lessons, with short definitions, are collected in the <a href="lessons/glossary.html">course glossary</a>.</p>
+  <p>Seven parts. Two short toolkits cover the math and physics you'll need, then five parts take you from what a robot arm is to steering one with its Jacobian. Each part ends with a checkpoint.</p>
+  <p>Terms from the lessons, with short definitions, are collected in the <a href="lessons/glossary.html">course glossary</a>.</p>
   <p class="progress-reset" id="progressReset" hidden>"Completed" and "started" marks are stored only in this browser. <button type="button">Reset progress</button></p>
   <div class="parts" id="parts"></div>
 </div></section>
 
-<section class="section alt" id="who"><div class="wrap">
-  <div class="kicker">Audience</div>
+<section class="section" id="who"><div class="wrap">
   <h2>Who is this for</h2>
-  <p class="lead">Anyone curious about how robot arms move, starting from zero. If you remember a little school algebra and trigonometry, that's enough: everything else is taught along the way.</p>
-  <div class="grid-2" style="margin-top:24px">
-    <div class="card aud"><h3><span class="dot" style="background:var(--classic)"></span>You'll learn to</h3><ul><li>describe where things are and how they're turned, with frames and rotation matrices</li><li>compute where an arm's hand is from its joint angles</li><li>find joint angles that put the hand where you want, and see when there are several answers or none</li><li>use the Jacobian to relate joint speeds to hand speeds and joint torques to hand forces</li></ul></div>
-    <div class="card aud"><h3><span class="dot" style="background:var(--e2e)"></span>You don't need</h3><ul><li>a robot: every lab runs in the browser</li><li>prior robotics or linear algebra: the M and F parts cover what's needed</li><li>to install anything or sign up</li></ul></div>
-  </div>
+  <p>Anyone curious about how robot arms move, starting from zero. If you remember a little school algebra and trigonometry, that's enough: everything else is taught along the way.</p>
+  <h3>You'll learn to</h3>
+  <ul><li>describe where things are and how they're turned, with frames and rotation matrices;</li><li>compute where an arm's hand is from its joint angles;</li><li>find joint angles that put the hand where you want, and see when there are several answers or none;</li><li>use the Jacobian to relate joint speeds to hand speeds and joint torques to hand forces.</li></ul>
+  <h3>You don't need</h3>
+  <ul><li>a robot: every lab runs in the browser;</li><li>prior robotics or linear algebra: the M and F parts cover what's needed;</li><li>to install anything or sign up.</li></ul>
 </div></section>
 
 <section class="section" id="faq"><div class="wrap">
-  <div class="kicker">FAQ</div>
   <h2>Questions</h2>
   <div class="faq">
-    <details class="card"><summary>What do I need to know before starting?</summary><div class="a">Basic school algebra and the idea of sine and cosine. Part M (math toolkit) and Part F (physics toolkit) cover vectors, matrices, derivatives, rotation and torque before the main parts use them.</div></details>
-    <details class="card"><summary>How long does it take?</summary><div class="a">A lesson takes 30–50 minutes. You can stop anywhere: your progress is remembered in this browser.</div></details>
-    <details class="card"><summary>Is it free?</summary><div class="a">Yes. There's no sign-up and nothing to install. The site doesn't collect any data about you.</div></details>
+    <details><summary>What do I need to know before starting?</summary><div>Basic school algebra and the idea of sine and cosine. Part M (math toolkit) and Part F (physics toolkit) cover vectors, matrices, derivatives, rotation and torque before the main parts use them.</div></details>
+    <details><summary>How long does it take?</summary><div>A lesson takes 30–50 minutes. You can stop anywhere: your progress is remembered in this browser.</div></details>
+    <details><summary>Is it free?</summary><div>Yes. There's no sign-up and nothing to install. The site doesn't collect any data about you.</div></details>
   </div>
 </div></section>
 </main>
 
 <footer class="foot"><div class="wrap">
-  <span>© 2026 Kinematics Workshop</span><span>Code: MIT</span><a href="lessons/glossary.html">Glossary</a><a href="{{REPO}}">Source code</a>
+  © 2026 Kinematics Workshop · Code: MIT · <a href="lessons/glossary.html">Glossary</a> · <a href="{{REPO}}">Source code on GitHub</a>
 </div></footer>
 
 <script>
 'use strict';
 /* ---------- Theme ---------- */
-(function () {
-  const btn = document.getElementById('themeBtn');
-  const sync = () => { btn.querySelector('use').setAttribute('href', document.documentElement.dataset.theme === 'dark' ? '#i-sun' : '#i-moon'); };
-  btn.addEventListener('click', () => { const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = t; try { localStorage.setItem('kw-theme', t); } catch (e) { /* no storage */ } sync(); });
-  sync();
-})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('kw-theme', t); } catch (e) { /* no storage */ }
+});
 
-/* ---------- Menu: highlight the section on screen ---------- */
+/* ---------- Menu: underline the section on screen ---------- */
 (function () {
   const links = [...document.querySelectorAll('.nav-links a[href^="#"]')], secs = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
   const onScroll = () => { let cur = null; for (const s of secs) if (s.getBoundingClientRect().top < 140) cur = s.id;
@@ -215,30 +151,29 @@ const PARTS = [
   const PROGRESS = (() => { try { return JSON.parse(localStorage.getItem('kw-progress') || '{}') || {}; } catch (e) { return {}; } })();
   const slugOf = (file) => file.split('/').pop().replace(/\.html$/, '');
   const prog = (n) => (READY[n] && PROGRESS[slugOf(READY[n])]) || null;
-  const CHECK = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2 5 8.6 9.6 3.6"/></svg>';
-  let last = -1; // the last part that has published lessons
-  PARTS.forEach((p, i) => { if (p.L.some((l) => READY[l[0]])) last = i; });
-  PARTS.forEach((p, i) => {
+  // one plain heading and list per part; unpublished lessons are grey text, not links
+  PARTS.forEach((p) => {
+    const part = document.createElement('div'); part.className = 'part';
     const nLessons = p.L.filter((l) => l[2] !== 'check').length;
-    const d = document.createElement('details'); d.className = 'card part' + (i > last ? ' later' : ''); d.open = i <= last || last < 0 && i === 0;
-    const s = document.createElement('summary');
     const passed = p.L.filter((l) => l[2] !== 'check' && prog(l[0]) && prog(l[0]).f).length;
-    s.innerHTML = `<span class="num">${p.id}</span><span><div class="t"></div><div class="q"></div></span><span class="count">${nLessons} lessons${passed ? ` · ${passed} completed` : ''}<span class="chev">›</span></span>`;
-    s.querySelector('.t').textContent = p.t; s.querySelector('.q').textContent = p.q;
-    const ul = document.createElement('ul'); ul.className = 'lessons';
+    const h = document.createElement('h3'); h.innerHTML = `<span class="num">${/\d/.test(p.id) ? 'Part ' + p.id : p.id}.</span> `; h.append(p.t);
+    const q = document.createElement('p'); q.className = 'q'; q.textContent = `${p.q}. ${nLessons} lessons${passed ? `, ${passed} completed` : ''}.`;
+    const ul = document.createElement('ol'); ul.className = 'lessons';
     p.L.forEach(([n, title, kind]) => {
       const li = document.createElement('li'); li.dataset.n = n;
-      const tag = kind === 'check' ? '<span class="tag check">checkpoint</span>' : '';
-      li.innerHTML = `<span class="n">${kind === 'check' ? '✓' : n}</span><span></span><span>${tag}${READY[n] ? '' : ' <span class="tag soon">Coming soon</span>'}</span>`;
+      li.innerHTML = `<span class="n">${kind === 'check' ? '' : n}</span><span></span>`;
       if (READY[n]) {
         const pr = prog(n);
-        if (pr) li.children[1].insertAdjacentHTML('beforeend', pr.f ? `<span class="lsn-st done" title="Completed">${CHECK}</span><span class="sr">Completed. </span>` : '<span class="lsn-st started" title="Started"></span><span class="sr">Started. </span>');
+        if (pr) li.children[1].insertAdjacentHTML('beforeend', pr.f ? '<span class="lsn-st done" title="Completed" aria-hidden="true">✓</span><span class="sr">Completed. </span>' : '<span class="lsn-st started" title="Started" aria-hidden="true">◐</span><span class="sr">Started. </span>');
         li.dataset.state = pr ? (pr.f ? 'completed' : 'started') : 'available';
         const a = document.createElement('a'); a.href = READY[n]; a.textContent = title; li.children[1].append(a);
-      } else { li.className = 'na'; li.dataset.state = 'soon'; li.children[1].textContent = title; }
+      } else {
+        li.className = 'na'; li.dataset.state = 'soon';
+        li.children[1].append(title); li.children[1].insertAdjacentHTML('beforeend', ' <span class="tag">· coming soon</span>');
+      }
       ul.append(li);
     });
-    d.append(s, ul); box.append(d);
+    part.append(h, q, ul); box.append(part);
   });
 
   // Hero button: continue the started lesson from its furthest section, or open the next unfinished one

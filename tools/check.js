@@ -4,12 +4,14 @@
 //  3. plays the sample lesson in a headless browser (tools/lesson_sample.js)
 //  4. the home page: available vs coming soon, progress after visiting the sample, theme toggle
 //  5. the glossary page of the real build shows its empty state
-//  6. every page fits a 390 px phone without horizontal scrolling
+//  6. every page passes the plain-page scan (tools/plain_scan.js) in light and dark
+//  7. every page fits a 390 px phone without horizontal scrolling
 // Prints ✓/✗ per check and exits non-zero on any failure. Screenshots go to shots/.
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { launch, sleep } = require('./cdp');
 const sample = require('./lesson_sample');
+const plain = require('./plain_scan');
 
 const ROOT = path.resolve(__dirname, '..');
 const fileUrl = (p) => require('url').pathToFileURL(path.resolve(ROOT, p)).href;
@@ -48,12 +50,13 @@ function assemble(out, config) {
     check(st.m1 === 'started' || st.m1 === 'completed', `M.1 shows progress from the visit: ${st.m1}`);
     check(st.others, `the other ${st.total - 1} program entries say "Coming soon" and aren't links`);
     await home.shot(shot('home-light.png'));
+    const t0 = await home.eval("document.documentElement.dataset.theme || 'light'");
     await home.click('#themeBtn');
     const t1 = await home.eval('document.documentElement.dataset.theme');
     await home.S('Page.reload'); await sleep(300);
     await home.waitFor("document.readyState === 'complete'");
     const t2 = await home.eval('document.documentElement.dataset.theme');
-    check(t1 === 'dark' && t2 === 'dark', `theme toggle persists after reload (${t1} → ${t2})`);
+    check(t1 !== t0 && t2 === t1, `theme toggle switches and persists after reload (${t0} → ${t1} → ${t2})`);
 
     console.log('Glossary');
     const gl = await B.page(fileUrl('dist/lessons/glossary.html'), { width: 1280, height: 900 });
@@ -62,6 +65,17 @@ function assemble(out, config) {
     const glc = await B.page(fileUrl('dist-check/lessons/glossary.html'), { width: 1280, height: 900 });
     await glc.waitFor("document.readyState === 'complete'");
     check(await glc.eval("document.querySelectorAll('.gl-item').length === 2"), 'check build: the glossary lists the sample\'s 2 terms');
+
+    console.log('Plain pages');
+    for (const page of ['dist-check/index.html', 'dist-check/404.html', 'dist-check/lessons/glossary.html', 'dist-check/lessons/sample.html']) {
+      for (const theme of ['light', 'dark']) {
+        const pp = await B.page(fileUrl(page), { width: 1280, height: 900, [theme]: true });
+        await pp.waitFor("document.readyState === 'complete'");
+        await pp.eval(`document.documentElement.dataset.theme = '${theme}'`); await sleep(150); // the stored theme would win otherwise
+        const bad = await plain.scan(pp);
+        check(!bad.length, `plain scan: ${path.basename(page)} ${theme} — ${bad.length} offenders${bad.length ? ': ' + bad.slice(0, 6).join('; ') + (bad.length > 6 ? '; …' : '') : ''}`);
+      }
+    }
 
     console.log('Phone, 390 px');
     for (const page of ['dist-check/index.html', 'dist-check/lessons/glossary.html', 'dist-check/404.html']) {

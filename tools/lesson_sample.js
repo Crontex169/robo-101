@@ -1,6 +1,7 @@
 // Check for the sample lesson: first the engine numbers the text states (Node), then the whole
 // lesson in a headless browser: warm-up, every mission, "Under the hood", a glossary tooltip, the
-// quiz, dark theme and a 390 px phone. Screenshots go to shots/sample-*.png.
+// quiz, related papers, research thinking, margin notes, dark theme and a 390 px phone.
+// Screenshots go to shots/sample-*.png.
 // Standalone: node tools/lesson_sample.js (builds the sample first). tools/check.js calls run().
 const path = require('path');
 const fs = require('fs');
@@ -69,15 +70,47 @@ async function run(B, url, check) {
   check(score.startsWith('Score: 8 of 8'), `quiz: "${score.slice(0, 20)}"`);
   await p.shot(shot('sample-light.png'));
 
+  // Related papers: every card has its fields; "More details" is closed until clicked
+  const papers = await p.eval(`(() => { const cards = [...document.querySelectorAll('#papers .paper')];
+    const ok = (c) => !!(c.querySelector('h3 a[href]') && c.querySelector('h3 a').textContent.trim() && c.querySelector('.authors').textContent.trim()
+      && c.querySelector('.venue').textContent.trim() && /^\\d{4}$/.test(c.querySelector('.year').textContent.trim()) && c.querySelector('.takeaway').textContent.trim());
+    const ids = cards.map((c) => c.id), more = cards.map((c) => c.querySelector('details.more')).filter(Boolean);
+    const closed = more.every((d) => !d.open); more.forEach((d) => d.querySelector('summary').click());
+    return { n: cards.length, fields: cards.every(ok), unique: ids.every((id) => id) && new Set(ids).size === ids.length, closed, opened: more.length > 0 && more.every((d) => d.open) }; })()`);
+  check(papers.n >= 3 && papers.fields && papers.unique, `${papers.n} paper cards, every card has title link, authors, venue, year and takeaway, ids unique`);
+  check(papers.closed && papers.opened, '"More details" closed on load, opens on click');
+
+  // Research thinking: question visible, answers and the real solution folded until clicked; card links resolve
+  const rt = await p.eval(`(() => { const r = document.querySelector('.research'); if (!r) return null;
+    const a = r.querySelector('details.answers'), s = r.querySelector('details.actual');
+    const res = { q: r.querySelector('.q').getBoundingClientRect().height > 0, closed: !a.open && !s.open };
+    a.querySelector('summary').click(); s.querySelector('summary').click();
+    res.opened = a.open && s.open && a.querySelectorAll('li').length >= 2;
+    res.links = [...s.querySelectorAll('a[href^="#paper-"]')].map((x) => !!document.getElementById(x.getAttribute('href').slice(1)));
+    return res; })()`);
+  check(!!rt && rt.q && rt.closed && rt.opened, 'research thinking: question visible, answers and solution closed on load, open on click');
+  check(!!rt && rt.links.length >= 1 && rt.links.every(Boolean), `research thinking: ${rt ? rt.links.length : 0} links to paper cards, all resolve`);
+
+  // Margin notes: beside their paragraph on a wide screen, below it on a phone, never overlapping
+  const notesAt = (pg) => pg.eval(`(() => [...document.querySelectorAll('.noted')].map((w) => { const pr = w.querySelector('p').getBoundingClientRect(), n = w.querySelector('.mnote');
+    const r = n.getBoundingClientRect(); return { label: n.getAttribute('aria-label'), dx: r.left - pr.right, dy: r.top - pr.top, below: r.top - pr.bottom, top: r.top + scrollY, bottom: r.bottom + scrollY, right: r.right }; }))()`);
+  const wide = await notesAt(p);
+  check(wide.length >= 2 && wide.every((n) => n.dx > 0 && Math.abs(n.dy) <= 40 && n.right <= 1280 && n.label), `margin notes at 1280 px: ${wide.length} notes in the right margin, top-aligned with their paragraph`);
+  check(wide.every((n, i) => !i || n.top >= wide[i - 1].bottom), "margin notes don't overlap");
+
   // Dark theme and a 390 px phone
   const d = await B.page(url, { width: 1280, height: 900, dark: true });
   await d.waitFor('window.__lessonReady === true');
-  check(await d.eval("document.documentElement.dataset.theme === 'dark'"), 'dark theme follows the system setting');
+  check(await d.eval("document.documentElement.dataset.theme !== 'dark'"), 'light theme is the default, even when the system is dark');
+  await d.click('#themeBtn');
+  check(await d.eval("document.documentElement.dataset.theme === 'dark'"), 'the theme button switches to dark');
   await d.shot(shot('sample-dark.png'));
   const m = await B.page(url, { width: 390, height: 844, mobile: true, dpr: 2 });
   await m.waitFor('window.__lessonReady === true'); await sleep(200);
   const sw = await m.eval('document.documentElement.scrollWidth');
   check(sw <= 391, `390 px phone: page width ${sw} px, no horizontal scroll`);
+  const narrow = await notesAt(m);
+  check(narrow.length >= 2 && narrow.every((n) => n.below >= -1 && n.right <= 391), 'margin notes at 390 px: inline below their paragraph');
   await m.shot(shot('sample-phone.png'));
 }
 

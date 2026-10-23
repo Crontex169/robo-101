@@ -8,7 +8,7 @@ import json, os, pathlib, re, subprocess, sys
 root = pathlib.Path(__file__).resolve().parent
 LESSONS = {
     # lesson: (output file, css files, {marker: js files})
-    'sample': ('sample.html', ['shared/lesson.css', 'shared/lab.css', 'sample/sample.css'], {
+    'sample': ('sample.html', ['shared/lesson.css', 'shared/lab.css', 'shared/research.css', 'sample/sample.css'], {
         '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/planar-arm.js', 'shared/missions.js', 'shared/quiz.js', 'sample/ui-sample.js'],
     }),
     # glossary: every published term from shared/glossary.json
@@ -53,7 +53,8 @@ def add_shared(page):
     return page.replace('</body>', f'<script>\n{js}</script>\n</body>', 1)
 # ---------- Glossary: a definition tooltip at a term's first mention (shared/glossary.*) ----------
 GLOSSARY = json.loads((root / 'shared/glossary.json').read_text(encoding='utf-8'))
-SKIP_TAGS = {'a', 'h1', 'h2', 'h3', 'h4', 'button', 'label', 'code', 'pre', 'script', 'style', 'summary', 'svg', 'canvas', 'select', 'textarea', 'figcaption'}
+# article = paper cards, aside = margin notes: a term's first mention belongs to the lesson text
+SKIP_TAGS = {'a', 'h1', 'h2', 'h3', 'h4', 'button', 'label', 'code', 'pre', 'script', 'style', 'summary', 'svg', 'canvas', 'select', 'textarea', 'figcaption', 'article', 'aside'}
 _gl_info = None
 def section_titles(key):
     src = (root / key / 'lesson.html').read_text(encoding='utf-8')
@@ -129,13 +130,12 @@ def glossarize(page, key):
 def build(key):
     name, css_files, js_map = LESSONS[key]
     html = only_published((root / key / 'lesson.html').read_text(encoding='utf-8'))
-    if '\\(' in html or '\\[' in html:  # KaTeX formulas are rendered into the HTML now; the browser gets only styles and fonts
+    if '\\(' in html or '\\[' in html:  # KaTeX formulas are rendered into the HTML now; the browser gets only KaTeX's styles and math fonts
         r = subprocess.run(['node', str(root.parent / 'tools/katex_render.js'), key], input=html, capture_output=True, text=True, encoding='utf-8')
         if r.returncode:
             sys.exit(r.stderr.strip())
         html = r.stdout
-        html = html.replace('<link rel="stylesheet" href="../assets/fonts/fonts.css">',
-                            '<link rel="stylesheet" href="../assets/fonts/fonts.css">\n<link rel="stylesheet" href="../assets/katex/katex.min.css">', 1)
+        html = html.replace('</head>', '<link rel="stylesheet" href="../assets/katex/katex.min.css">\n</head>', 1)
     if key != 'gl':
         html = glossarize(html, key)
     else:  # only terms whose lesson is published

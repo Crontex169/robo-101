@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds the site pages: fills in the SVG sprite, links and the published-lesson list from
+"""Builds the site pages: fills in the links and the published-lesson list from
 config.json, and writes robots.txt and sitemap.xml.
 Run:  python site/build.py
       KW_CONFIG=tools/fixtures/config.check.json python site/build.py   (check build)
@@ -12,7 +12,6 @@ cfg_path = pathlib.Path(os.environ.get('KW_CONFIG') or HERE / 'config.json')
 if not cfg_path.is_absolute():
     cfg_path = ROOT / cfg_path
 cfg = json.loads(cfg_path.read_text(encoding='utf-8'))
-sprite = (HERE / 'assets/sprite.svg.html').read_text(encoding='utf-8')
 
 # Every published entry must exist in the program (PARTS in index.src.html), except the glossary.
 if not (HERE / 'index.src.html').exists():
@@ -33,7 +32,7 @@ site_url = vals.get('SITE_URL', '').rstrip('/')
 
 missing = set()
 for src in sorted(HERE.glob('*.src.html')):
-    html = src.read_text(encoding='utf-8').replace('<!--SPRITE-->', sprite)
+    html = src.read_text(encoding='utf-8')
     def sub(m):
         val = vals.get(m.group(1), '')
         if not val:

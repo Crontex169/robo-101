@@ -58,6 +58,13 @@ function initTheme() {
   btn.addEventListener('click', () => apply(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
 }
 
+/* ---------- Print: every fold-out printed open, then put back as it was ---------- */
+(function () {
+  let closed = [];
+  window.addEventListener('beforeprint', () => { closed = $$('details:not([open])'); closed.forEach((d) => { d.open = true; }); });
+  window.addEventListener('afterprint', () => { closed.forEach((d) => { d.open = false; }); closed = []; });
+})();
+
 /* ---------- Tooltip ---------- */
 const Tip = {
   el: null,

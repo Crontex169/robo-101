@@ -40,4 +40,5 @@ SOFTWARE.
 
 ## Fonts
 
-Inter and JetBrains Mono in `site/assets/fonts/` are under the SIL Open Font License 1.1.
+The site uses the reader's system fonts. KaTeX's math fonts in `site/assets/katex/fonts/` are
+under the SIL Open Font License 1.1.

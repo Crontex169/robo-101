@@ -1,0 +1,54 @@
+/* ---------- Research blocks: related papers, research thinking, margin notes ----------
+   Markup: specs/002-plain-redesign/contracts/lesson-blocks.md. Each block type has one fixed icon
+   (book, bulb, pen), drawn for this course and painted in currentColor. */
+:root {
+  --i-book: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5zM12 6.5v13'/%3E%3C/svg%3E");
+  --i-bulb: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z'/%3E%3C/svg%3E");
+  --i-pen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20l3.5-1L19 7.5a2.1 2.1 0 0 0-3-3L4.5 16 4 20zM14.5 6l3 3'/%3E%3C/svg%3E");
+}
+[data-block="papers"] h2::before, .toc a[data-block="papers"]::before,
+.research h3::before, .toc a[data-block="research"]::before, .mnote::before {
+  content: ""; display: inline-block; width: .9em; height: .9em; margin-right: .35em; vertical-align: -.08em;
+  background: currentColor; -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat;
+}
+[data-block="papers"] h2::before, .toc a[data-block="papers"]::before { --i: var(--i-book); }
+.research h3::before, .toc a[data-block="research"]::before { --i: var(--i-bulb); }
+.mnote::before { --i: var(--i-pen); color: var(--ink-3); }
+
+/* ---------- Related papers: one card per paper ---------- */
+.paper { margin: 0 0 16px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--tint); }
+.paper h3 { margin: 0 0 4px; font-size: 1.05rem; line-height: 1.4; }
+.paper .pay { font-size: 13.5px; font-weight: 400; color: var(--ink-3); }
+.paper .meta { margin: 0 0 8px; font-size: 14.5px; color: var(--ink-3); }
+.paper .takeaway { margin: 0 0 8px; }
+.paper-fig { margin: 12px 0; }
+.paper-fig svg { width: 100%; max-width: 300px; height: auto; }
+.paper-fig figcaption { margin-top: 4px; font-size: 14px; color: var(--ink-3); }
+details.more > summary { cursor: pointer; font-size: 15px; color: var(--ink-2); }
+details.more .body { padding-top: 8px; }
+
+/* ---------- Research thinking: question first, answers folded ---------- */
+.research { margin: 1.4em 0; padding: 14px 16px; border: 1px solid var(--line); border-left: 3px solid var(--warning); border-radius: var(--radius); background: var(--tint); }
+.research h3 { margin: 0 0 8px; }
+.research .q { font-weight: 600; margin-bottom: .4em; }
+.research .think { font-style: italic; color: var(--ink-3); }
+.research details { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px; }
+.research summary { cursor: pointer; font-weight: 600; }
+.research .body { padding-top: 6px; }
+.paper .body > :last-child, .research .body > :last-child { margin-bottom: 0; }
+
+/* ---------- Margin notes: in the margin on wide screens, inline below the paragraph otherwise ---------- */
+.mnote { margin: -.4em 0 1em; padding: 1px 0 1px 12px; border-left: 2px solid var(--line-2); font-size: .92em; color: var(--ink-2); }
+.mnote p { display: inline; margin: 0; }
+@media (min-width: 1200px) {
+  /* the paragraph keeps the column; the note takes a second grid column out in the right margin,
+     top-aligned with its paragraph. The row grows with the taller of the two, so notes never overlap. */
+  .noted { display: grid; grid-template-columns: 100% 12rem; column-gap: 1.5rem; align-items: start; }
+  .noted > .mnote { grid-column: 2; grid-row: 1; margin: 0; font-size: 14px; line-height: 1.5; }
+  .noted > :not(.mnote) { grid-column: 1; grid-row: 1; }
+}
+
+@media print {
+  details::details-content { content-visibility: visible; display: block; }
+  .noted { display: block; }
+}

@@ -14,9 +14,9 @@ checkpoint. Dynamics, trajectories and control are out of scope.
 ```
 site/      home page, 404 page and config.json (links and the published-lesson list)
   index.src.html, 404.src.html   page sources; site/build.py fills in links and the program state
-  assets/                        styles, fonts (Inter, JetBrains Mono, KaTeX), icons, og.png
+  assets/                        styles, KaTeX styles and math fonts, icons, og.png (text uses system fonts)
 lessons/   lesson sources; lessons/build.py turns each into one HTML file in site/lessons/
-  shared/  modules every lesson uses: lesson and lab styles, scene kit (kit.js), missions,
+  shared/  modules every lesson uses: lesson, lab and research-block styles, scene kit (kit.js), missions,
            quiz, warm-up (recall), glossary tooltips, progress, part checkpoints (check.js),
            and the planar arm engine (planar-arm.js)
   sample/  the template lesson: copy it to start a new one (never published)
@@ -36,7 +36,7 @@ Python 3.10+, Node.js 22+, and Chrome or Edge for the checks.
 python lessons/build.py all     # build every lesson into site/lessons/
 python site/build.py            # build the home and 404 pages, sitemap.xml and robots.txt
 python tools/assemble.py dist   # both builds, then only published pages into dist/
-node tools/check.js             # the full pre-publish check (about 10 s)
+node tools/check.js             # the full pre-publish check, including the plain-page scan
 node tools/lesson_sample.js     # check one lesson
 node tools/og_image.js          # redraw the link-preview image
 ```
@@ -50,8 +50,12 @@ executable. `KW_CONFIG=path/to/config.json` builds against another published lis
 ## Adding a lesson
 
 1. Copy `lessons/sample/` to `lessons/<key>/` and rename `sample.css` and `ui-sample.js`.
-2. Register it in the `LESSONS` map in `lessons/build.py` (output file name, CSS, JS).
-3. Write the lesson following `specs/001-site-foundation/contracts/lesson-source.md`.
+2. Register it in the `LESSONS` map in `lessons/build.py` (output file name, CSS, JS; include
+   `shared/research.css` if the lesson uses the research blocks).
+3. Write the lesson following `specs/001-site-foundation/contracts/lesson-source.md`. Keep it
+   plain (constitution principle VII). For related papers, research thinking blocks and margin
+   notes, copy the examples in the sample (`specs/002-plain-redesign/contracts/lesson-blocks.md`);
+   check every citation against the original publication.
 4. Copy `tools/lesson_sample.js` to `tools/lesson_<key>.js`. Assert every number the text states,
    then play every mission. Call it from `tools/check.js`.
 5. Add `{ "n": "<number>", "file": "lessons/<file>.html" }` to `site/config.json → PUBLISHED`

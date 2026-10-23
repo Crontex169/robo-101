@@ -8,24 +8,32 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/fonts/fonts.css">
 <script>
-  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark'; } catch (e) {} })();
+  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {} })();
 </script>
 <style>
 /*@@CSS@@*/
 </style>
 </head>
 <body>
+<!--
+  Sample lesson: copy this file to start a new lesson. It shows every block a lesson can use:
+  plain header, warm-up, a lab with missions, a small interactive, prose with "Under the hood",
+  a margin note (<aside class="mnote">), a research thinking block (<div class="research">),
+  the quiz, related papers (<article class="paper">) and the wrap-up.
+  Markup for the three research blocks: specs/002-plain-redesign/contracts/lesson-blocks.md.
+  Keep the page plain (constitution VII): no labels above headings, no badges, no shadows.
+-->
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="../index.html#program" title="Back to the course program"><div>Kinematics Workshop<small>Sample lesson · template</small></div></a>
+    <a class="brand" href="../index.html#program" title="Back to the course program">Kinematics Workshop<small>Sample lesson</small></a>
     <nav class="toc" aria-label="Lesson sections">
       <a href="#arm">Lab</a>
       <a href="#reach">Reach</a>
       <a href="#why">Formulas</a>
       <a href="#quiz">Quiz</a>
+      <a href="#papers" data-block="papers">Papers</a>
       <a href="#finale">Wrap-up</a>
     </nav>
     <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
@@ -35,17 +43,17 @@
 
 <main>
 
-<section class="hero" id="top">
+<section class="intro" id="top">
   <div class="wrap">
-    <div class="kicker"><span class="num">S</span> Template · not part of the course</div>
-    <h1>Sample lesson: <span class="amp">a two-link arm</span></h1>
-    <p class="lead">This page shows every block a lesson can use, so a new lesson can start as a copy of it. The text is a placeholder. It walks through a planar arm with two links: you move its joints, see where the hand ends up, and find out which points it can reach at all.</p>
-    <div class="hero-meta"><span>≈ 10 minutes</span><span>1 lab and 1 interactive</span><span>3 missions</span></div>
-    <div class="hero-list">
-      <div><b>LAB</b>Turn the two joints and put the hand on a target, then predict what bending the elbow does</div>
-      <div><b>REACH</b>Change the second link's length and watch the reachable ring grow and shrink</div>
-    </div>
-    <p style="margin-top:28px"><a class="btn primary" href="#arm">Start the lesson ↓</a></p>
+    <p class="lesson-n">Sample lesson · a template for authors, not part of the course</p>
+    <h1>A two-link arm</h1>
+    <p class="lead">This page shows every block a lesson can use, so a new lesson can start as a copy of it. It walks through a planar arm with two links: you move its joints, see where the hand ends up, and find out which points it can reach at all.</p>
+    <p class="meta">About 10 minutes · 1 lab and 1 interactive scene · 3 missions</p>
+    <p>In this lesson you will:</p>
+    <ul>
+      <li>turn the two joints and put the hand on a target, then predict what bending the elbow does;</li>
+      <li>change the second link's length and watch the reachable ring grow and shrink.</li>
+    </ul>
   </div>
 </section>
 
@@ -54,13 +62,13 @@
   <script type="application/json" id="recallData">{"n": "S", "title": "Course program", "href": "../index.html", "q": [{"q": "How many links does the arm in this lesson have?", "o": ["One", "Two", "Three"], "a": 1, "e": "A two-link planar arm: a shoulder joint, an elbow joint and two rigid links.", "sec": "program", "secTitle": "Program"}, {"q": "Where do the formulas live in a lesson?", "o": ["In the main text", "In fold-out \"Under the hood\" blocks", "Only in the quiz"], "a": 1, "e": "The main text builds intuition; the math sits in fold-out blocks.", "sec": "how", "secTitle": "How a lesson works"}, {"q": "What do you do before running a mission with a prediction?", "o": ["Nothing", "Pick what you think will happen", "Read the explanation"], "a": 1, "e": "Predicting first makes the result stick, whether you were right or not.", "sec": "how", "secTitle": "How a lesson works"}]}</script>
 </section>
 
-<section class="section alt" id="arm">
-  <div class="wrap">
-    <div class="prose" style="margin:0 0 22px;max-width:820px">
-      <div class="kicker"><span class="num">1</span> Lab</div>
-      <h2>Joint angles and where the hand ends up</h2>
-      <p>Our arm lies flat on a table. A shoulder joint at the base turns the first link, and an elbow joint turns the second link relative to the first. Two numbers, the joint angles θ₁ and θ₂, decide the whole pose.</p>
+<section class="section" id="arm">
+  <div class="wrap prose">
+    <h2><span class="n">1.</span> Joint angles and where the hand ends up</h2>
+    <p>Our arm lies flat on a table. A shoulder joint at the base turns the first link, and an elbow joint turns the second link relative to the first. Two numbers, the joint angles θ₁ and θ₂, decide the whole pose.</p>
+    <div class="noted">
       <p>Going from joint angles to the position of the hand is called <strong>forward kinematics</strong>. The links simply add up, one after the other. Try it: drag the elbow or the hand, or use the sliders, and put the hand on the green target.</p>
+      <aside class="mnote" aria-label="Author's note"><p>The first time I did this, I only turned the shoulder and wondered why the hand never got closer. The shoulder can't change the distance to the base: that's the elbow's job.</p></aside>
     </div>
     <div class="lab lab-narrow">
       <div class="card scene-card">
@@ -73,20 +81,34 @@
       </div>
       <div class="card guide-card"><div id="armMis"></div></div>
     </div>
-    <div class="prose" style="margin:26px 0 0;max-width:820px">
-      <p>Guessing angles by hand works, but it's slow. Next, let's see which points the hand can reach at all.</p>
+    <p>Guessing angles by hand works, but it's slow.</p>
+
+    <div class="research" data-block="research">
+      <h3>Let the computer find the angles</h3>
+      <p>You just searched for θ₁ and θ₂ by hand, watching the hand creep toward the target. A robot controller has to do the same many times a second, and for arms with six joints, not two.</p>
+      <p class="q">How could a computer find joint angles that put the hand on a given target?</p>
+      <p class="think">Think about it for a minute before opening the answers.</p>
+      <details class="answers"><summary>Possible answers</summary><div class="body"><ul>
+        <li><strong>Solve the triangle.</strong> The shoulder, the elbow and the target form a triangle whose three sides you know: the two link lengths and the distance to the target. Trigonometry gives the angles exactly, and it shows there are two answers, elbow up and elbow down.</li>
+        <li><strong>Take small steps.</strong> Nudge each joint a little, watch how the hand moves, and keep turning the joints in the direction that brings the hand closer. It works for any arm but needs many steps.</li>
+        <li><strong>Pull the chain.</strong> Put the hand on the target, drag the elbow after it so the link keeps its length, then pull the chain back so the shoulder sits on the base again. Repeat until it settles. No angles at all during the search.</li>
+      </ul></div></details>
+      <details class="actual"><summary>What was actually done</summary><div class="body">
+        <p>All three ideas are real methods. In his 1968 Stanford thesis, Donald Pieper showed that a six-joint arm whose last three joint axes meet in one point can be solved exactly with formulas, much like our triangle. That result is one reason so many industrial arms have such a "spherical wrist" (<a href="#paper-pieper1968">Pieper, 1968</a>).</p>
+        <p>A year later, Daniel Whitney described <em>resolved motion rate control</em>: don't solve for the angles at all, but compute small joint speeds that move the hand the way you want, again and again (<a href="#paper-whitney1969">Whitney, 1969</a>).</p>
+        <p>The chain-pulling idea came much later, from computer animation: FABRIK by Andreas Aristidou and Joan Lasenby (<a href="#paper-aristidou2011">Aristidou and Lasenby, 2011</a>). You'll meet the first two methods properly in Parts 4 and 5.</p>
+      </div></details>
     </div>
+
+    <p>Next, let's see which points the hand can reach at all.</p>
   </div>
 </section>
 
 <section class="section" id="reach">
-  <div class="wrap">
-    <div class="prose" style="margin:0 0 22px;max-width:820px">
-      <div class="kicker"><span class="num">2</span> Interactive</div>
-      <h2>The reachable ring</h2>
-      <p>Swing both joints through every angle and the hand sweeps out a ring around the base. This set of points is the arm's <strong>workspace</strong>. Its outer edge is where the arm is fully stretched, its inner edge where it's folded back on itself. Change the second link's length and watch the ring.</p>
-    </div>
-    <div class="lab lab-narrow">
+  <div class="wrap prose">
+    <h2><span class="n">2.</span> The reachable ring</h2>
+    <p>Swing both joints through every angle and the hand sweeps out a ring around the base. This set of points is the arm's <strong>workspace</strong>. Its outer edge is where the arm is fully stretched, its inner edge where it's folded back on itself. Change the second link's length and watch the ring.</p>
+    <div class="lab">
       <div class="card scene-card">
         <canvas id="reachCv" width="420" height="420" class="sq-cv" role="img" aria-label="The ring of points the two-link arm can reach"></canvas>
         <label class="hd-range reach-ctl"><span>Second link L₂</span><input id="reachL2" type="range" min="0.1" max="0.5" step="0.01" value="0.4"><output></output></label>
@@ -96,44 +118,101 @@
   </div>
 </section>
 
-<section class="section alt" id="why">
-  <div class="wrap">
-    <div class="prose" style="max-width:820px">
-      <div class="kicker"><span class="num">3</span> Formulas</div>
-      <h2>Adding up the links</h2>
+<section class="section" id="why">
+  <div class="wrap prose">
+    <h2><span class="n">3.</span> Adding up the links</h2>
+    <div class="noted">
       <p>Each link points in the direction of all the angles before it added together. The hand's position is the sum of the two link vectors. With our lengths, 0.5 m and 0.4 m, the hand can be at most 0.9 m from the base and at least 0.1 m.</p>
-      <details class="deep"><summary>Under the hood: forward kinematics of a two-link arm</summary><div class="body">
-        <div class="formula">\[\begin{aligned} x &= L_1\cos\theta_1 + L_2\cos(\theta_1 + \theta_2),\\ y &= L_1\sin\theta_1 + L_2\sin(\theta_1 + \theta_2). \end{aligned}\]</div>
-        <p>The workspace is the ring between radii \(|L_1 - L_2|\) and \(L_1 + L_2\).</p>
-      </div></details>
+      <aside class="mnote" aria-label="Author's note"><p>I expected the arm to reach everything inside its circle. The hole in the middle surprised me: with a shorter second link, the hand can never fold back onto the base.</p></aside>
     </div>
+    <details class="deep"><summary>Under the hood: forward kinematics of a two-link arm</summary><div class="body">
+      <div class="formula">\[\begin{aligned} x &= L_1\cos\theta_1 + L_2\cos(\theta_1 + \theta_2),\\ y &= L_1\sin\theta_1 + L_2\sin(\theta_1 + \theta_2). \end{aligned}\]</div>
+      <p>The workspace is the ring between radii \(|L_1 - L_2|\) and \(L_1 + L_2\).</p>
+    </div></details>
   </div>
 </section>
 
 <section class="section" id="quiz">
-  <div class="prose">
-    <div class="kicker"><span class="num">4</span> Check yourself</div>
-    <h2>Eight questions on common misconceptions</h2>
+  <div class="wrap prose">
+    <h2>Check yourself: eight common misconceptions</h2>
     <div class="quiz" id="quizBox"></div>
-    <p class="score" id="quizScore" style="margin-top:14px"></p>
+    <p class="score" id="quizScore"></p>
   </div>
 </section>
 
-<section class="section alt" id="finale">
-  <div class="prose">
-    <div class="kicker"><span class="num">5</span> Wrap-up</div>
+<section class="section" id="papers" data-block="papers">
+  <div class="wrap prose">
+    <h2>Related papers</h2>
+    <p>The papers behind the ideas on this page. Each card says in one sentence what the paper brought; open "More details" for how it connects to our two-link arm.</p>
+
+    <article class="paper" id="paper-dh1955">
+      <h3><a href="https://doi.org/10.1115/1.4011045">A Kinematic Notation for Lower-Pair Mechanisms Based on Matrices</a> <span class="pay">(may need a subscription)</span></h3>
+      <p class="meta"><span class="authors">J. Denavit, R. S. Hartenberg</span> · <span class="venue">Journal of Applied Mechanics 22(2)</span> · <span class="year">1955</span></p>
+      <p class="takeaway">Any chain of joints and links can be described with four numbers per joint, and the pose at the end of the chain is the product of one matrix per joint.</p>
+      <details class="more"><summary>More details</summary><div class="body">
+        <p>Our two-link arm is easy: add two vectors. With six joints in 3D, each turning about a different axis, you need careful bookkeeping. Denavit and Hartenberg, writing about mechanisms in general before industrial robots existed, proposed describing every joint-to-joint step with the same four numbers and one 4×4 matrix, then multiplying the matrices along the chain.</p>
+        <p>This course uses a later variant of their convention, the "modified" one from Craig's textbook. It comes in Part 3.</p>
+      </div></details>
+    </article>
+
+    <article class="paper" id="paper-pieper1968">
+      <h3><a href="https://apps.dtic.mil/sti/pdfs/AD0680036.pdf">The Kinematics of Manipulators Under Computer Control</a></h3>
+      <p class="meta"><span class="authors">D. L. Pieper</span> · <span class="venue">PhD thesis, Stanford University</span> · <span class="year">1968</span></p>
+      <p class="takeaway">Arms whose last three joint axes meet in one point have an exact, formula-based solution to "which angles put the hand here?"</p>
+      <details class="more"><summary>More details</summary><div class="body">
+        <p>Our arm has a formula solution too: the triangle from the research question gives the elbow angle from the law of cosines and the shoulder angle from the triangle's other angles, with two answers, elbow up and elbow down.</p>
+        <p>Pieper looked at six-joint arms, where such formulas usually don't exist, and found arm shapes for which they do. The thesis also builds a model of a six-joint arm and plans motions around obstacles. It was published as Stanford AI Memo AIM-72; the link is a free scan.</p>
+      </div></details>
+    </article>
+
+    <article class="paper" id="paper-whitney1969">
+      <h3><a href="https://doi.org/10.1109/TMMS.1969.299896">Resolved Motion Rate Control of Manipulators and Human Prostheses</a> <span class="pay">(may need a subscription)</span></h3>
+      <p class="meta"><span class="authors">D. E. Whitney</span> · <span class="venue">IEEE Transactions on Man-Machine Systems 10(2)</span> · <span class="year">1969</span></p>
+      <p class="takeaway">Instead of solving for the angles, ask which small joint speeds move the hand the way you want, and repeat.</p>
+      <details class="more"><summary>More details</summary><div class="body">
+        <p>The table that links joint speeds to hand speed is the <em>Jacobian</em>, the subject of Part 5. For our arm it's a 2×2 table that changes with the pose. Whitney turned it into a way to steer manipulators and arm prostheses: the operator asks for a hand velocity, and the controller inverts the table to get joint speeds.</p>
+        <p>When the arm is fully stretched or folded, the table can't be inverted and the method breaks down. Later papers found ways around that.</p>
+      </div></details>
+    </article>
+
+    <article class="paper" id="paper-aristidou2011">
+      <h3><a href="https://www.andreasaristidou.com/FABRIK">FABRIK: A Fast, Iterative Solver for the Inverse Kinematics Problem</a></h3>
+      <p class="meta"><span class="authors">A. Aristidou, J. Lasenby</span> · <span class="venue">Graphical Models 73(5)</span> · <span class="year">2011</span></p>
+      <p class="takeaway">Move the hand to the target, drag each joint after it, then drag the chain back to the base; a few passes are usually enough.</p>
+      <figure class="paper-fig">
+        <svg viewBox="0 0 240 120" role="img" aria-label="A two-link chain before and after a forward pass: the hand is moved onto the target and the elbow and base are dragged after it">
+          <line x1="30" y1="100" x2="90" y2="60" style="stroke:var(--ink-3)" stroke-width="4" stroke-linecap="round"/>
+          <line x1="90" y1="60" x2="150" y2="90" style="stroke:var(--ink-3)" stroke-width="4" stroke-linecap="round"/>
+          <line x1="190" y1="40" x2="124" y2="53" style="stroke:var(--classic)" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round"/>
+          <line x1="124" y1="53" x2="60" y2="85" style="stroke:var(--classic)" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round"/>
+          <circle cx="190" cy="40" r="7" fill="none" style="stroke:var(--good)" stroke-width="2"/>
+          <circle cx="30" cy="100" r="4" style="fill:var(--ink)"/>
+          <circle cx="60" cy="85" r="3.5" fill="none" style="stroke:var(--classic)" stroke-width="2"/>
+        </svg>
+        <figcaption>Forward pass: the hand jumps onto the target (green) and the links are dragged after it (dashed). The backward pass then puts the base back in place.</figcaption>
+      </figure>
+      <details class="more"><summary>More details</summary><div class="body">
+        <p>FABRIK stands for Forward And Backward Reaching Inverse Kinematics. During the search it never computes an angle: each step just places a joint on the line towards its neighbour, at the right link length. It was written for computer animation, where long chains such as spines and fingers have to follow targets in real time, and it can respect joint limits.</p>
+        <p>Try it in your head on our arm: hand onto the target, elbow pulled along, shoulder pulled back onto the base.</p>
+      </div></details>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="finale">
+  <div class="wrap prose">
     <h2>What we covered</h2>
     <ol class="takeaways">
-      <li><span>Forward kinematics turns joint angles into the hand's position by <strong>adding up the links</strong>.</span></li>
-      <li><span>A two-link arm reaches a <strong>ring</strong>: no farther than L₁ + L₂, no closer than |L₁ − L₂|.</span></li>
+      <li>Forward kinematics turns joint angles into the hand's position by <strong>adding up the links</strong>.</li>
+      <li>A two-link arm reaches a <strong>ring</strong>: no farther than L₁ + L₂, no closer than |L₁ − L₂|.</li>
     </ol>
-    <h3 style="margin-top:40px">Open questions</h3>
-    <details class="card pad open-q"><summary>What shape is the workspace when both links have the same length?</summary><p>The inner radius |L₁ − L₂| becomes zero, so the ring turns into a full disc: the hand can reach the base itself.</p></details>
-    <h3 style="margin-top:34px">Further reading</h3>
+    <h3>Open questions</h3>
+    <details class="open-q"><summary>What shape is the workspace when both links have the same length?</summary><p>The inner radius |L₁ − L₂| becomes zero, so the ring turns into a full disc: the hand can reach the base itself.</p></details>
+    <h3>Further reading</h3>
     <ul class="links">
       <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch and F. Park, 2017: free book and videos; forward kinematics is chapter 4</span></li>
     </ul>
-    <p style="margin-top:34px">Next: <!--if:m-1-vectors-and-frames.html--><a href="m-1-vectors-and-frames.html">M.1 Vectors and coordinate frames</a>.<!--/if--> The real course starts with the math toolkit.</p>
+    <p>Next: <!--if:m-1-vectors-and-frames.html--><a href="m-1-vectors-and-frames.html">M.1 Vectors and coordinate frames</a>.<!--/if--> The real course starts with the math toolkit.</p>
   </div>
 </section>
 

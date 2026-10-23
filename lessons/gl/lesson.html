@@ -7,9 +7,8 @@
 <meta name="description" content="Glossary of the Kinematics Workshop: robot kinematics terms with short definitions and links to the lessons that explain them.">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/fonts/fonts.css">
 <script>
-  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark'; } catch (e) {} })();
+  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {} })();
 </script>
 <style>
 /*@@CSS@@*/
@@ -19,17 +18,16 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="../index.html#program" title="Back to the course program"><div>Kinematics Workshop<small>Glossary</small></div></a>
+    <a class="brand" href="../index.html#program" title="Back to the course program">Kinematics Workshop<small>Glossary</small></a>
     <button class="theme-btn" style="margin-left:auto" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
   </div>
   <div class="progress" id="progress"></div>
 </header>
 
 <main>
-<section class="hero hero-slim" id="top">
+<section class="intro" id="top">
   <div class="wrap">
-    <div class="kicker">Course reference</div>
-    <h1><span class="amp">Glossary</span></h1>
+    <h1>Glossary</h1>
     <p class="lead">Terms used in the lessons, each with a short definition and a link to the section that explains it in detail.</p>
     <div class="gl-search" id="glSearch"><input type="search" id="glQ" placeholder="Find a term, e.g. workspace" aria-label="Search the glossary" autocomplete="off"><span class="gl-count" id="glCount"></span></div>
     <nav class="gl-abc" id="glAbc" aria-label="Letters"></nav>
