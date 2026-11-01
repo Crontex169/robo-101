@@ -1,0 +1,19 @@
+/* ---------- lesson M.3 ---------- */
+#gridCv, #rotCv, #orderCv { touch-action: pan-y; }
+#gridCv:focus-visible, #rotCv:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+.wide-cv { width: 100%; height: auto; aspect-ratio: 420 / 240; border: 1px solid var(--line); display: block; }
+.flip-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; }
+.frame-fig { margin: 1.2em 0; }
+.frame-fig svg { width: 100%; max-width: 320px; height: auto; }
+.frame-fig figcaption { font-size: 14.5px; color: var(--ink-3); margin-top: 4px; }
+.arm-ctl { display: grid; gap: 4px; margin-top: 10px; }
+.arm-ctl .hd-range { display: grid; grid-template-columns: 110px 1fr 56px; align-items: center; gap: 8px; margin-top: 6px; }
+.arm-ctl .hd-range input { width: 100%; }
+/* a 2×2 matrix in a readout: square brackets, column 1 and column 2 in their colours */
+.mat { display: inline-grid; grid-template-columns: auto auto; column-gap: 0.7em; padding: 1px 0.4em; margin: 2px 0; vertical-align: middle;
+  position: relative; border-left: 1.5px solid currentColor; border-right: 1.5px solid currentColor; font-variant-numeric: tabular-nums; text-align: right; line-height: 1.3; }
+.mat::before, .mat::after { content: ''; position: absolute; top: 0; bottom: 0; width: 4px; border-top: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; }
+.mat::before { left: 0; }
+.mat::after { right: 0; }
+.c1 { color: var(--classic); }
+.c2 { color: var(--e2e); }

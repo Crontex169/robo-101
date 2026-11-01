@@ -13,6 +13,10 @@
     },
     {
       "n": "M.3",
+      "file": "lessons/m-3-matrices-as-transformations.html"
+    },
+    {
+      "n": "M.4",
       "file": "lessons/sample.html"
     },
     {
@@ -21,5 +25,5 @@
     }
   ],
   "_comment_published": "Published pages: marked available on the home page, listed in sitemap.xml and copied to dist/ by tools/assemble.py.",
-  "_comment_check": "Check build only: the sample lesson is published as M.3 so it is built and played."
+  "_comment_check": "Check build only: the sample lesson is published as M.4 so it is built and played."
 }

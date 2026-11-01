@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M.3 Dönüşüm olarak matrisler — Kinematik Atölyesi</title>
+<meta name="description" content="Kinematik Atölyesi, M.3 dersi: matrisi vektörle çarpmak, sütunları birim vektörlerin gittiği yer olarak okumak, dönme matrisi, iki dönüşümü art arda uygulamak ve z ekseni etrafında dönme. Canlı laboratuvarlarla.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<script>
+  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {} })();
+</script>
+<style>
+/*@@CSS@@*/
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html#program" title="Kurs programına dön">Kinematik Atölyesi<small>M.3</small></a>
+    <nav class="toc" aria-label="Ders bölümleri">
+      <a href="#product">Çarpım</a>
+      <a href="#grid">Izgara</a>
+      <a href="#rotation">Dönme</a>
+      <a href="#order">Sıra</a>
+      <a href="#rotz">3B</a>
+      <a href="#quiz">Test</a>
+      <a href="#papers" data-block="papers">Makale</a>
+      <a href="#finale">Özet</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Temayı değiştir">◐</button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+
+<section class="intro" id="top">
+  <div class="wrap">
+    <p class="lesson-n">M.3 dersi · Bölüm M, matematik araç kutusu</p>
+    <h1>Dönüşüm olarak matrisler</h1>
+    <p class="lead">M.2'de bir uzvu döndürmek için her seferinde (L cos θ, L sin θ) yazdık. Bu ders, bir dönüşümü bir kez, küçük bir sayı tablosu olarak yazmayı gösteriyor. O tablo tek bir vektörü değil, bütün düzlemi birden taşır.</p>
+    <p class="meta">Yaklaşık 50 dakika · 2 laboratuvar ve 1 küçük etkileşimli sahne · 6 görev</p>
+    <p>Bu derste:</p>
+    <ul>
+      <li>bir tabloyu bir vektörle çarpmayı, sütunlarını okuyarak öğreneceksin;</li>
+      <li>sütunları sürükleyip bütün ızgaranın nasıl eğildiğini, döndüğünü ve esnediğini göreceksin;</li>
+      <li>M.2'deki sinüs ve kosinüsten döndürme tablosunu kuracaksın;</li>
+      <li>iki dönüşümü art arda uygulayıp sıranın neden önemli olduğunu göreceksin;</li>
+      <li>aynı fikrin üç boyutta nasıl göründüğüne bakacaksın.</li>
+    </ul>
+    <p class="muted small">Sahneler fareyle, parmakla ya da klavyeyle çalışır: sahneye tıkla ya da Tab ile gel, ok tuşlarıyla hareket ettir, Enter ile sonraki tutamağa geç. Kaydırıcılar da ok tuşlarıyla çalışır.</p>
+  </div>
+</section>
+
+<section class="recall-sec" id="recall" aria-label="Önceki derse ısınma">
+  <div class="wrap"><div class="card recall" data-recall></div></div>
+  <script type="application/json" id="recallData">{"n": "M.2", "title": "Robot kolları için trigonometri", "href": "m-2-trigonometry.html", "q": [{"q": "cos 60° kaçtır?", "o": ["0.5", "0.866", "1"], "a": 0, "e": "Birim çemberde 60°'deki noktanın x koordinatı 0.5'tir. 0.866, sin 60°'dir.", "sec": "circle", "secTitle": "Birim çember: kosinüs ve sinüs"}, {"q": "Uzunluğu 2 olan bir uzuv 30° açıyla duruyor. Ucu nerededir?", "o": ["(2 cos 30°, 2 sin 30°)", "(2 sin 30°, 2 cos 30°)", "(2, 30)"], "a": 0, "e": "Birim vektör (cos 30°, sin 30°), uzunlukla, yani 2 ile çarpılır. Bu derste aynı sonucu bir tabloyla bulacağız.", "sec": "links", "secTitle": "Bir uzuv: uzunluk ve açı"}, {"q": "İki uzuvlu kolda θ₁ = 30° ve θ₂ = 60°. İkinci uzuv x ekseninden hangi açıyla uzanır?", "o": ["60°", "90°", "30°"], "a": 1, "e": "İkinci uzuv birinci uzva göre ölçülür, bu yüzden açılar toplanır: 30° + 60° = 90°. Bu derste bunun matrislerdeki karşılığını göreceksin.", "sec": "links", "secTitle": "Bir uzuv: uzunluk ve açı"}]}</script>
+</section>
+
+<section class="section" id="product">
+  <div class="wrap prose">
+    <h2><span class="n">1.</span> Matris çarpı vektör</h2>
+    <p>Bir robotta aynı dönüşü bir kez değil, kolun her noktasına ve her an yeniden uygularız. Bunun için dönüşümü bir kez yazıp saklamak isteriz. En kısa yazılış, birkaç sayıdan oluşan bir tablodur.</p>
+    <div class="noted">
+      <p>Sayıların satırlara ve sütunlara dizildiği böyle bir tabloya <strong>matris</strong> denir. 2×2'lik bir matrisin iki satırı ve iki sütunu vardır. Biz her sütunu ayrı bir vektör olarak, yani bir <strong>sütun vektörü</strong> olarak okuyacağız. Matrisi bir (x, y) vektörüyle çarpmak şu demektir: birinci sütunu x kez, ikinci sütunu y kez al ve ikisini topla. Bu işleme <strong>matris-vektör çarpımı</strong> denir; sonuç yine bir vektördür.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Okulda bu çarpımı "satırı sütunla çarp, topla" diye ezberledim ve ne işe yaradığını uzun süre görmedim. Sütunlarla okumak, bana ilk kez bir şey anlattı.</p></aside>
+    </div>
+    <p>Bir örnek: sütunları (2, 1) ve (−1, 1) olan matrisi (1, 2) ile çarpalım. Birinci sütunun 1 katı (2, 1), ikinci sütunun 2 katı (−2, 2). Toplamları (0, 3).</p>
+    <figure class="frame-fig">
+      <svg viewBox="0 0 240 170" role="img" aria-label="Birinci sütun (2, 1) ile ikinci sütunun iki katı (−2, 2) uç uca eklenince (0, 3) noktasına varılır">
+        <line x1="20" y1="140" x2="225" y2="140" style="stroke:var(--axis)" stroke-width="1.2"/>
+        <line x1="110" y1="160" x2="110" y2="10" style="stroke:var(--axis)" stroke-width="1.2"/>
+        <line x1="110" y1="140" x2="166" y2="112" style="stroke:var(--classic)" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="170,110 158,111 163,119" style="fill:var(--classic)"/>
+        <line x1="170" y1="110" x2="114" y2="54" style="stroke:var(--e2e)" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="110,50 113,62 120,56" style="fill:var(--e2e)"/>
+        <line x1="110" y1="140" x2="110" y2="58" style="stroke:var(--ink)" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <circle cx="110" cy="50" r="3.5" style="fill:var(--ink)"/>
+        <text x="174" y="126" font-size="12" style="fill:var(--classic)">1 · (2, 1)</text>
+        <text x="146" y="74" font-size="12" style="fill:var(--e2e)">2 · (−1, 1)</text>
+        <text x="72" y="46" font-size="12" style="fill:var(--ink)">(0, 3)</text>
+      </svg>
+      <figcaption>Birinci sütunun 1 katı (mavi) ile ikinci sütunun 2 katı (turuncu) uç uca eklenir: sonuç (0, 3).</figcaption>
+    </figure>
+    <details class="deep"><summary>Perde arkası: yazılışı ve satır kuralı</summary><div class="body">
+      <div class="formula">\[\begin{bmatrix} a & b \\ c & d \end{bmatrix}\begin{bmatrix} x \\ y \end{bmatrix} = x\begin{bmatrix} a \\ c \end{bmatrix} + y\begin{bmatrix} b \\ d \end{bmatrix} = \begin{bmatrix} ax + by \\ cx + dy \end{bmatrix}.\]</div>
+      <p>Sağdaki biçim ezberlenen "satır çarpı sütun" kuralıdır: sonucun her bileşeni, matrisin bir satırındaki sayıların vektörün bileşenleriyle çarpılıp toplanmasıdır. İki okuma aynı hesabı yapar, yalnızca toplama sırası farklıdır. Örnekte 2 · 1 + (−1) · 2 = 0 ve 1 · 1 + 1 · 2 = 3.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="grid">
+  <div class="wrap prose">
+    <h2><span class="n">2.</span> Sütunlar ızgarayı taşır</h2>
+    <p>x̂ = (1, 0) birim vektörünü bir matrisle çarparsan ne çıkar? Birinci sütunun 1 katı, ikinci sütunun 0 katı, yani birinci sütunun kendisi. Aynı şekilde ŷ = (0, 1) ikinci sütuna gider. Matrisin sütunları, x̂ ile ŷ'nin gittiği yerlerdir.</p>
+    <div class="noted">
+      <p>Bu küçük gözlem çok şey söylüyor. Her vektör x x̂ + y ŷ diye yazılabildiği için, x̂ ile ŷ'nin nereye gittiğini bilmek her vektörün nereye gittiğini bilmek demektir. Izgaranın her karesi aynı biçimde değişir: düz çizgiler düz kalır, orijin yerinde durur, eşit aralıklı çizgiler eşit aralıklı kalır. Böyle bir değişime <strong>doğrusal dönüşüm</strong> denir. Aşağıda iki sütunun uçlarını sürükle ve ızgarayı izle.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Bir matrise bakıp ne yaptığını görmenin en hızlı yolu bu: sütunları çiz, ızgarayı onlara göre hayal et. Sayılara bakarak tahmin etmeye çalışmaktan çok daha kolay.</p></aside>
+    </div>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="gridCv" width="420" height="420" class="sq-cv" role="img" aria-label="Izgara ve iki sütun vektörü. Sütunların uçlarını sürükle ya da ok tuşlarıyla taşı; Enter diğer sütuna geçer."></canvas>
+        <div class="readout" id="gridOut"></div>
+      </div>
+      <div class="card guide-card"><div id="gridMis"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rotation">
+  <div class="wrap prose">
+    <h2><span class="n">3.</span> Dönme matrisi</h2>
+    <p>Şimdi M.2'deki kosinüsü ve sinüsü bu dille yeniden yazalım. Düzlemi θ kadar döndüren matrisin sütunları ne olmalı? x̂ = (1, 0), birim çember üzerinde θ açısına gider: (cos θ, sin θ). ŷ = (0, 1) zaten 90°'de durur; θ kadar dönünce θ + 90°'ye gelir: (−sin θ, cos θ). Bu iki sütundan oluşan matrise <strong>dönme matrisi</strong> denir ve R(θ) diye yazılır.</p>
+    <div class="noted">
+      <p>Uzunluğu 2 olan, x ekseni boyunca duran bir uzvu R(θ) ile çarpalım: 2 · (cos θ, sin θ) + 0 · (−sin θ, cos θ) = (2 cos θ, 2 sin θ). M.2'de elle yazdığımız formülün ta kendisi. θ = 0 iken R(θ) hiçbir şeyi değiştirmez; köşegeninde 1, geri kalanında 0 olan bu matrise <strong>birim matris</strong> denir ve I diye yazılır.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>−sin θ'nın hangi köşede olduğunu hâlâ ezbere bilmiyorum. Bilmem de gerekmiyor: ŷ'nin 90° döndüğü yeri düşünmek yetiyor.</p></aside>
+    </div>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="rotCv" width="420" height="420" class="sq-cv" role="img" aria-label="Uzunluğu 2 olan bir uzuv ve dönme matrisinin iki sütunu. Kaydırıcı ya da ok tuşları açıyı değiştirir."></canvas>
+        <div class="arm-ctl">
+          <label class="hd-range"><span>Açı θ</span><input id="rotIn" type="range" min="-180" max="180" step="1" value="30"><output></output></label>
+        </div>
+        <div class="readout" id="rotOut"></div>
+      </div>
+    </div>
+    <details class="deep"><summary>Perde arkası: R(θ)</summary><div class="body">
+      <div class="formula">\[R(\theta) = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}, \qquad R(\theta)\begin{bmatrix} L \\ 0 \end{bmatrix} = \begin{bmatrix} L\cos\theta \\ L\sin\theta \end{bmatrix}.\]</div>
+      <p>Örneğin R(90°)'nin sütunları (0, 1) ve (−1, 0): 2. bölümün 3. görevinde kurduğun matris. R(30°) · (2, 0) = (1.73, 1), M.2'deki (2 cos 30°, 2 sin 30°).</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="order">
+  <div class="wrap prose">
+    <h2><span class="n">4.</span> İki dönüşüm üst üste: sıra önemli</h2>
+    <p>Bir vektörü önce B ile, sonra A ile dönüştürmek istiyoruz: önce Bv, sonra A(Bv). İki adımı tek bir matrisle yapabilir miyiz? Evet. A ile B'nin <strong>matris çarpımı</strong> AB, tam olarak "önce B, sonra A" dönüşümünün matrisidir. Sıraya dikkat: AB yazılır ama önce B uygulanır, çünkü vektöre en yakın duran odur.</p>
+    <p>AB'nin sütunlarını bulmak için 2. bölümün fikri yeter. AB'nin birinci sütunu x̂'in gittiği yerdir: B onu B'nin birinci sütununa, A da oradan bir sonraki yere götürür. Yani AB'nin her sütunu, B'nin o sütununun A ile çarpımıdır.</p>
+    <div class="noted">
+      <p>Sayılarda 2 · 3 = 3 · 2'dir; matrislerde böyle değildir. Döndürüp sonra esnetmek, esnetip sonra döndürmekle çoğu zaman aynı sonucu vermez. Aşağıda A bir dönme, B bir esnetme (ölçekleme): her eksen kendi oranında uzar ya da kısalır. Sol sahne AB'yi, sağ sahne BA'yı gösteriyor.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Robot kodunda en sık yaptığım hata bu oldu: iki dönüşümü ters sırada çarpmak. Kol yine bir yere gidiyor, yalnızca yanlış yere.</p></aside>
+    </div>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="orderCv" width="420" height="240" class="wide-cv" role="img" aria-label="Solda önce B sonra A, sağda önce A sonra B uygulanmış bir F harfi. Kaydırıcılar A'yı ve B'yi değiştirir."></canvas>
+        <div class="arm-ctl">
+          <label class="hd-range" id="alRow"><span>A = R(α), α</span><input id="alIn" type="range" min="-180" max="180" step="5" value="90"><output></output></label>
+          <label class="hd-range" id="sxRow"><span>B: x oranı</span><input id="sxIn" type="range" min="0.5" max="2" step="0.5" value="2"><output></output></label>
+          <label class="hd-range" id="syRow"><span>B: y oranı</span><input id="syIn" type="range" min="0.5" max="2" step="0.5" value="1"><output></output></label>
+        </div>
+        <p class="flip-row" id="bKind"><button class="btn sm" type="button" id="bScale" aria-pressed="true">B: esnetme</button><button class="btn sm" type="button" id="bRot" aria-pressed="false">B: dönme R(60°)</button></p>
+        <div class="readout" id="orderOut"></div>
+      </div>
+      <div class="card guide-card"><div id="orderMis"></div></div>
+    </div>
+    <details class="deep"><summary>Perde arkası: iki matrisin çarpımı</summary><div class="body">
+      <div class="formula">\[(AB)\,v = A\,(B\,v), \qquad \begin{bmatrix} a & b \\ c & d \end{bmatrix}\begin{bmatrix} e & f \\ g & h \end{bmatrix} = \begin{bmatrix} ae + bg & af + bh \\ ce + dg & cf + dh \end{bmatrix}.\]</div>
+      <p>Sağdaki matrisin her sütunu, ikinci matrisin aynı sütununun birinci matrisle çarpımıdır. Örneğin R(90°) · S, S'nin x'i 2 katına çıkardığı durumda [[0, −1], [2, 0]] olur: önce esnet, sonra döndür.</p>
+    </div></details>
+
+    <div class="research" data-block="research">
+      <h3>Çarpımın tuhaf kuralı</h3>
+      <p>İki matrisi çarpmanın kuralı ilk bakışta tuhaf. Neden karşılıklı sayıları çarpıp yan yana yazmıyoruz? Bu çok daha basit olurdu.</p>
+      <p class="q">İki matrisin çarpımı neden "satır çarpı sütun" diye tanımlanmış?</p>
+      <p class="think">Cevapları açmadan önce bir dakika düşün.</p>
+      <details class="answers"><summary>Olası cevaplar</summary><div class="body"><ul>
+        <li><strong>Gelenek.</strong> Bir tanım seçilmiş ve tutmuş; başka bir tanım da aynı işi görürdü.</li>
+        <li><strong>Sayı sayı çarpmak.</strong> Bu da bir işlem, ama sonucu "önce B, sonra A" değildir. R(90°) kendisiyle sayı sayı çarpılınca sütunları (0, 1) ve (1, 0) olan matris çıkar: bu bir dönme değil, x ile y'nin yer değiştirmesi, bir ayna. Oysa 90° iki kez dönmek 180° dönmektir.</li>
+        <li><strong>Art arda uygulamak.</strong> Kural, iki dönüşümü art arda uygulamaktan doğar: AB'nin sütunları, A ile çarpılmış B sütunlarıdır. Bunu sayılarla açınca satır çarpı sütun kuralı kendiliğinden belirir.</li>
+      </ul></div></details>
+      <details class="actual"><summary>Gerçekte ne yapıldı</summary><div class="body">
+        <p>Üçüncüsü. Arthur Cayley 1858'de matrisleri ilk kez kendi başlarına birer nesne olarak inceledi (<a href="#paper-cayley1858">Cayley, 1858</a>). Bir doğrusal denklem takımını, bilinmeyenlere uygulanan tek bir matris olarak yazdı ve iki matrisin çarpımını, birinin ardından öbürünün uygulanmasının matrisi olarak tanımladı. Çarpımın sıraya bağlı olduğunu da aynı makalede belirtti. Yani kural keyfi değil: bu bölümdeki "önce B, sonra A" fikrinin sayılarla yazılışı.</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rotz">
+  <div class="wrap prose">
+    <h2><span class="n">5.</span> Üç boyuta bir bakış: z ekseni etrafında dönme</h2>
+    <p>Robot kollarının çoğu üç boyutta çalışır, ama ilk eklemleri çoğu zaman düşey bir eksen, yani z ekseni etrafında döner. Bu dönme x ile y'yi az önceki gibi döndürür, yüksekliğe ise hiç dokunmaz. Bu yüzden matrisi 3×3'lük olur: sol üst köşede tanıdık 2×2'lik dönme matrisi, sağ alt köşede 1, geri kalan yerlerde 0.</p>
+    <p>Örneğin z ekseni etrafında 90° dönme, (1, 0, 5) noktasını (0, 1, 5)'e götürür: noktanın yerdeki gölgesi 90° döner, yüksekliği 5'te kalır. Sütunlarla okuyunca da görülür: üçüncü sütun (0, 0, 1), yani ẑ yerinde durur.</p>
+    <figure class="frame-fig">
+      <svg viewBox="0 0 240 175" role="img" aria-label="Yerden 5 yüksekte bir nokta z ekseni etrafında 90 derece döner; gölgesi yerde döner, yüksekliği değişmez">
+        <line x1="110" y1="140" x2="110" y2="14" style="stroke:var(--axis)" stroke-width="1.5"/>
+        <line x1="110" y1="140" x2="205" y2="148" style="stroke:var(--axis)" stroke-width="1.5"/>
+        <line x1="110" y1="140" x2="67" y2="168" style="stroke:var(--axis)" stroke-width="1.5"/>
+        <text x="114" y="20" font-size="12" style="fill:var(--ink-3)">z</text>
+        <text x="208" y="152" font-size="12" style="fill:var(--ink-3)">x</text>
+        <text x="56" y="172" font-size="12" style="fill:var(--ink-3)">y</text>
+        <ellipse cx="110" cy="140" rx="60" ry="14" fill="none" style="stroke:var(--line-2)" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <line x1="166.4" y1="144.8" x2="166.4" y2="56.8" style="stroke:var(--ink-3)" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <line x1="89.5" y1="153.2" x2="89.5" y2="65.2" style="stroke:var(--ink-3)" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <path d="M166.4 144.8 A60 14 0 0 1 89.5 153.2" fill="none" style="stroke:var(--hybrid)" stroke-width="2.5"/>
+        <circle cx="166.4" cy="56.8" r="4" style="fill:var(--classic)"/>
+        <circle cx="89.5" cy="65.2" r="4" style="fill:var(--e2e)"/>
+        <text x="148" y="46" font-size="12" style="fill:var(--classic)">(1, 0, 5)</text>
+        <text x="28" y="62" font-size="12" style="fill:var(--e2e)">(0, 1, 5)</text>
+        <text x="132" y="168" font-size="11" style="fill:var(--hybrid)">90°</text>
+      </svg>
+      <figcaption>Nokta z ekseni etrafında 90° döner. Yerdeki gölgesi (mor yay) döner, yüksekliği 5'te kalır.</figcaption>
+    </figure>
+    <details class="deep"><summary>Perde arkası: R<sub>z</sub>(θ)</summary><div class="body">
+      <div class="formula">\[R_z(\theta) = \begin{bmatrix} \cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix}, \qquad R_z(90^\circ)\begin{bmatrix} 1 \\ 0 \\ 5 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ 5 \end{bmatrix}.\]</div>
+    </div></details>
+    <p>x ve y eksenleri etrafındaki dönmelerin matrisleri de aynı kalıptadır: dönme ekseni olan satır ve sütun yerinde kalır. M.4'te dönme matrislerinin ortak özelliklerine bakacağız.</p>
+  </div>
+</section>
+
+<section class="section" id="quiz">
+  <div class="wrap prose">
+    <h2>Kendini sına: sık yapılan sekiz yanılgı</h2>
+    <div class="quiz" id="quizBox"></div>
+    <p class="score" id="quizScore"></p>
+  </div>
+</section>
+
+<section class="section" id="papers" data-block="papers">
+  <div class="wrap prose">
+    <h2>İlgili makale</h2>
+    <p>Araştırma sorusunun arkasındaki makale (İngilizce).</p>
+    <article class="paper" id="paper-cayley1858">
+      <h3><a href="https://doi.org/10.1098/rstl.1858.0002">A Memoir on the Theory of Matrices</a></h3>
+      <p class="meta"><span class="authors">A. Cayley</span> · <span class="venue">Philosophical Transactions of the Royal Society of London 148</span> · <span class="year">1858</span></p>
+      <p class="takeaway">Matris, bir doğrusal denklem takımının kısa yazılışı olarak doğar. İki matrisin çarpımı, iki dönüşümü art arda uygulamanın matrisidir ve sıraya bağlıdır.</p>
+      <details class="more"><summary>Daha fazla ayrıntı</summary><div class="body">
+        <p>Cayley matrislerin toplanabildiğini, bir sayıyla ve birbirleriyle çarpılabildiğini, yani sayılar gibi hesap yapılabilen nesneler olduğunu gösterdi. Bunu yaparken, sayılardan farklı olarak çarpımın genellikle sıraya bağlı olduğunu vurguladı.</p>
+        <p>Bugün Cayley–Hamilton teoremi diye bilinen sonuç da bu makalede ifade edilir; Cayley kanıtını yalnızca 2×2 matrisler için yayımladı.</p>
+      </div></details>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="finale">
+  <div class="wrap prose">
+    <h2>Neler gördük</h2>
+    <ol class="takeaways">
+      <li>Bir matris çarpı (x, y): x kez birinci sütun artı y kez ikinci sütun.</li>
+      <li>Sütunlar, x̂ ile ŷ'nin gittiği yerlerdir. Bu yüzden bir matris, bütün düzlemin ızgarasıyla birlikte nasıl değiştiğini söyler.</li>
+      <li>R(θ)'nın sütunları (cos θ, sin θ) ve (−sin θ, cos θ); R(θ) · (L, 0) = (L cos θ, L sin θ).</li>
+      <li>AB "önce B, sonra A" demektir ve sıra çoğu zaman önemlidir. Art arda iki dönme açıları toplar.</li>
+      <li>z ekseni etrafında dönme, yüksekliğe dokunmayan 3×3'lük bir matristir.</li>
+    </ol>
+    <h3>Açık sorular</h3>
+    <details class="open-q"><summary>İki sütun aynı doğru üzerinde olursa ne olur?</summary><p>Bütün düzlem o doğruya ezilir. Farklı vektörler aynı yere gider ve dönüşüm geri alınamaz. M.4'te bunu tek bir sayıyla ölçmeyi göreceksin.</p></details>
+    <details class="open-q"><summary>Bir dönmeyi geri almak için hangi matrisle çarparsın?</summary><p>R(−θ) ile: R(−θ) R(θ) = R(0) = I. M.4'te bunun R(θ)'nın satırlarıyla sütunlarının yer değiştirmesinden ibaret olduğunu göreceksin.</p></details>
+    <h3>Ek okuma</h3>
+    <ul class="links">
+      <li><a href="https://www.3blue1brown.com/topics/linear-algebra" target="_blank" rel="noopener">Essence of linear algebra</a><span>3Blue1Brown: matrisleri dönüşüm olarak anlatan video dizisi (İngilizce)</span></li>
+      <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch ve F. Park, 2017: ücretsiz kitap ve videolar (İngilizce); 3. bölüm dönme matrislerine ayrılmış</span></li>
+    </ul>
+    <p>Sıradaki: <!--if:m-4-special-matrices.html--><a href="m-4-special-matrices.html">M.4 Özel matrisler</a>.<!--/if--> Dönme matrislerini özel yapan ne, ve bir dönüşüm nasıl geri alınır.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Kinematik Atölyesi, M.3 dersi. Bütün sahneler tarayıcında, kendi bilgisayarında çalışır.
+</footer>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+<script>
+/*@@JS@@*/
+</script>
+</body>
+</html>

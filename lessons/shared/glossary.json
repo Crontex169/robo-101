@@ -151,5 +151,68 @@
   "l": "m2",
   "sec": "cosrule",
   "a": "kosinüs teorem\\w*"
+ },
+ {
+  "id": "matrix",
+  "t": "Matris",
+  "en": "Matrix",
+  "d": "Sayıların satırlara ve sütunlara dizildiği tablo. Bir vektörle çarpılınca onu başka bir vektöre götürür, yani bir dönüşümü saklar.",
+  "l": "m3",
+  "sec": "product",
+  "a": "matris\\w*"
+ },
+ {
+  "id": "column-vector",
+  "t": "Sütun vektörü",
+  "en": "Column vector",
+  "d": "Bir matrisin tek bir sütunu, vektör olarak okunur. 2×2'lik bir matrisin birinci sütunu x̂'in, ikinci sütunu ŷ'nin gittiği yerdir.",
+  "l": "m3",
+  "sec": "product",
+  "a": "sütun vektör\\w*"
+ },
+ {
+  "id": "matrix-vector-product",
+  "t": "Matris-vektör çarpımı",
+  "en": "Matrix–vector product",
+  "d": "Bir matrisi (x, y) vektörüyle çarpmak: birinci sütunun x katı ile ikinci sütunun y katını toplamak. Sonuç yine bir vektördür.",
+  "l": "m3",
+  "sec": "product",
+  "a": "matris-vektör çarpım\\w*"
+ },
+ {
+  "id": "linear-transformation",
+  "t": "Doğrusal dönüşüm",
+  "en": "Linear transformation",
+  "d": "Düz çizgileri düz, orijini yerinde, eşit aralıkları eşit tutan dönüşüm. Her doğrusal dönüşüm bir matrisle yazılır.",
+  "l": "m3",
+  "sec": "grid",
+  "a": "doğrusal dönüşüm\\w*"
+ },
+ {
+  "id": "rotation-matrix",
+  "t": "Dönme matrisi",
+  "en": "Rotation matrix",
+  "d": "Düzlemi θ kadar döndüren matris R(θ). Sütunları (cos θ, sin θ) ve (−sin θ, cos θ).",
+  "l": "m3",
+  "sec": "rotation",
+  "a": "dönme matris\\w*"
+ },
+ {
+  "id": "identity-matrix",
+  "t": "Birim matris",
+  "en": "Identity matrix",
+  "d": "Köşegeninde 1, geri kalanında 0 olan matris I. Hiçbir vektörü değiştirmez; R(0°) = I.",
+  "l": "m3",
+  "sec": "rotation",
+  "a": "birim matris\\w*"
+ },
+ {
+  "id": "matrix-product",
+  "t": "Matris çarpımı",
+  "en": "Matrix product",
+  "d": "AB, \"önce B, sonra A\" dönüşümünün matrisidir. AB'nin her sütunu, B'nin o sütununun A ile çarpımıdır. Sıra çoğu zaman önemlidir: AB ≠ BA.",
+  "l": "m3",
+  "sec": "order",
+  "a": "matris çarpım\\w*"
  }
 ]

@@ -14,6 +14,7 @@ const { launch, sleep } = require('./cdp');
 const sample = require('./lesson_sample');
 const m1 = require('./lesson_m1');
 const m2 = require('./lesson_m2');
+const m3 = require('./lesson_m3');
 const fs = require('fs');
 
 // What each build should show, derived from the published lists and the glossary (not hard-coded counts)
@@ -56,6 +57,9 @@ function assemble(out, config) {
     console.log('Lesson M.2');
     await m2.run(B, fileUrl('dist-check/lessons/m-2-trigonometry.html'), check);
 
+    console.log('Lesson M.3');
+    await m3.run(B, fileUrl('dist-check/lessons/m-3-matrices-as-transformations.html'), check);
+
     console.log('Home page');
     const home = await B.page(fileUrl('dist-check/index.html'), { width: 1280, height: 900, light: true });
     await home.waitFor("document.querySelectorAll('#parts li').length > 0");
@@ -87,7 +91,7 @@ function assemble(out, config) {
     check(await glc.eval(`document.querySelectorAll('.gl-item').length === ${checkN}`), `check build: the glossary lists ${checkN} terms`);
 
     console.log('Plain pages');
-    for (const page of ['dist-check/index.html', 'dist-check/404.html', 'dist-check/lessons/glossary.html', 'dist-check/lessons/sample.html', 'dist-check/lessons/m-1-vectors-and-frames.html', 'dist-check/lessons/m-2-trigonometry.html']) {
+    for (const page of ['dist-check/index.html', 'dist-check/404.html', 'dist-check/lessons/glossary.html', 'dist-check/lessons/sample.html', 'dist-check/lessons/m-1-vectors-and-frames.html', 'dist-check/lessons/m-2-trigonometry.html', 'dist-check/lessons/m-3-matrices-as-transformations.html']) {
       for (const theme of ['light', 'dark']) {
         const pp = await B.page(fileUrl(page), { width: 1280, height: 900, [theme]: true });
         await pp.waitFor("document.readyState === 'complete'");

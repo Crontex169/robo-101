@@ -17,6 +17,9 @@ LESSONS = {
     'm2': ('m-2-trigonometry.html', ['shared/lesson.css', 'shared/lab.css', 'shared/research.css', 'm2/m2.css'], {
         '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/vec.js', 'shared/planar-arm.js', 'shared/missions.js', 'shared/quiz.js', 'm2/ui-m2.js'],
     }),
+    'm3': ('m-3-matrices-as-transformations.html', ['shared/lesson.css', 'shared/lab.css', 'shared/research.css', 'm3/m3.css'], {
+        '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/vec.js', 'shared/missions.js', 'shared/quiz.js', 'm3/ui-m3.js'],
+    }),
     # glossary: every published term from shared/glossary.json
     'gl': ('glossary.html', ['shared/lesson.css', 'gl/gl.css'], {
         '/*@@JS@@*/': ['shared/ui-core.js', 'gl/ui-gl.js'],
