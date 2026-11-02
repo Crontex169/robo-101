@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M.4 Özel matrisler — Kinematik Atölyesi</title>
+<meta name="description" content="Kinematik Atölyesi, M.4 dersi: nokta çarpımı, devrik matris, dik matrisler, ters matris, determinant ve homojen koordinatlara ilk bakış. Canlı laboratuvarlarla.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<script>
+  (function () { try { var t = localStorage.getItem('kw-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {} })();
+</script>
+<style>
+/*@@CSS@@*/
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html#program" title="Kurs programına dön">Kinematik Atölyesi<small>M.4</small></a>
+    <nav class="toc" aria-label="Ders bölümleri">
+      <a href="#dot">Nokta</a>
+      <a href="#ortho">Devrik</a>
+      <a href="#inverse">Ters</a>
+      <a href="#det">Alan</a>
+      <a href="#special">Dönme</a>
+      <a href="#quiz">Test</a>
+      <a href="#papers" data-block="papers">Makale</a>
+      <a href="#finale">Özet</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Temayı değiştir">◐</button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+
+<section class="intro" id="top">
+  <div class="wrap">
+    <p class="lesson-n">M.4 dersi · Bölüm M, matematik araç kutusu</p>
+    <h1>Özel matrisler</h1>
+    <p class="lead">M.3 iki soruyla bitti: iki sütun aynı doğruya düşerse ne olur, ve bir dönme nasıl geri alınır? Bu ders ikisini de yanıtlıyor ve dönme matrislerini öteki matrislerden ayıran şeyi gösteriyor.</p>
+    <p class="meta">Yaklaşık 50 dakika · 2 laboratuvar ve 2 küçük etkileşimli sahne · 7 görev</p>
+    <p>Bu derste:</p>
+    <ul>
+      <li>iki vektörü tek bir sayıya çeviren çarpımı ve onun 90°'yi nasıl yakaladığını öğreneceksin;</li>
+      <li>bir matrisin satırlarını sütun yapıp dönme matrislerinin sınavını kuracaksın;</li>
+      <li>döndürülmüş bir şekli evine geri getireceksin;</li>
+      <li>bir matrisin alanı nasıl değiştirdiğini ölçüp düzlemi ezecek ve aynalayacaksın;</li>
+      <li>tek bir matrisle hem döndürüp hem kaydırmanın yoluna ilk kez bakacaksın.</li>
+    </ul>
+    <p class="muted small">Sahneler fareyle, parmakla ya da klavyeyle çalışır: sahneye tıkla ya da Tab ile gel, ok tuşlarıyla hareket ettir, Enter ile sonraki tutamağa geç. Kaydırıcılar da ok tuşlarıyla çalışır.</p>
+  </div>
+</section>
+
+<section class="recall-sec" id="recall" aria-label="Önceki derse ısınma">
+  <div class="wrap"><div class="card recall" data-recall></div></div>
+  <script type="application/json" id="recallData">{"n": "M.3", "title": "Dönüşüm olarak matrisler", "href": "m-3-matrices-as-transformations.html", "q": [{"q": "Sütunları (1, 2) ve (0, 1) olan matris (1, 0) vektörünü nereye götürür?", "o": ["(1, 2)", "(1, 0)", "(0, 1)"], "a": 0, "e": "(1, 0) = x̂, ve x̂ her zaman birinci sütuna gider: (1, 2).", "sec": "grid", "secTitle": "Sütunlar ızgarayı taşır"}, {"q": "R(90°) · (0, 1) nedir?", "o": ["(−1, 0)", "(1, 0)", "(0, −1)"], "a": 0, "e": "ŷ 90° dönünce sola bakar. R(90°)'nin ikinci sütunu (−sin 90°, cos 90°) = (−1, 0).", "sec": "rotation", "secTitle": "Dönme matrisi"}, {"q": "AB çarpımında hangi dönüşüm önce uygulanır?", "o": ["B", "A", "Fark etmez"], "a": 0, "e": "(AB)v = A(Bv): vektöre en yakın duran B önce uygulanır. Bu derste bir dönüşümü geri alırken bu sırayı kullanacağız.", "sec": "order", "secTitle": "İki dönüşüm üst üste: sıra önemli"}]}</script>
+</section>
+
+<section class="section" id="dot">
+  <div class="wrap prose">
+    <h2><span class="n">1.</span> Nokta çarpımı</h2>
+    <p>M.3'te bir matrisin sütunlarına bakıp ne yaptığını okuduk. Dönme matrisinin iki sütununda göze çarpan iki şey var: ikisinin de uzunluğu 1, ve aralarında tam 90° var. Bunu sayılarla sınamak için iki vektörden tek bir sayı çıkaran bir işleme ihtiyacımız var.</p>
+    <div class="noted">
+      <p>İki vektörün karşılıklı bileşenlerini çarpıp toplayalım: a · b = aₓbₓ + a_yb_y. Buna a ile b'nin <strong>nokta çarpımı</strong> denir; sonuç bir vektör değil, tek bir sayıdır. Örneğin (1, 2) · (3, 1) = 1 · 3 + 2 · 1 = 5. Bir de (3, 4) · (4, −3) = 12 − 12 = 0. Nokta çarpımı sıfırsa iki vektör birbirine <strong>dik</strong> durur: aralarındaki açı 90°'dir.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Bu çarpımı ilk gördüğümde ne işe yaradığını anlamadım. Sonra şunu fark ettim: bir vektörün, öbürünün doğrultusunda ne kadar ilerlediğini ölçüyor. 90°'de hiç ilerlemiyor.</p></aside>
+    </div>
+    <p>Aşağıda a = (2, 0) sabit, b ise uzunluğu 1 olan bir vektör. b'yi döndür ve a · b'yi izle. b, a ile aynı yöne bakarken sayı en büyük, ters yöne bakarken en küçük, ikisi arasında tam ortada sıfır.</p>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="dotCv" width="420" height="300" class="mid-cv" role="img" aria-label="Sabit a vektörü ve dönen birim b vektörü. Kaydırıcı, b'nin ucunu sürüklemek ya da ok tuşları açıyı değiştirir."></canvas>
+        <div class="arm-ctl">
+          <label class="hd-range"><span>b'nin açısı φ</span><input id="dotIn" type="range" min="-180" max="180" step="1" value="30"><output></output></label>
+        </div>
+        <div class="readout" id="dotOut"></div>
+      </div>
+    </div>
+    <details class="deep"><summary>Perde arkası: nokta çarpımı ve kosinüs</summary><div class="body">
+      <div class="formula">\[a \cdot b = a_x b_x + a_y b_y = |a|\,|b|\cos\varphi, \qquad a \cdot a = |a|^2.\]</div>
+      <p>φ, iki vektör arasındaki açıdır; M.2'deki kosinüs burada yeniden çıkıyor. Sahnede |a| = 2 ve |b| = 1, yani a · b = 2 cos φ: φ = 60° iken 1, φ = 90° iken 0. Bir vektörü kendisiyle çarpınca açı 0 olur ve uzunluğun karesi çıkar: (3, 4) · (3, 4) = 25 = 5². Bir birim vektör için a · a = 1.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="ortho">
+  <div class="wrap prose">
+    <h2><span class="n">2.</span> Devrik matris ve dik matrisler</h2>
+    <p>Bir matrisin satırlarını sütun, sütunlarını satır yaparsan onun <strong>devriğini</strong> elde edersin. A'nın devrik matrisi Aᵀ diye yazılır. Örneğin sütunları (2, 1) ve (−1, 1) olan matrisin devriğinin sütunları (2, −1) ve (1, 1) olur: [[2, −1], [1, 1]]ᵀ = [[2, 1], [−1, 1]].</p>
+    <p>Devriğin işe yaradığı yer şu: AᵀA matris çarpımının dört sayısı, A'nın sütunlarının birbiriyle nokta çarpımlarıdır. c₁ ve c₂, A'nın birinci ve ikinci sütunu olsun. Sol üstte c₁ · c₁, sağ üstte c₁ · c₂, sol altta c₂ · c₁, sağ altta c₂ · c₂ durur.</p>
+    <div class="noted">
+      <p>Demek ki AᵀA'nın birim matris I olması iki şey söyler: her sütunun uzunluğu 1 (c · c = 1), ve iki sütun birbirine dik (c₁ · c₂ = 0). Böyle bir matrise <strong>dik matris</strong> denir. Dik bir matris ızgarayı döndürebilir ya da aynalayabilir, ama hiçbir kareyi esnetmez ya da eğmez.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>İngilizcesi "orthogonal matrix". Ad yalnızca sütunların dik olmasını söylüyor, ama birim uzunlukta olmaları da şart. Bu adın kafa karıştırdığını düşünen tek kişi ben değilim.</p></aside>
+    </div>
+    <p>Aşağıda birinci sütun uzunluğu 1 olan bir vektör; açısını kaydırıcıyla seçiyorsun. İkinci sütunun ucunu sürükle. Uç, birim çembere ya da birinci sütuna dik konuma yaklaşınca oraya oturur.</p>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="orthoCv" width="420" height="420" class="sq-cv" role="img" aria-label="Birim uzunlukta birinci sütun ve sürüklenebilen ikinci sütun. İkinci sütunun ucunu sürükle ya da ok tuşlarıyla taşı."></canvas>
+        <div class="arm-ctl">
+          <label class="hd-range" id="orthoRow"><span>1. sütunun açısı α</span><input id="orthoIn" type="range" min="-180" max="180" step="5" value="0"><output></output></label>
+        </div>
+        <div class="readout" id="orthoOut"></div>
+      </div>
+      <div class="card guide-card"><div id="orthoMis"></div></div>
+    </div>
+    <details class="deep"><summary>Perde arkası: devrik ve AᵀA</summary><div class="body">
+      <div class="formula">\[\begin{bmatrix} a & b \\ c & d \end{bmatrix}^{\mathsf T} = \begin{bmatrix} a & c \\ b & d \end{bmatrix}, \qquad A^{\mathsf T}A = \begin{bmatrix} c_1\cdot c_1 & c_1\cdot c_2 \\ c_2\cdot c_1 & c_2\cdot c_2 \end{bmatrix}, \qquad (AB)^{\mathsf T} = B^{\mathsf T}A^{\mathsf T}.\]</div>
+      <p>AᵀA'nın her sayısı, Aᵀ'nin bir satırı (yani A'nın bir sütunu) ile A'nın bir sütununun satır çarpı sütun kuralıyla çarpımıdır: tam bir nokta çarpımı. Örnekteki matris için AᵀA = [[5, −1], [−1, 2]]: sütunların uzunluğu 1 değil ve aralarındaki açı 90° değil. Son kural, bir çarpımın devriğinde sıranın ters döndüğünü söyler.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="inverse">
+  <div class="wrap prose">
+    <h2><span class="n">3.</span> Bir dönüşümü geri almak: ters matris</h2>
+    <p>Bir robot kolu bir cismi döndürdüğünde çoğu zaman şunu da sorarız: cismi eski yerine götürmek için hangi dönüşüm gerekir? A'nın yaptığını geri alan matrise A'nın <strong>ters matrisi</strong> denir ve A⁻¹ diye yazılır. Önce A, sonra A⁻¹ uygulanınca her vektör yerine döner: A⁻¹A = I.</p>
+    <div class="noted">
+      <p>Bir dönmeyi geri almak kolay: aynı açıyla ters yöne dön, R(θ)⁻¹ = R(−θ). Aynı matrisi bulmanın bir yolu daha var: R(θ)'nın devriğini al. R(θ) dik bir matris olduğu için R(θ)ᵀR(θ) = I, yani devrik zaten tersidir. Hesap yok; satırlarla sütunlar yer değiştirir, o kadar.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Robot yazılımlarında bir dönmenin tersi neredeyse hiç genel bir "ters al" işlemiyle hesaplanmaz; devriği alınır. Hem daha hızlıdır hem de daha az yuvarlama hatası getirir.</p></aside>
+    </div>
+    <p>Aşağıda F harfi R(50°) ile döndürülmüş. İkinci bir dönmenin açısını seç ve harfi evine geri getir.</p>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="invCv" width="420" height="300" class="mid-cv" role="img" aria-label="Evindeki F harfi (soluk), R(50°) ile döndürülmüş hali (kesikli) ve ikinci dönmeden sonraki hali. Kaydırıcı ikinci dönmenin açısını değiştirir."></canvas>
+        <div class="arm-ctl">
+          <label class="hd-range"><span>Geri alma açısı β</span><input id="invIn" type="range" min="-180" max="180" step="1" value="0"><output></output></label>
+        </div>
+        <div class="readout" id="invOut"></div>
+      </div>
+    </div>
+    <details class="deep"><summary>Perde arkası: 2×2'lik bir matrisin tersi</summary><div class="body">
+      <div class="formula">\[\begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \frac{1}{ad - bc}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix}, \qquad \begin{bmatrix} 2 & -1 \\ 1 & 1 \end{bmatrix}^{-1} = \frac{1}{3}\begin{bmatrix} 1 & 1 \\ -1 & 2 \end{bmatrix}.\]</div>
+      <p>M.3'ün ilk bölümünde bu matris (1, 2)'yi (0, 3)'e götürmüştü. Tersi (0, 3)'ü geri getirir: (1/3) · (0 · 1 + 3 · 1, 0 · (−1) + 3 · 2) = (1, 2). Formül ad − bc = 0 olduğunda çalışmaz, çünkü sıfıra bölünemez. Bu sayının adını 4. bölümde koyacağız.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="det">
+  <div class="wrap prose">
+    <h2><span class="n">4.</span> Determinant: alan nasıl değişir</h2>
+    <p>M.3'te iki sütunu aynı doğruya koyunca düzlemin bir doğruya ezildiğini gördük. Ezilmiş bir düzlem geri açılamaz: birçok nokta aynı yere düşmüştür ve hangisinin nereden geldiğini bilemezsin. Bunu tek bir sayıyla ölçebiliriz.</p>
+    <div class="noted">
+      <p>Kenarları x̂ ve ŷ olan birim kareye bak. Matris onu, kenarları iki sütun olan bir paralelkenara götürür. Bu paralelkenarın alanına matrisin <strong>determinantı</strong> denir ve det A diye yazılır. [[a, b], [c, d]] için det A = ad − bc: 3. bölümdeki formülün paydasındaki sayı. Alan 0 ise düzlem ezilmiştir ve ters matris yoktur.</p>
+      <p>Determinantın bir de işareti var. İkinci sütun, birinci sütunun saat yönündeki tarafına geçerse kare ters yüz olur ve determinant eksi çıkar. Bu, düzlemin aynadaki görüntüsünü almak gibidir; böyle bir dönüşüme <strong>yansıma</strong> denir.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Determinantı ilk "şu çarpı şu, eksi şu çarpı şu" diye öğrendim. Bir alan olduğunu duyunca formülü bir daha unutmadım.</p></aside>
+    </div>
+    <p>Aşağıda iki sütunun uçlarını sürükle. Birim kare, matrisin götürdüğü paralelkenar olarak boyanıyor; ters yüz olunca rengi değişiyor.</p>
+    <div class="lab">
+      <div class="card scene-card">
+        <canvas id="detCv" width="420" height="420" class="sq-cv" role="img" aria-label="İki sütun vektörü ve birim karenin gittiği paralelkenar. Sütunların uçlarını sürükle ya da ok tuşlarıyla taşı; Enter diğer sütuna geçer."></canvas>
+        <div class="readout" id="detOut"></div>
+      </div>
+      <div class="card guide-card"><div id="detMis"></div></div>
+    </div>
+    <details class="deep"><summary>Perde arkası: determinant ve dönme</summary><div class="body">
+      <div class="formula">\[\det\begin{bmatrix} a & b \\ c & d \end{bmatrix} = ad - bc, \qquad \det R(\theta) = \cos^2\theta + \sin^2\theta = 1, \qquad \det(AB) = \det A \cdot \det B.\]</div>
+      <p>Bir dönme kareyi yalnızca döndürür; alanı değişmez, ters yüz de olmaz. Bu yüzden determinantı her zaman 1'dir. Son kural, art arda iki dönüşümde alan oranlarının çarpıldığını söyler: alanı 2 katına çıkarıp sonra 3 katına çıkarırsan 6 kat büyümüş olur.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="section" id="special">
+  <div class="wrap prose">
+    <h2><span class="n">5.</span> Dönme matrisi nedir, ve bir adım ötesi</h2>
+    <p>Parçaları birleştirelim. 2. bölümde AᵀA = I'yi sağlayan iki sütun bulmuştun: biri dönmeydi, öbürü yansıma. 4. bölüm ikisini ayırıyor: dönmenin determinantı +1, yansımanın −1. Yani bir dönme matrisi, determinantı +1 olan dik bir matristir. Üç boyutta da aynısı geçerli; orada determinant alan yerine hacmin nasıl değiştiğini ölçer. M.3'teki R<sub>z</sub>(90°) için R<sub>z</sub>(90°)ᵀ R<sub>z</sub>(90°) = I ve determinantı 1.</p>
+    <p>Bir eksik kaldı. Robot kolunun bir uzvu yalnızca dönmez, bir yerden başlar: bir önceki uzvun ucundan. Kaydırmayı ise bir matrisle yapamayız gibi görünüyor, çünkü her matris orijini yerinde bırakır.</p>
+    <div class="noted">
+      <p>Hile şu: noktayı bir sayı fazlasıyla, (x, y, 1) diye yaz. Bu yazılışa <strong>homojen koordinatlar</strong> denir. Artık 3×3'lük bir matrisin sol üst köşesine dönmeyi, sağ sütununa kaydırmayı koyabilirsin. Örneğin [[0, −1, 2], [1, 0, 1], [0, 0, 1]] önce 90° döndürür, sonra (2, 1) kaydırır: (1, 0, 1) noktasını (2, 2, 1)'e, yani düzlemde (2, 2)'ye götürür.</p>
+      <aside class="mnote" aria-label="Yazarın notu"><p>Bu dersteki her şeyin asıl hedefi bu matris. 2.2 dersinde onu 4×4'lük haliyle yeniden göreceğiz ve bütün bir robot kolunu bu matrislerden bir zincir olarak yazacağız.</p></aside>
+    </div>
+    <figure class="frame-fig">
+      <svg viewBox="0 0 240 170" role="img" aria-label="(1, 0) noktası önce 90 derece dönerek (0, 1)'e, sonra (2, 1) kayarak (2, 2)'ye gider">
+        <line x1="20" y1="140" x2="225" y2="140" style="stroke:var(--axis)" stroke-width="1.2"/>
+        <line x1="60" y1="160" x2="60" y2="10" style="stroke:var(--axis)" stroke-width="1.2"/>
+        <path d="M100 140 A40 40 0 0 0 60 100" fill="none" style="stroke:var(--hybrid)" stroke-width="2.5"/>
+        <line x1="60" y1="100" x2="134" y2="63" style="stroke:var(--ink-3)" stroke-width="2" stroke-dasharray="5 4"/>
+        <polygon points="140,60 128,61 133,69" style="fill:var(--ink-3)"/>
+        <circle cx="100" cy="140" r="4" style="fill:var(--classic)"/>
+        <circle cx="60" cy="100" r="4" style="fill:var(--e2e)"/>
+        <circle cx="140" cy="60" r="4.5" style="fill:var(--ink)"/>
+        <text x="96" y="157" font-size="12" style="fill:var(--classic)">(1, 0)</text>
+        <text x="16" y="96" font-size="12" style="fill:var(--e2e)">(0, 1)</text>
+        <text x="146" y="58" font-size="12" style="fill:var(--ink)">(2, 2)</text>
+        <text x="88" y="114" font-size="11" style="fill:var(--hybrid)">90°</text>
+        <text x="92" y="74" font-size="11" style="fill:var(--ink-3)">+ (2, 1)</text>
+      </svg>
+      <figcaption>Önce 90° dönme (mor yay), sonra (2, 1) kaydırma (kesikli ok): (1, 0) noktası (2, 2)'ye gider. Tek bir 3×3'lük matris ikisini birden yapar.</figcaption>
+    </figure>
+    <details class="deep"><summary>Perde arkası: dönme ve kaydırma tek matriste</summary><div class="body">
+      <div class="formula">\[\begin{bmatrix} R & p \\ 0 & 1 \end{bmatrix}\begin{bmatrix} v \\ 1 \end{bmatrix} = \begin{bmatrix} Rv + p \\ 1 \end{bmatrix}, \qquad \begin{bmatrix} 0 & -1 & 2 \\ 1 & 0 & 1 \\ 0 & 0 & 1 \end{bmatrix}\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 2 \\ 2 \\ 1 \end{bmatrix}.\]</div>
+      <p>R(90°) · (1, 0) = (0, 1), artı (2, 1): (2, 2). Sondaki 1, kaydırmanın her noktaya tam bir kez eklenmesini sağlar.</p>
+    </div></details>
+
+    <div class="research" data-block="research">
+      <h3>Kaydırma bir matrise nasıl sığdı?</h3>
+      <p>Bir matrisin yaptığı her şey orijini yerinde bırakır: A · (0, 0) = (0, 0). Kaydırma ise orijini de taşır. Yine de az önce bir matris kaydırma yaptı.</p>
+      <p class="q">Bu nasıl mümkün oldu, ve bu fikir robot kollarına nasıl ulaştı?</p>
+      <p class="think">Cevapları açmadan önce bir dakika düşün.</p>
+      <details class="answers"><summary>Olası cevaplar</summary><div class="body"><ul>
+        <li><strong>Kaydırma aslında doğrusaldır.</strong> Değil: orijini yerinde bırakmayan hiçbir dönüşüm 2×2'lik bir matrisle yazılamaz.</li>
+        <li><strong>Bir boyut yukarı çıkmak.</strong> Düzlemi üç boyutta z = 1 yüksekliğine koyarsan, oradaki kaydırma üç boyutta bir eğme olur, yani doğrusal bir dönüşüm. 3×3'lük matris bu eğmeyi yapar.</li>
+        <li><strong>Bilgisayar grafiği için uydurulmuş bir hile.</strong> Bilgisayarlar onu çok kullanır, ama fikir onlardan çok daha eski.</li>
+      </ul></div></details>
+      <details class="actual"><summary>Gerçekte ne yapıldı</summary><div class="body">
+        <p>İkincisi. August Möbius 1827'de bir noktayı bir sayı fazlasıyla yazmayı önerdi; bu yazılışta yalnızca sayıların oranı önemlidir (<a href="#paper-mobius1827">Möbius, 1827</a>). Fikir uzun süre geometrinin bir aracı olarak kaldı. 1955'te Jacques Denavit ve Richard Hartenberg, bir mekanizmanın her uzvunu birkaç sayıyla tanımladılar ve bir uzuvdan sonrakine geçişi böyle bir matrisle yazdılar (<a href="#paper-dh1955">Denavit ve Hartenberg, 1955</a>). Bütün bir kol, bu matrislerin çarpımı olur. Bölüm 3'te kullanacağımız gösterim budur.</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="quiz">
+  <div class="wrap prose">
+    <h2>Kendini sına: sık yapılan sekiz yanılgı</h2>
+    <div class="quiz" id="quizBox"></div>
+    <p class="score" id="quizScore"></p>
+  </div>
+</section>
+
+<section class="section" id="papers" data-block="papers">
+  <div class="wrap prose">
+    <h2>İlgili kaynaklar</h2>
+    <p>Araştırma sorusunun arkasındaki iki kaynak: bir kitap (Almanca) ve bir makale (İngilizce).</p>
+    <article class="paper" id="paper-mobius1827">
+      <h3><a href="https://www.digitale-sammlungen.de/en/view/bsb11267597">Der barycentrische Calcul</a></h3>
+      <p class="meta"><span class="authors">A. F. Möbius</span> · <span class="venue">J. A. Barth, Leipzig</span> · <span class="year">1827</span></p>
+      <p class="takeaway">Bir noktayı, sabit noktalara konmuş ağırlıkların denge noktası olarak, olağandan bir sayı fazlasıyla yazmak. Bütün ağırlıkları aynı sayıyla çarpmak noktayı değiştirmez; yalnızca oranlar önemlidir.</p>
+      <details class="more"><summary>Daha fazla ayrıntı</summary><div class="body">
+        <p>Kitabın adı "ağırlık merkezi hesabı" demektir. Möbius bu yazılışla geometrik soruları cebirle çözmenin yeni bir yolunu verdi. Bugün homojen koordinatlar diye bildiğimiz fikrin ilk biçimi budur.</p>
+      </div></details>
+    </article>
+    <article class="paper" id="paper-dh1955">
+      <h3><a href="https://doi.org/10.1115/1.4011045">A Kinematic Notation for Lower-Pair Mechanisms Based on Matrices</a></h3>
+      <p class="meta"><span class="authors">J. Denavit, R. S. Hartenberg</span> · <span class="venue">Journal of Applied Mechanics 22</span> · <span class="year">1955</span></p>
+      <p class="takeaway">Bir mekanizmanın her uzvu birkaç sayıyla tanımlanır ve bir uzuvdan ötekine geçiş bir matrisle yazılır. Bütün zincir, bu matrislerin çarpımıdır.</p>
+      <details class="more"><summary>Daha fazla ayrıntı</summary><div class="body">
+        <p>Makale, birbirine eklemlerle bağlı uzuvların hareketini matrislerle hesaplamanın sistemli bir yolunu verdi. Bugün robot kitaplarının çoğu bu gösterimi ufak değişikliklerle kullanır; bu kursun 3. bölümü de onun üzerine kurulu.</p>
+      </div></details>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="finale">
+  <div class="wrap prose">
+    <h2>Neler gördük</h2>
+    <ol class="takeaways">
+      <li>a · b = aₓbₓ + a_yb_y. Sıfırsa vektörler diktir; a · a uzunluğun karesidir.</li>
+      <li>Aᵀ satırlarla sütunların yerini değiştirir. AᵀA, A'nın sütunlarının nokta çarpımlarıdır.</li>
+      <li>AᵀA = I ise A dik bir matristir: sütunları birim uzunlukta ve birbirine dik.</li>
+      <li>A⁻¹, A'nın yaptığını geri alır. Bir dönmede R(θ)⁻¹ = R(θ)ᵀ = R(−θ).</li>
+      <li>det A, birim karenin gittiği paralelkenarın işaretli alanıdır: 0 ise ters yoktur, eksi ise bir yansıma vardır. Bir dönme matrisi, determinantı +1 olan dik bir matristir.</li>
+      <li>Homojen koordinatlarla tek bir matris hem döndürür hem kaydırır.</li>
+    </ol>
+    <h3>Açık sorular</h3>
+    <details class="open-q"><summary>Üç boyutta bir dönmeyi kaç sayı belirler?</summary><p>R<sub>z</sub>'nin dokuz sayısı var, ama hepsi serbest değil: AᵀA = I onları birbirine bağlıyor. Geriye üç serbest sayı kalıyor. 2.3 dersinde bunları açılar olarak göreceğiz.</p></details>
+    <details class="open-q"><summary>Hem döndüren hem kaydıran bir matrisin tersi nedir?</summary><p>Önce kaydırmayı, sonra dönmeyi geri alırsın; sonuç yine aynı biçimde bir matristir. 2.2 dersinde.</p></details>
+    <h3>Ek okuma</h3>
+    <ul class="links">
+      <li><a href="https://www.3blue1brown.com/topics/linear-algebra" target="_blank" rel="noopener">Essence of linear algebra</a><span>3Blue1Brown: determinantı alan, tersi geri alma olarak anlatan video dizisi (İngilizce)</span></li>
+      <li><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener">Modern Robotics</a><span>K. Lynch ve F. Park, 2017: ücretsiz kitap ve videolar (İngilizce); 3. bölüm dönme ve homojen dönüşüm matrislerine ayrılmış</span></li>
+    </ul>
+    <p>Sıradaki ders M.5, türevler ve küçük değişimler<!--if:m-5-derivatives-and-small-changes.html-->: <a href="m-5-derivatives-and-small-changes.html">derse git</a><!--/if-->. Bir eklem biraz dönünce kolun ucu ne kadar kayar?</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Kinematik Atölyesi, M.4 dersi. Bütün sahneler tarayıcında, kendi bilgisayarında çalışır.
+</footer>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+<script>
+/*@@JS@@*/
+</script>
+</body>
+</html>

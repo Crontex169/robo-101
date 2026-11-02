@@ -15,6 +15,7 @@ const sample = require('./lesson_sample');
 const m1 = require('./lesson_m1');
 const m2 = require('./lesson_m2');
 const m3 = require('./lesson_m3');
+const m4 = require('./lesson_m4');
 const fs = require('fs');
 
 // What each build should show, derived from the published lists and the glossary (not hard-coded counts)
@@ -59,6 +60,9 @@ function assemble(out, config) {
 
     console.log('Lesson M.3');
     await m3.run(B, fileUrl('dist-check/lessons/m-3-matrices-as-transformations.html'), check);
+
+    console.log('Lesson M.4');
+    await m4.run(B, fileUrl('dist-check/lessons/m-4-special-matrices.html'), check);
 
     console.log('Home page');
     const home = await B.page(fileUrl('dist-check/index.html'), { width: 1280, height: 900, light: true });

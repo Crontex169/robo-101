@@ -214,5 +214,77 @@
   "l": "m3",
   "sec": "order",
   "a": "matris çarpım\\w*"
+ },
+ {
+  "id": "dot-product",
+  "t": "Nokta çarpımı",
+  "en": "Dot product",
+  "d": "İki vektörün karşılıklı bileşenleri çarpılıp toplanır: a · b = aₓbₓ + a_yb_y. Sonuç tek bir sayıdır; |a| |b| cos φ'ye eşittir.",
+  "l": "m4",
+  "sec": "dot",
+  "a": "nokta çarpım\\w*"
+ },
+ {
+  "id": "orthogonal",
+  "t": "Dik",
+  "en": "Orthogonal (perpendicular)",
+  "d": "Aralarındaki açı 90° olan iki vektör birbirine diktir. Nokta çarpımları sıfırdır.",
+  "l": "m4",
+  "sec": "dot",
+  "a": "dik"
+ },
+ {
+  "id": "transpose",
+  "t": "Devrik matris",
+  "en": "Transpose",
+  "d": "Aᵀ: A'nın satırları sütun, sütunları satır olur. AᵀA, A'nın sütunlarının birbiriyle nokta çarpımlarını listeler.",
+  "l": "m4",
+  "sec": "ortho",
+  "a": "devri[kğ]\\w*"
+ },
+ {
+  "id": "orthogonal-matrix",
+  "t": "Dik matris",
+  "en": "Orthogonal matrix",
+  "d": "AᵀA = I olan matris: sütunları birim uzunlukta ve birbirine dik. Döndürür ya da aynalar, ama esnetmez. Tersi devriğidir.",
+  "l": "m4",
+  "sec": "ortho",
+  "a": "dik matris\\w*"
+ },
+ {
+  "id": "inverse-matrix",
+  "t": "Ters matris",
+  "en": "Inverse matrix",
+  "d": "A⁻¹, A'nın yaptığını geri alır: A⁻¹A = I. Bir dönmede R(θ)⁻¹ = R(θ)ᵀ = R(−θ). Determinantı 0 olan bir matrisin tersi yoktur.",
+  "l": "m4",
+  "sec": "inverse",
+  "a": "ters matris\\w*"
+ },
+ {
+  "id": "determinant",
+  "t": "Determinant",
+  "en": "Determinant",
+  "d": "det A: birim karenin gittiği paralelkenarın işaretli alanı. 2×2 için ad − bc. 0 ise düzlem ezilir, eksi ise kare ters yüz olur. Her dönmenin determinantı 1'dir.",
+  "l": "m4",
+  "sec": "det",
+  "a": "determinant\\w*"
+ },
+ {
+  "id": "reflection",
+  "t": "Yansıma",
+  "en": "Reflection",
+  "d": "Düzlemi bir doğruya göre aynalayan dönüşüm. Dik bir matristir ama determinantı −1'dir; örneğin [[1, 0], [0, −1]].",
+  "l": "m4",
+  "sec": "det",
+  "a": "yansıma\\w*"
+ },
+ {
+  "id": "homogeneous-coordinates",
+  "t": "Homojen koordinatlar",
+  "en": "Homogeneous coordinates",
+  "d": "Bir noktayı bir sayı fazlasıyla, (x, y, 1) diye yazmak. Böylece tek bir matris hem döndürür hem kaydırır.",
+  "l": "m4",
+  "sec": "special",
+  "a": "homojen koordinat\\w*"
  }
 ]

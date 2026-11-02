@@ -18,7 +18,10 @@ LESSONS = {
         '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/vec.js', 'shared/planar-arm.js', 'shared/missions.js', 'shared/quiz.js', 'm2/ui-m2.js'],
     }),
     'm3': ('m-3-matrices-as-transformations.html', ['shared/lesson.css', 'shared/lab.css', 'shared/research.css', 'm3/m3.css'], {
-        '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/vec.js', 'shared/missions.js', 'shared/quiz.js', 'm3/ui-m3.js'],
+        '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/vec.js', 'shared/plane.js', 'shared/missions.js', 'shared/quiz.js', 'm3/ui-m3.js'],
+    }),
+    'm4': ('m-4-special-matrices.html', ['shared/lesson.css', 'shared/lab.css', 'shared/research.css', 'm4/m4.css'], {
+        '/*@@JS@@*/': ['shared/ui-core.js', 'shared/kit.js', 'shared/vec.js', 'shared/plane.js', 'shared/missions.js', 'shared/quiz.js', 'm4/ui-m4.js'],
     }),
     # glossary: every published term from shared/glossary.json
     'gl': ('glossary.html', ['shared/lesson.css', 'gl/gl.css'], {

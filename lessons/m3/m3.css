@@ -9,11 +9,3 @@
 .arm-ctl { display: grid; gap: 4px; margin-top: 10px; }
 .arm-ctl .hd-range { display: grid; grid-template-columns: 110px 1fr 56px; align-items: center; gap: 8px; margin-top: 6px; }
 .arm-ctl .hd-range input { width: 100%; }
-/* a 2×2 matrix in a readout: square brackets, column 1 and column 2 in their colours */
-.mat { display: inline-grid; grid-template-columns: auto auto; column-gap: 0.7em; padding: 1px 0.4em; margin: 2px 0; vertical-align: middle;
-  position: relative; border-left: 1.5px solid currentColor; border-right: 1.5px solid currentColor; font-variant-numeric: tabular-nums; text-align: right; line-height: 1.3; }
-.mat::before, .mat::after { content: ''; position: absolute; top: 0; bottom: 0; width: 4px; border-top: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; }
-.mat::before { left: 0; }
-.mat::after { right: 0; }
-.c1 { color: var(--classic); }
-.c2 { color: var(--e2e); }
